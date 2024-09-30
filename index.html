@@ -86,10 +86,13 @@
         </tr>
     </table>
 
-    <div style="display: flex; gap: 10px;">
-        <button id="calculateButton" onclick="calculate()">Laske</button>
-        <button id="addToCompareButton">Lisää vertailuun</button>
-    </div>
+	<div>
+		<button id="calculateButton" onclick="calculate()">Laske</button>
+		<button id="addToCompareButton">Lisää vertailuun</button>
+		<button id="clearButton" onclick="clearSavedResults()">Tyhjennä</button> <!-- New Clear button -->
+
+	</div>
+	
 
     <!-- Result section -->
     <div class="result" id="result">Valitse tiedot ja paina nappia nähdäksesi tulokset.</div>
