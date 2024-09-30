@@ -25,14 +25,14 @@ body {
     width: 100%;
     border-collapse: collapse; /* Ensures that borders are merged */
     margin-bottom: 20px;
-    border: 2px solid white !important;
+    /* border: 2px solid white !important; */
 }
 
 .form-table td { /* Ensure both table and cells get borders */
     padding: 10px;
     vertical-align: top;
     color: #fff; /* Asetetaan fontin väriksi valkoinen */
-    border: 2px solid white !important; /* Adding a 2px solid white border */
+    /* border: 2px solid white !important; /* Adding a 2px solid white border */ */
 }
 
 /* Lomakekenttien perusasetukset */
