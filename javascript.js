@@ -293,6 +293,13 @@ function clearSavedResults() {
     savedResultsDiv.innerHTML = ''; // Clears all saved cards
 }
 
+function setRandomBackground() {
+    const maxImages = 3; // Update this number as you add more background images
+    const randomNumber = Math.floor(Math.random() * maxImages) + 1;
+    const imageName = `back_${String(randomNumber).padStart(2, '0')}.jpg`;
+    document.body.style.backgroundImage = `url('${imageName}')`;
+}
+
 
 // Sivun latautuessa täytetään ikävalinnat ja päivitetään auton merkit
 window.onload = async function() {
@@ -302,7 +309,9 @@ window.onload = async function() {
     updateBrandOptions();
     toggleFuelInputs(); // Piilotetaan lisäkentät aluksi
     toggleModelYear(); // Tarkistetaan käytetyn auton valinta
+    setRandomBackground(); // Invoke the background function
 };
+
 
 // Lisätään tapahtumakuuntelijat valintaruutuihin
 document.getElementById('used').addEventListener('change', toggleModelYear);
