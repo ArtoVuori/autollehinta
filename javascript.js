@@ -149,6 +149,7 @@ async function calculate() {
     }
 
     addToCompareButton.style.display = 'inline-block';
+	clearButton.style.display = 'inline-block';
 
     if (!selectedBrand || isNaN(price) || isNaN(selectedAge) || (isUsed && isNaN(modelYear))) {
         resultDiv.innerHTML = 'Syötä kaikki tiedot ja arvot.';
@@ -286,6 +287,13 @@ function addToComparison() {
     comparisonContent = ""; // Tyhjennetään sisältö tulevaa käyttöä varten
 }
 
+function clearSavedResults() {
+    console.log('Tyhjennetään tallennetut kortit.');
+    const savedResultsDiv = document.getElementById('savedResults');
+    savedResultsDiv.innerHTML = ''; // Clears all saved cards
+}
+
+
 // Sivun latautuessa täytetään ikävalinnat ja päivitetään auton merkit
 window.onload = async function() {
     console.log('Sivu ladattu, täytetään valinnat ja päivitetään merkit.');
@@ -298,3 +306,4 @@ window.onload = async function() {
 
 // Lisätään tapahtumakuuntelijat valintaruutuihin
 document.getElementById('used').addEventListener('change', toggleModelYear);
+
