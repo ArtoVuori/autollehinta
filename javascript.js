@@ -294,7 +294,7 @@ function clearSavedResults() {
 }
 
 function setRandomBackground() {
-    const maxImages = 3; // Update this number as you add more background images
+    const maxImages = 7; // Update this number as you add more background images
     const randomNumber = Math.floor(Math.random() * maxImages) + 1;
     const imageName = `back_${String(randomNumber).padStart(2, '0')}.jpg`;
     document.body.style.backgroundImage = `url('${imageName}')`;

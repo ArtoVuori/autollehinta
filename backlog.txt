@@ -1,0 +1,5 @@
+
++ Huoltokustannukset lisättävä
++ Renkaat lisättävä
++ Pesut
++ Tallennetaan vertailukortti laskennasta, jotta voidaan laskea uusi ja vertailla
