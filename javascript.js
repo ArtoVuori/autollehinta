@@ -125,8 +125,24 @@ function toggleModelYear() {
     console.log('Tarkistetaan käytetty auto -valinta.');
     const usedCheckbox = document.getElementById('used');
     const modelYearRow = document.getElementById('modelYearRow');
+    const priceLabel = document.getElementById('priceLabel');
+
+    if (!priceLabel) {
+        console.error('priceLabel-elementtiä ei löytynyt!');
+        return; // Lopeta suoritus, jos elementtiä ei ole löydetty
+    }
+
+    // Näytetään tai piilotetaan mallivuosikenttä
     modelYearRow.style.display = usedCheckbox.checked ? 'block' : 'none';
+
+    // Muutetaan otsikko "Auton hankintahinta" tarpeen mukaan
+    if (usedCheckbox.checked) {
+        priceLabel.textContent = "Auton hankintahinta (käytettynä):";
+    } else {
+        priceLabel.textContent = "Auton hankintahinta:";
+    }
 }
+
 
 // Lasketaan auton arvonalenema ja kustannukset
 async function calculate() {
@@ -308,9 +324,10 @@ window.onload = async function() {
     await loadFuelData();
     updateBrandOptions();
     toggleFuelInputs(); // Piilotetaan lisäkentät aluksi
-    toggleModelYear(); // Tarkistetaan käytetyn auton valinta
+    toggleModelYear(); // Tarkistetaan käytetyn auton valinta vasta DOM:n latauksen jälkeen
     setRandomBackground(); // Invoke the background function
 };
+
 
 
 // Lisätään tapahtumakuuntelijat valintaruutuihin
