@@ -92,6 +92,20 @@ select, input {
     }
 }
 
+@media screen and (max-width: 768px) {
+    /* Make the saved results container full width */
+    .saved-results {
+        flex-direction: column; /* Stack cards vertically */
+    }
+
+    /* Make the result cards take full width */
+    .result-card {
+        width: 100%; /* Full width in mobile */
+        margin-bottom: 10px; /* Add space between cards */
+    }
+}
+
+
 /* Button Styles */
 /* Button Container (Flexbox) */
 .button-container {
@@ -146,6 +160,7 @@ button#clearButton {
     cursor: pointer;
     width: auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	display: none;
 }
 
 button#clearButton:hover {
@@ -162,6 +177,7 @@ button#clearButton:hover {
     padding: 10px;
     width: auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	display: none;
 }
 
 #addToCompareButton:hover {
