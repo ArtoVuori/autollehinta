@@ -26,12 +26,15 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    border: 0px solid white; /* Lisää 2px valkoinen reunus */
+    table-layout: fixed; /* Varmistaa, että sarakkeet ovat yhtä leveitä */
 }
 
 .form-table td {
     padding: 10px;
     vertical-align: top;
     color: #fff;
+    border: 0px solid white; /* Lisää 2px valkoinen reunus */
 }
 
 /* Form Field Styles */
@@ -118,7 +121,7 @@ select, input {
 
 /* General Button Styles */
 button {
-    background: #4CAF50;
+    background: #c9b040;
     color: white;
     cursor: pointer;
     border: none;
@@ -136,7 +139,7 @@ button {
 /* Hover and focus effects */
 button:hover, 
 button:focus {
-    background: #45a049;
+    background: #b39926;
     transform: scale(1.02); /* Slightly increase size on hover */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
     outline: none; /* Removes the outline */
@@ -152,6 +155,24 @@ button#calculateButton:hover {
 }
 
 /* Clear Button Specific Styles */
+
+button#calculateButton {
+    background: #81b463 !important;
+    color: white !important;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button#calculateButton:hover {
+    background: #6e9457 !important;
+    transform: scale(1.02);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+
 button#clearButton {
     background: #d96fc5 !important;
     color: white !important;
@@ -184,4 +205,70 @@ button#clearButton:hover {
     background: #475ed1;
     transform: scale(1.02);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Tyylit otsikon painikkeelle */
+.accordion {
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.accordion:hover {
+    background-color: #b39926;
+}
+
+.accordion.active::after {
+    content: "▲"; /* Vaihda nuolen suunta ylös */
+}
+
+.accordion::after {
+    content: "▼"; /* Nuolen suunta alas */
+    float: right;
+    margin-left: 10px;
+}
+
+/* Piilotetun sisällön tyylit, käytetään max-height smoothiin avautumiseen */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    padding: 0 18px;
+    margin-top: 5px;
+    border-radius: 4px;
+}
+
+/* Kun sisällön pitää olla näkyvissä */
+.accordion-content.show {
+    max-height: 500px; /* Riittävän suuri, jotta sisältö mahtuu */
+    transition: max-height 0.5s ease-in;
+}
+
+/* Sama tyyli domain-otsikolle */
+h2.domain {
+    background: #c9b040;
+    color: white;
+    border-radius: 4px;
+    padding: 10px 20px;
+    display: inline-block; /* Jotta se pysyy samalla rivillä */
+    font-size: 24px; /* Voit säätää otsikon kokoa */
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Inline-h2-tyyli, jotta se tulee samalle riville */
+h2.inline-h2 {
+    display: inline-block; /* Pitää elementin samalla rivillä */
+    font-size: 24px; /* Sama fonttikoko kuin domain-otsikossa */
+    margin-left: 10px; /* Pieni väli ensimmäisen osan jälkeen */
+    font-weight: normal; /* Voit säätää painotusta halutessasi */
+    color: #fff; /* Tekstin väri */
 }

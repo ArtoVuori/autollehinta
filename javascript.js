@@ -113,12 +113,35 @@ function calculateDepreciation(age, depreciationArray) {
 // Käsitellään tapahtumat DOM:n latautumisen jälkeen
 document.addEventListener("DOMContentLoaded", function () {
     console.log('DOM ladattu, lisätään tapahtumakuuntelijat.');
+
+    // Lisää tapahtumakuuntelijat painikkeille
     document.getElementById('calculateButton').addEventListener('click', calculate);
     document.getElementById('addToCompareButton').addEventListener('click', addToComparison);
+
+    // Täytetään auton iät ja merkit
     fillAgeOptions();
     loadFuelData();
     updateBrandOptions();
+
+    // Accordion-ominaisuus
+    const accordions = document.querySelectorAll(".accordion");
+
+    accordions.forEach(acc => {
+        acc.addEventListener("click", function () {
+            // Vaihda aktiivisuusluokka
+            this.classList.toggle("active");
+
+            // Etsi seuraava sisällön div ja näytä/piilota se
+            const content = this.nextElementSibling;
+            if (content.classList.contains("show")) {
+                content.classList.remove("show");
+            } else {
+                content.classList.add("show");
+            }
+        });
+    });
 });
+
 
 // Näytetään tai piilotetaan mallivuosikenttä valintaruudun perusteella
 function toggleModelYear() {
