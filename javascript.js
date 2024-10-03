@@ -71,17 +71,23 @@ function clearResults() {
 // Täytetään auton merkit valinnoiksi ajoneuvotyypin perusteella
 async function updateBrandOptions() {
     const fuelType = document.getElementById('fuelType').value;
-    console.log(`Päivitetään merkkivalinnat polttoainetyypille: ${fuelType}`);
     const brandSelect = document.getElementById('brand');
-    brandSelect.innerHTML = ""; // Tyhjennetään vanhat valinnat
+    const selectedBrand = brandSelect.value;  // Tallenna käyttäjän valitsema merkki
+    brandSelect.innerHTML = "";  // Tyhjennetään vanhat valinnat
     const devaluationFile = fuelType === 'sahko' ? 'devaluation_ev.csv' : 'devaluation.csv';
     devaluationData = await loadCSV(devaluationFile);
+    
     Object.keys(devaluationData).forEach(brand => {
         const option = document.createElement('option');
         option.value = brand;
         option.textContent = brand;
         brandSelect.appendChild(option);
     });
+
+    // Jos tallennettu merkki löytyy uudesta listasta, aseta se valituksi
+    if (selectedBrand && Object.keys(devaluationData).includes(selectedBrand)) {
+        brandSelect.value = selectedBrand;
+    }
 }
 
 // Ladataan polttoainehinnan tiedot
@@ -181,6 +187,9 @@ async function calculate() {
     const annualTaxCost = parseFloat(document.getElementById('tax').value) || 0;
     const resultDiv = document.getElementById('result');
     const addToCompareButton = document.getElementById('addToCompareButton');
+	const maintenance = parseFloat(document.getElementById('maintenance').value) || 0;
+	const tires = parseFloat(document.getElementById('tires').value) || 0;
+	const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
 
     carDetails = `${selectedBrand} (${fuelType}) ${modelYear}`; // Päivitetään auton tiedot
     if (isUsed) {
@@ -238,7 +247,7 @@ async function calculate() {
 
     // Lasketaan polttoainekustannukset
     let annualFuelCost = calculateFuelCosts(fuelType, kilometers);
-    const totalAnnualCosts = annualFuelCost + annualInsuranceCost + annualTaxCost;
+    const totalAnnualCosts = annualFuelCost + annualInsuranceCost + annualTaxCost +tires +maintenance +otherCosts;
     const totalCostWithoutDepreciation = totalAnnualCosts * selectedAge;
     const totalCost = (totalCostWithoutDepreciation + parseFloat(depreciation)).toFixed(2);
     const totalMonths = selectedAge * 12;
