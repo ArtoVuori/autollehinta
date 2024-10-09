@@ -132,17 +132,30 @@ document.addEventListener("DOMContentLoaded", function () {
     // Accordion-ominaisuus
     const accordions = document.querySelectorAll(".accordion");
 
-    accordions.forEach(acc => {
+    // Oletuksena avataan vain "Kulutustiedot"-accordion ja suljetaan muut
+    accordions.forEach((acc, index) => {
+        const content = acc.nextElementSibling;
+        if (index === 0) { // Avaa ensimmäinen accordion ("Kulutustiedot")
+            acc.classList.add("active");
+            content.classList.add("show");
+            content.style.maxHeight = content.scrollHeight + "px"; // Avaa sisältö
+        } else {
+            content.classList.remove("show");
+            content.style.maxHeight = null; // Sulje muut accordionit
+        }
+
+        // Klikkaustapahtuma accordionille
         acc.addEventListener("click", function () {
-            // Vaihda aktiivisuusluokka
+            // Togglaa aktiivisuusluokka
             this.classList.toggle("active");
 
-            // Etsi seuraava sisällön div ja näytä/piilota se
-            const content = this.nextElementSibling;
+            // Togglaa accordion-sisällön näkyvyys
             if (content.classList.contains("show")) {
                 content.classList.remove("show");
+                content.style.maxHeight = null;
             } else {
                 content.classList.add("show");
+                content.style.maxHeight = content.scrollHeight + "px";
             }
         });
     });
@@ -191,9 +204,9 @@ async function calculate() {
 	const tires = parseFloat(document.getElementById('tires').value) || 0;
 	const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
 
-    carDetails = `${selectedBrand} (${fuelType}) ${modelYear}`; // Päivitetään auton tiedot
+    carDetails = `${selectedBrand} (${fuelType}) <br>${modelYear}`; // Päivitetään auton tiedot
     if (isUsed) {
-        carDetails += `<br> (käytetty)`;
+        carDetails += ` (käytetty)`;
     }
 
     addToCompareButton.style.display = 'inline-block';
@@ -275,7 +288,7 @@ async function calculate() {
         <table style="width: 100%;">
             <tr>
                 <td style="width: 60%;">Hankintahinta:</td>
-                <td style="width: 40%;">${price.toFixed(2)} €</td>
+                <td style="width: 40%;">${price.toFixed(0)} €</td>
             </tr>
             <tr>
                 <td style="width: 60%;">Pitoaika:</td>
@@ -317,23 +330,55 @@ function calculateFuelCosts(fuelType, kilometers) {
     return fuelCost;
 }
 
+// Funktio poistamaan kortti fade-animaation kanssa
+function removeCard(cardElement) {
+    // Lisää "removing"-luokka, joka käynnistää fade-out-animaation
+    cardElement.classList.add('removing');
+    
+    // Odota animaation loppumista ennen kuin kortti poistetaan DOM:sta
+    setTimeout(function() {
+        cardElement.remove();
+    }, 500); // 500 ms vastaa animaation kestoa
+}
+
 // Funktio tallentamaan ja näyttämään tulos korttina
 function addToComparison() {
     console.log('Lisätään tulos vertailuun.');
     const savedResultsDiv = document.getElementById('savedResults');
     const card = document.createElement('div');
     card.className = 'result-card';
-    card.innerHTML = `<div class="card-content">
-                    <h4>${carDetails}</h4>
-                    ${comparisonContent}
-                  </div>`;
+    
+    // Luo poistoruksi ja lisää sen korttiin
+    const removeButton = document.createElement('span');
+    removeButton.className = 'remove-button';
+    removeButton.innerHTML = '&times;';
+    removeButton.onclick = function () {
+        removeCard(card); // Käynnistetään poisto animaation kanssa
+    };
+    
+    // Kortin sisältö
+    card.innerHTML = `
+        <div class="card-content">
+            <h4>${carDetails}</h4>
+            ${comparisonContent}
+        </div>
+    `;
+    
+    card.appendChild(removeButton); // Lisää poistoruksi korttiin
     savedResultsDiv.appendChild(card);
+
+    // Viivästys, jotta kortti tulee näkyviin sulavasti
+    setTimeout(() => {
+        card.style.opacity = 1; // Aseta näkyväksi smoothisti
+    }, 10); // Viivästys, jotta DOM päivitetään ensin
 
     // Tyhjennetään tulokset päänäytöstä ja nollataan comparisonContent
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = 'Valitse tiedot ja paina nappia nähdäksesi tulokset.';
     comparisonContent = ""; // Tyhjennetään sisältö tulevaa käyttöä varten
 }
+
+
 
 function clearSavedResults() {
     console.log('Tyhjennetään tallennetut kortit.');
@@ -365,3 +410,10 @@ window.onload = async function() {
 // Lisätään tapahtumakuuntelijat valintaruutuihin
 document.getElementById('used').addEventListener('change', toggleModelYear);
 
+
+const iframe = document.getElementById('myIframe'); // Replace with your iframe's ID
+const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+// Now you can access the HTML
+const htmlContent = iframeDocument.documentElement.innerHTML;
+console.log(htmlContent); // This will log the HTML content of the iframe

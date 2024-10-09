@@ -58,13 +58,41 @@ select, input {
 }
 
 /* Saved Results Styles */
+/* Container Flexbox Setup */
 .saved-results {
-    margin-top: 10px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
+    flex-wrap: wrap; /* Kortit ryhmittyvät useammalle riville tarvittaessa */
+    gap: 10px; /* Lisää pieni väli korttien välille */
+    transition: all 0.5s ease; /* Transition, joka tekee uudelleenjärjestäytymisen sulavaksi */
 }
 
+
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Fade-out animation */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+/* Korttien siirtymät ja ilmestyminen */
 .result-card {
     background-color: #fff;
     color: #000;
@@ -73,11 +101,42 @@ select, input {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: calc(33% - 10px);
     box-sizing: border-box;
+    position: relative;
+    opacity: 0; /* Aluksi kortti on näkymätön */
+    transform: scale(0.9); /* Aluksi hieman pienennettynä */
+    animation: fadeIn 0.5s ease-in-out forwards; /* Kortti ilmestyy pehmeästi */
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Siirtymät */
+}
+
+
+
+/* Kun kortti poistetaan */
+.result-card.removing {
+    animation: fadeOut 0.5s ease-in-out;
+    opacity: 0; /* Kortti häipyy */
+    transform: scale(0.9); /* Kortti pienenee häipymisen aikana */
 }
 
 .result-card .card-content {
     font-size: 14px;
+    padding-right: 1px; /* Varmistaa, että sisältö ei mene poistoruksin päälle */
 }
+
+/* Poistoruksin tyyli */
+.result-card .remove-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 32px; /* Suurempi fonttikoko */
+    color: #ff5733;
+    /* font-weight: bold; */
+}
+
+.result-card .remove-button:hover {
+    color: #b83131;
+}
+
 
 /* Mobile Responsive Layout */
 @media screen and (max-width: 768px) {
@@ -246,7 +305,7 @@ button#clearButton:hover {
 }
 
 /* Kun sisällön pitää olla näkyvissä */
-.accordion-content.show {
+.accordion-content.show,  {
     max-height: 500px; /* Riittävän suuri, jotta sisältö mahtuu */
     transition: max-height 0.5s ease-in;
 }
