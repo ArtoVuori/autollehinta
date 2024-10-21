@@ -44,7 +44,6 @@ async function fillAgeOptions() {
     }
 }
 
-
 // Näytetään tai piilotetaan polttoainekentät ajoneuvotyypin perusteella
 function toggleFuelInputs() {
     const fuelType = document.getElementById('fuelType').value;
@@ -113,16 +112,43 @@ function calculateDepreciation(age, depreciationArray) {
     return depreciationFactor;
 }
 
-
-
-
 // Käsitellään tapahtumat DOM:n latautumisen jälkeen
 document.addEventListener("DOMContentLoaded", function () {
     console.log('DOM ladattu, lisätään tapahtumakuuntelijat.');
 
-    // Lisää tapahtumakuuntelijat painikkeille
-    document.getElementById('calculateButton').addEventListener('click', calculate);
-    document.getElementById('addToCompareButton').addEventListener('click', addToComparison);
+
+    // Lisää tapahtumakuuntelija Laske-napille
+    document.getElementById('calculateButton').addEventListener('click', function() {
+        if (checkFormValidity()) {
+            calculate(); // Suorita laskenta, jos kentät ovat kunnossa
+            smoothScrollToResult(); // Scrollataan tuloksiin
+
+            // Piilotetaan "Tyhjennä"-nappula Laske-painalluksen jälkeen
+            clearButton.style.display = 'none';
+        }
+    });
+	
+
+
+    // Lisää tapahtumakuuntelija Lisää vertailuun -napille
+    document.getElementById('addToCompareButton').addEventListener('click', function() {
+        addToComparison(); // Lisää kortti vertailuun
+
+        // Piilota "Lisää vertailuun" -nappula, kun kortti on lisätty vertailuun
+        this.style.display = 'none';
+
+        // Näytetään "Tyhjennä"-nappula kun "Lisää vertailuun" -nappulaa on painettu
+        clearButton.style.display = 'inline-block';
+    });
+
+    // Lisää tapahtumakuuntelija Tyhjennä-napille
+    clearButton.addEventListener('click', function() {
+        clearSavedResults(); // Tyhjennä tallennetut tulokset
+
+        // Piilota "Tyhjennä"-nappula kun sitä on painettu
+        this.style.display = 'none';
+    });
+
 
     // Täytetään auton iät ja merkit
     fillAgeOptions();
@@ -158,8 +184,50 @@ document.addEventListener("DOMContentLoaded", function () {
                 content.style.maxHeight = content.scrollHeight + "px";
             }
         });
-    });
+
 });
+
+
+
+    // Lisää tapahtumakuuntelija "Vertaa tästä" -painikkeelle
+    document.getElementById('mainButton').addEventListener('click', function() {
+        // Avaa myös lomake
+        document.getElementById('showNewVsOld').style.display = 'block';
+
+        // Avaa "Kulutustiedot"-accordion automaattisesti
+        const kulutusAccordion = document.querySelector('.accordion');
+        const kulutusContent = kulutusAccordion.nextElementSibling;
+        kulutusAccordion.classList.add("active");
+        kulutusContent.classList.add("show");
+        kulutusContent.style.maxHeight = kulutusContent.scrollHeight + "px"; // Varmista, että sisältö pysyy auki
+    });
+
+    // Skrollaa sivun alareunaan
+    function smoothScrollToBottom() {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    // Funktio tarkistamaan onko lomake täytetty oikein
+    function checkFormValidity() {
+        const brand = document.getElementById('brand').value;
+        const fuelType = document.getElementById('fuelType').value;
+        const age = document.getElementById('age').value;
+        const price = document.getElementById('price').value;
+        const kilometers = document.getElementById('kilometers').value;
+        const insurance = document.getElementById('insurance').value;
+        const tax = document.getElementById('tax').value;
+
+        return brand && fuelType && age && price && kilometers && insurance && tax; // Palauttaa true, jos kaikki kentät on täytetty
+    }
+
+	// Smooth scroll tuloksiin
+	function smoothScrollToResult() {
+		const resultDiv = document.getElementById('result');
+		resultDiv.scrollIntoView({ behavior: 'smooth' });
+	}
+});
+
+
 
 
 // Näytetään tai piilotetaan mallivuosikenttä valintaruudun perusteella
@@ -210,7 +278,6 @@ async function calculate() {
     }
 
     addToCompareButton.style.display = 'inline-block';
-	clearButton.style.display = 'inline-block';
 
     if (!selectedBrand || isNaN(price) || isNaN(selectedAge) || (isUsed && isNaN(modelYear))) {
         resultDiv.innerHTML = 'Syötä kaikki tiedot ja arvot.';
@@ -411,9 +478,60 @@ window.onload = async function() {
 document.getElementById('used').addEventListener('change', toggleModelYear);
 
 
-const iframe = document.getElementById('myIframe'); // Replace with your iframe's ID
+/* const iframe = document.getElementById('myIframe'); // Replace with your iframe's ID
 const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 
 // Now you can access the HTML
 const htmlContent = iframeDocument.documentElement.innerHTML;
-console.log(htmlContent); // This will log the HTML content of the iframe
+console.log(htmlContent); // This will log the HTML content of the iframe */
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Function to scroll smoothly to the form container
+    function smoothScroll(target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Get the reset element (the div wrapping the h2 titles)
+    const pageReset = document.getElementById('pageReset');
+    
+    // Add a click event listener to reset the page
+    if (pageReset) {
+        pageReset.style.cursor = "pointer"; // Change cursor to pointer for better UX
+        pageReset.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent any default behavior (if inside a form)
+            location.reload(); // Reloads the current page, effectively resetting it
+        });
+    } else {
+        console.error('Page reset element is missing.');
+    }
+
+    // Existing logic for the main button and form toggle
+    const mainButton = document.getElementById('mainButton');
+    const introContainer = document.getElementById('introContainer');
+    const formContainer = document.getElementById('showNewVsOld'); // This is the element you're toggling
+
+    // Check if the mainButton, introContainer, and formContainer exist before adding the event listener
+    if (mainButton && introContainer && formContainer) {
+        mainButton.addEventListener('click', function () {
+            // Smoothly hide the entire div that contains the intro text and the button
+            introContainer.style.opacity = '0';
+            /* introContainer.style.transition = 'opacity 0.6s ease'; */
+
+            // Wait for the fade-out transition to complete before setting display to "none"
+            setTimeout(function () {
+                introContainer.style.display = "none";
+
+                // Smoothly show the form by setting display and adding the 'show' class (defined in CSS)
+                formContainer.style.display = 'block';  // Explicitly set display to block
+                formContainer.classList.add('show');
+
+                // Smooth scroll to the form
+                smoothScroll(formContainer);
+            }, 600); // Wait for the transition duration to match (600ms)
+        });
+    } else {
+        console.error('Main button, intro container, or form container is missing.');
+    }
+});
+

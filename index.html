@@ -11,131 +11,158 @@
 </head>
 <body>
 <div class="container">
-    <h2 class="domain">Autollehinta.fi</h2><h2 class="inline-h2"> - Kannattaako vaihtaa uudempaan?</h2>
-
-<table class="form-table">
-    <tr>
-        <td>
-            <label for="brand">Automerkki:</label>
-            <select id="brand">
-                <!-- Automerkit täytetään JavaScriptillä -->
-            </select>
-        </td>
-        <td>
-            <label for="fuelType">Käyttövoima:</label>
-            <select id="fuelType" onchange="updateBrandOptions(); toggleFuelInputs();">
-                <option value="bensiini">Bensiini</option>
-                <option value="bensiini">Hybridi, bensiini</option>
-                <option value="bensiini">Lataushybridi, bensiini</option>
-                <option value="diesel">Diesel</option>
-                <option value="kaasu">Kaasu</option>
-                <option value="saahko">Sähkö</option>
-            </select>
-        </td>
-        <!-- <td rowspan="4" style="border-left: 1px solid #ccc;">  <!-- New cell with rowspan -->
-				      <!-- <button class="accordion">Katso nettiautosta</button> -->
-            <!-- <div class="accordion-content"> -->
-				<!-- <div style="position: relative; width: 100%; padding-bottom: 200%; height: 0; overflow: hidden;"> -->
-					<!-- <iframe  -->
-						<!-- src="https://www.nettiauto.com/audi/a8"  -->
-						<!-- style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"  -->
-						<!-- title="Audi A8" -->
-						<!-- sandbox="allow-same-origin allow-scripts"> -->
-					<!-- </iframe> -->
-				<!-- </div> -->
-            <!-- </div> -->
-			
-        <!-- </td> -->
-    </tr>
-    <tr>
-        <td>
-            <label for="age">Auton pitoaika:</label>
-            <select id="age">
-                <!-- Auton iät täytetään myöhemmin JavaScriptillä -->
-            </select>
-        </td>
-        <td>
-            <label for="kilometers">Vuosittainen ajokilometrimäärä:</label>
-            <input type="number" id="kilometers" placeholder="km per vuosi">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label id="priceLabel" for="price">Auton hankintahinta:</label>
-            <br>
-            <div style="display: flex; align-items: center;">
-                <input type="number" id="price" placeholder="Hankintahinta €">
-                <div style="margin-right: 20px;">
-                    <input type="checkbox" id="used" name="carCondition" value="used">
-                    <label for="used">käytetty</label>
-                </div>
-                <div id="modelYearRow" style="display: none;">
-                    <label for="modelYear">Vuosimalli:</label>
-                    <input type="number" id="modelYear" placeholder="Vuosimalli">
-                </div>
-            </div>
-        </td>
-        <td>
-            <button class="accordion active">Kulutustiedot</button>
-            <div class="accordion-content" style="display: block;">
-                <div style="margin-top: 10px; margin-left: 10px;" class="grid-item fuel-inputs" id="fuelConsumption">
-                    <label for="fuelConsumption">Polttoaine (l/100km):</label>
-                    <input type="number" step="0.1" id="fuelPer100Km" placeholder="Polttoaineen kulutus (l/100 km)">
-                </div>
-                <div style="margin-left: 10px;" class="grid-item fuel-inputs" id="electricConsumption">
-                    <label for="electricConsumption">Sähkö (kWh/100km):</label>
-                    <input type="number" step="0.1" id="electricPer100Km" placeholder="Sähkön kulutus (kWh/100 km)">
-                </div>
-                <div class="grid-item fuel-inputs" id="gasConsumption">
-                    <label for="gasConsumption">Kaasu (kg/100km):</label>
-                    <input type="number" step="0.1" id="gasPer100Km" placeholder="Kaasun kulutus (kg/100 km)">
-                </div>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <button class="accordion">Vakuutukset ja verot</button>
-            <div class="accordion-content">
-                <div style="margin-top: 10px; margin-left: 10px;">
-                    <label for="insurance">Vuosittainen vakuutusmaksu:</label>
-                    <input type="number" id="insurance" placeholder="Vakuutusmaksu €">
-
-                    <label for="tax">Vuosittainen ajoneuvovero:</label>
-                    <input type="number" id="tax" placeholder="Ajoneuvovero + mahdollinen käyttövoimavero €">
-                </div>
-            </div>
-        </td>
-        <td>
-            <button class="accordion">Muut kulut</button>
-            <div class="accordion-content">
-                <div style="margin-top: 10px; margin-left: 10px;">
-                    <label for="maintenance">Vuosittaiset huolto- ja korjauskustannukset</label>
-                    <input type="number" id="maintenance" placeholder="Vuosihuolto keskimäärin per vuosi €">
-                    <label for="tires">Rengaskulut</label>
-                    <input type="number" id="tires" placeholder="Rengaskulut vuositasolla €">
-                    <label for="otherCosts">Muut kulut yhteensä</label>
-                    <input type="number" id="otherCosts" placeholder="Esimerkiksi pesut €">
-                </div>
-            </div>
-        </td>
-    </tr>
-</table>
-
-
-	<div>
-		<button id="calculateButton" onclick="calculate()">Laske</button>
-		<button id="addToCompareButton">Lisää vertailuun</button>
-		<button id="clearButton" onclick="clearSavedResults()">Tyhjennä</button> <!-- New Clear button -->
+	 <!-- Title and description with click-to-reset functionality -->
+	<div id="pageReset">
+		<h2 class="domain">Autollehinta.fi</h2><h2 class="inline-h2"> - Kannattaako vaihtaa uudempaan?</h2>
 	</div>
 	
+			<div id="showNewVsOld" style="display: none;">
+			<table class="form-table">
+				<tr>
+					<td>
+						<label for="brand">Automerkki:</label>
+						<select id="brand">
+							<!-- Automerkit täytetään JavaScriptillä -->
+						</select>
+					</td>
+					<td>
+						<label for="fuelType">Käyttövoima:</label>
+						<select id="fuelType" onchange="updateBrandOptions(); toggleFuelInputs();">
+							<option value="bensiini">Bensiini</option>
+							<option value="bensiini">Hybridi, bensiini</option>
+							<option value="bensiini">Lataushybridi, bensiini</option>
+							<option value="diesel">Diesel</option>
+							<option value="kaasu">Kaasu</option>
+							<option value="saahko">Sähkö</option>
+						</select>
+					</td>
+					<!-- <td rowspan="4" style="border-left: 1px solid #ccc;">  <!-- New cell with rowspan -->
+								  <!-- <button class="accordion">Katso nettiautosta</button> -->
+						<!-- <div class="accordion-content"> -->
+							<!-- <div style="position: relative; width: 100%; padding-bottom: 200%; height: 0; overflow: hidden;"> -->
+								<!-- <iframe  -->
+									<!-- src="https://www.nettiauto.com/audi/a8"  -->
+									<!-- style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"  -->
+									<!-- title="Audi A8" -->
+									<!-- sandbox="allow-same-origin allow-scripts"> -->
+								<!-- </iframe> -->
+							<!-- </div> -->
+						<!-- </div> -->
+						
+					<!-- </td> -->
+				</tr>
+				<tr>
+					<td>
+						<label for="age">Auton pitoaika:</label>
+						<select id="age">
+							<!-- Auton iät täytetään myöhemmin JavaScriptillä -->
+						</select>
+					</td>
+					<td>
+						<label for="kilometers">Vuosittainen ajokilometrimäärä:</label>
+						<input type="number" id="kilometers" placeholder="km per vuosi">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="priceLabel" for="price">Auton hankintahinta:</label>
+						<br>
+						<div style="display: flex; align-items: center;">
+							<input type="number" id="price" placeholder="Hankintahinta €">
+							<div style="margin-right: 20px;">
+								<input type="checkbox" id="used" name="carCondition" value="used">
+								<label for="used">käytetty</label>
+							</div>
+							<div id="modelYearRow" style="display: none;">
+								<label for="modelYear">Vuosimalli:</label>
+								<input type="number" id="modelYear" placeholder="Vuosimalli">
+							</div>
+						</div>
+					</td>
+					<td>
+						<button class="accordion active">Kulutustiedot</button>
+						<div class="accordion-content" style="max-height: 500px; overflow: hidden;">
+							<div style="margin-top: 10px; margin-left: 10px;" class="grid-item fuel-inputs" id="fuelConsumption">
+								<label for="fuelConsumption">Polttoaine (l/100km):</label>
+								<input type="number" step="0.1" id="fuelPer100Km" placeholder="Polttoaineen kulutus (l/100 km)">
+							</div>
+							<div style="margin-left: 10px;" class="grid-item fuel-inputs" id="electricConsumption">
+								<label for="electricConsumption">Sähkö (kWh/100km):</label>
+								<input type="number" step="0.1" id="electricPer100Km" placeholder="Sähkön kulutus (kWh/100 km)">
+							</div>
+							<div class="grid-item fuel-inputs" id="gasConsumption">
+								<label for="gasConsumption">Kaasu (kg/100km):</label>
+								<input type="number" step="0.1" id="gasPer100Km" placeholder="Kaasun kulutus (kg/100 km)">
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button class="accordion">Vakuutukset ja verot</button>
+						<div class="accordion-content">
+							<div style="margin-top: 10px; margin-left: 10px;">
+								<label for="insurance">Vuosittainen vakuutusmaksu:</label>
+								<input type="number" id="insurance" placeholder="Vakuutusmaksu €">
 
-    <!-- Result section -->
-    <div class="result" id="result">Valitse tiedot ja paina nappia nähdäksesi tulokset.</div>
+								<label for="tax">Vuosittainen ajoneuvovero:</label>
+								<input type="number" id="tax" placeholder="Ajoneuvovero + mahdollinen käyttövoimavero €">
+							</div>
+						</div>
+					</td>
+					<td>
+						<button class="accordion">Muut kulut</button>
+						<div class="accordion-content">
+							<div style="margin-top: 10px; margin-left: 10px;">
+								<label for="maintenance">Vuosittaiset huolto- ja korjauskustannukset</label>
+								<input type="number" id="maintenance" placeholder="Vuosihuolto keskimäärin per vuosi €">
+								<label for="tires">Rengaskulut</label>
+								<input type="number" id="tires" placeholder="Rengaskulut vuositasolla €">
+								<label for="otherCosts">Muut kulut yhteensä</label>
+								<input type="number" id="otherCosts" placeholder="Esimerkiksi pesut €">
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+
+		<div>
+			<button id="calculateButton" onclick="calculate()">Laske</button>
+			<button id="addToCompareButton">Lisää vertailuun</button>
+			<button id="clearButton" onclick="clearSavedResults()">Tyhjennä</button> <!-- New Clear button -->
+		</div>
+		
+
+		<!-- Result section -->
+		<div class="result" id="result">Valitse tiedot ja paina nappia nähdäksesi tulokset.</div>
+		
+
+		<!-- New section for displaying saved results -->
+		<div class="saved-results" id="savedResults"></div> 
+		</div>
+
+	<div id="introContainer">
+		<ul>
+		<p>Oletko miettinyt, pitäisikö sinun päivittää autosi uudempaan vai jatkaa nykyisellä menopelillä?<br><br>  
+		Tämä on kysymys, jonka moni autoilija kohtaa jossain vaiheessa. Uudemman auton hankinta voi tuntua houkuttelevalta, mutta entä kustannukset?<br><br>  
+		Onko uudempi auto aina kalliimpi vai voiko se tuoda säästöjä pitkällä aikavälillä?<br><br> 
+		Näiden kysymysten selvittämiseksi olemme luoneet työkalun, jolla voit helposti vertailla molempia vaihtoehtoja.</p></ul>
+
+		<!-- Main Button -->
+		<button id="mainButton" class="expand-button">Vertaa tästä</button>
+	</div>
+
+
+    <!-- Additional buttons will go here -->
+
+    </div>
 	
 
-    <!-- New section for displaying saved results -->
-    <div class="saved-results" id="savedResults"></div> 
+
+
+
+
+
 </div>
 
 

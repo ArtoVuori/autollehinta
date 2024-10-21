@@ -14,12 +14,13 @@ body {
 .container {
     max-width: 800px;
     margin: auto;
-    background-color: #1b2631;
+    background-color: rgba(27, 38, 49, 0.7); /* Muuttaa taustan läpinäkyväksi */
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #fff;
 }
+
 
 /* Table Styles */
 .form-table {
@@ -232,6 +233,8 @@ button#calculateButton:hover {
 }
 
 
+
+
 button#clearButton {
     background: #d96fc5 !important;
     color: white !important;
@@ -304,11 +307,18 @@ button#clearButton:hover {
     border-radius: 4px;
 }
 
-/* Kun sisällön pitää olla näkyvissä */
-.accordion-content.show,  {
-    max-height: 500px; /* Riittävän suuri, jotta sisältö mahtuu */
+/* Kun accordion on aktiivinen ja näytetään sisältö */
+.accordion-content.show {
+    max-height: 500px; /* Riittävän suuri sisältöä varten */
     transition: max-height 0.5s ease-in;
 }
+
+/* Varmista, että "Kulutustiedot" on oletuksena auki */
+.accordion.active + .accordion-content {
+    display: block;
+    max-height: 500px;
+}
+
 
 /* Sama tyyli domain-otsikolle */
 h2.domain {
@@ -331,3 +341,39 @@ h2.inline-h2 {
     font-weight: normal; /* Voit säätää painotusta halutessasi */
     color: #fff; /* Tekstin väri */
 }
+
+/* Styling for buttons */
+.expand-button {
+    background: #c9b040;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.expand-button:hover {
+    background: #b39926;
+    transform: scale(1.02);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth transition for the form display */
+#formContainer {
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+}
+
+#formContainer.show {
+    opacity: 1;
+}
+
+/* Add more space below the main button */
+#mainButton {
+    margin-bottom: 20px;
+}
+
