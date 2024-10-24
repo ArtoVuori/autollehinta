@@ -354,6 +354,8 @@ h2.inline-h2 {
     font-size: 16px;
     font-weight: bold;
     margin-top: 10px;
+	text-decoration: none; /* Poistaa alleviivauksen vain .expand-button-luokasta */
+	
 }
 
 .expand-button:hover {
@@ -375,5 +377,20 @@ h2.inline-h2 {
 /* Add more space below the main button */
 #mainButton {
     margin-bottom: 20px;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: rgba(27, 38, 49, 0.7); /* Sama tausta kuin containerissa */
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Koko sivun leveys */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sama varjo kuin containerissa */
+    border-radius: 5px 5px 0 0; /* Pyöristetyt kulmat yläosaan */
+    z-index: 100; /* Varmistaa, että footer näkyy kaiken muun päällä */
 }
 
