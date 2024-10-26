@@ -1,0 +1,1 @@
+start cmd /k "cd /d C:\Users\rdjam\OneDrive\Sovellukset\Autokuluvertailu_APP && python -m http.server"

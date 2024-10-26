@@ -1,0 +1,59 @@
+Palvelupolku
+
+Alkuruudussa:
+- Kannattaako vaihtaa uudempaan -nappula
+- Kannattaako vaihtaa yksityisleasingiin?
+
+Releasea varten:
+
+
+Tehtävää
++ Info/tipit eri kenttiin (toast tms.)
++ Tallenna kyselyt ja niiden vastaukset tilastoon
++ Vertaa + tekstin ei tarvitse feidata hitaasti pois
+
++ Validoinnit, jos jokin oleellinen tieto puuttuu
++ Käytetyllä ajettujen kilometrien määrän laskeminen
+
++ Artikkeleja
+
+Nice-to-have
+
+Nettiauto
++ Mahdollisuus lisätä nettiautosta linkki, josta lasketaan kustannukset + tai iframe
++ Palautus nettiautosta, paljon autojen pyynnit ovat?
+
+
+
+Mallikohtaiset pyynnit - Esim. iframe
+https://www.nettiauto.com/tesla/model-y
+
+
+Tarkemmat arvonalenemat
+https://caredge.com/tesla/depreciation
+
+
+
+
+Tehty
++ Vertailukortin skaalaus & asettelu mobiilissa jos ruutu pystyssä
++ Piilota nappuloita accordionin taakse
++ Huoltokustannukset lisättävä (nappula lisätty, logiikka ei)
++ Renkaat lisättävä (nappula lisätty, logiikka ei)
++ Pesut (nappula lisätty, logiikka ei)
++ Lisää Cupra
+
+Gittiin notet:
+- Kortteihin lisätty ruksit, joilla niitä voi poistaa
+
+Vertailukortteihin dynaamiset nettiautourlit:
+
+				<td>
+					<iframe 
+						src="https://www.nettiauto.com/audi/a8" 
+						width="300" 
+						height="600" 
+						style="border:none;" 
+						title="Audi A8">
+					</iframe>
+				</td>

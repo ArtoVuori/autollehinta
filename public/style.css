@@ -1,0 +1,396 @@
+/* Body Styles */
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: rgba(27, 38, 49, 0.7); /* Muuttaa taustan läpinäkyväksi */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    color: #fff;
+}
+
+
+/* Table Styles */
+.form-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 0px solid white; /* Lisää 2px valkoinen reunus */
+    table-layout: fixed; /* Varmistaa, että sarakkeet ovat yhtä leveitä */
+}
+
+.form-table td {
+    padding: 10px;
+    vertical-align: top;
+    color: #fff;
+    border: 0px solid white; /* Lisää 2px valkoinen reunus */
+}
+
+/* Form Field Styles */
+select, input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #000;
+    background-color: #fff;
+    font-family: 'Josefin Sans', sans-serif;
+    box-sizing: border-box;
+}
+
+/* Result Section */
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #fff;
+}
+
+/* Saved Results Styles */
+/* Container Flexbox Setup */
+.saved-results {
+    display: flex;
+    flex-wrap: wrap; /* Kortit ryhmittyvät useammalle riville tarvittaessa */
+    gap: 10px; /* Lisää pieni väli korttien välille */
+    transition: all 0.5s ease; /* Transition, joka tekee uudelleenjärjestäytymisen sulavaksi */
+}
+
+
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Fade-out animation */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+/* Korttien siirtymät ja ilmestyminen */
+.result-card {
+    background-color: #fff;
+    color: #000;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: calc(33% - 10px);
+    box-sizing: border-box;
+    position: relative;
+    opacity: 0; /* Aluksi kortti on näkymätön */
+    transform: scale(0.9); /* Aluksi hieman pienennettynä */
+    animation: fadeIn 0.5s ease-in-out forwards; /* Kortti ilmestyy pehmeästi */
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Siirtymät */
+}
+
+
+
+/* Kun kortti poistetaan */
+.result-card.removing {
+    animation: fadeOut 0.5s ease-in-out;
+    opacity: 0; /* Kortti häipyy */
+    transform: scale(0.9); /* Kortti pienenee häipymisen aikana */
+}
+
+.result-card .card-content {
+    font-size: 14px;
+    padding-right: 1px; /* Varmistaa, että sisältö ei mene poistoruksin päälle */
+}
+
+/* Poistoruksin tyyli */
+.result-card .remove-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 32px; /* Suurempi fonttikoko */
+    color: #ff5733;
+    /* font-weight: bold; */
+}
+
+.result-card .remove-button:hover {
+    color: #b83131;
+}
+
+
+/* Mobile Responsive Layout */
+@media screen and (max-width: 768px) {
+    .form-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .button-container {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* Make the saved results container full width */
+    .saved-results {
+        flex-direction: column; /* Stack cards vertically */
+    }
+
+    /* Make the result cards take full width */
+    .result-card {
+        width: 100%; /* Full width in mobile */
+        margin-bottom: 10px; /* Add space between cards */
+    }
+}
+
+
+/* Button Styles */
+/* Button Container (Flexbox) */
+.button-container {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    flex-wrap: nowrap; /* Prevent wrapping */
+    justify-content: flex-start; /* Align buttons to the left */
+    align-items: center; /* Vertically center buttons */
+}
+
+/* General Button Styles */
+button {
+    background: #c9b040;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: inherit; /* Inherit font from parent (body) */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    text-align: center;
+    white-space: nowrap; /* Prevents text from wrapping within buttons */
+}
+
+/* Hover and focus effects */
+button:hover, 
+button:focus {
+    background: #b39926;
+    transform: scale(1.02); /* Slightly increase size on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
+    outline: none; /* Removes the outline */
+}
+
+/* Calculate Button Specific Styles */
+button#calculateButton {
+    flex-grow: 1; /* Allow the calculate button to take up the remaining space */
+}
+
+button#calculateButton:hover {
+    background: #45a049;
+}
+
+/* Clear Button Specific Styles */
+
+button#calculateButton {
+    background: #81b463 !important;
+    color: white !important;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button#calculateButton:hover {
+    background: #6e9457 !important;
+    transform: scale(1.02);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+
+
+button#clearButton {
+    background: #d96fc5 !important;
+    color: white !important;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	display: none;
+}
+
+button#clearButton:hover {
+    background: #d95fc2 !important;
+    transform: scale(1.02);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Add to Compare Button */
+#addToCompareButton {
+    background: #5f74d9;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    width: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	display: none;
+}
+
+#addToCompareButton:hover {
+    background: #475ed1;
+    transform: scale(1.02);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Tyylit otsikon painikkeelle */
+.accordion {
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.accordion:hover {
+    background-color: #b39926;
+}
+
+.accordion.active::after {
+    content: "▲"; /* Vaihda nuolen suunta ylös */
+}
+
+.accordion::after {
+    content: "▼"; /* Nuolen suunta alas */
+    float: right;
+    margin-left: 10px;
+}
+
+/* Piilotetun sisällön tyylit, käytetään max-height smoothiin avautumiseen */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    padding: 0 18px;
+    margin-top: 5px;
+    border-radius: 4px;
+}
+
+/* Kun accordion on aktiivinen ja näytetään sisältö */
+.accordion-content.show {
+    max-height: 500px; /* Riittävän suuri sisältöä varten */
+    transition: max-height 0.5s ease-in;
+}
+
+/* Varmista, että "Kulutustiedot" on oletuksena auki */
+.accordion.active + .accordion-content {
+    display: block;
+    max-height: 500px;
+}
+
+
+/* Sama tyyli domain-otsikolle */
+h2.domain {
+    background: #c9b040;
+    color: white;
+    border-radius: 4px;
+    padding: 10px 20px;
+    display: inline-block; /* Jotta se pysyy samalla rivillä */
+    font-size: 24px; /* Voit säätää otsikon kokoa */
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Inline-h2-tyyli, jotta se tulee samalle riville */
+h2.inline-h2 {
+    display: inline-block; /* Pitää elementin samalla rivillä */
+    font-size: 24px; /* Sama fonttikoko kuin domain-otsikossa */
+    margin-left: 10px; /* Pieni väli ensimmäisen osan jälkeen */
+    font-weight: normal; /* Voit säätää painotusta halutessasi */
+    color: #fff; /* Tekstin väri */
+}
+
+/* Styling for buttons */
+.expand-button {
+    background: #c9b040;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+	text-decoration: none; /* Poistaa alleviivauksen vain .expand-button-luokasta */
+	
+}
+
+.expand-button:hover {
+    background: #b39926;
+    transform: scale(1.02);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth transition for the form display */
+#formContainer {
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+}
+
+#formContainer.show {
+    opacity: 1;
+}
+
+/* Add more space below the main button */
+#mainButton {
+    margin-bottom: 20px;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: rgba(27, 38, 49, 0.7); /* Sama tausta kuin containerissa */
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Koko sivun leveys */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sama varjo kuin containerissa */
+    border-radius: 5px 5px 0 0; /* Pyöristetyt kulmat yläosaan */
+    z-index: 100; /* Varmistaa, että footer näkyy kaiken muun päällä */
+}
+
