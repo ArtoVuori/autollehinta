@@ -1,14 +1,17 @@
 {
   "name": "autokuluvertailu_app",
   "version": "1.0.0",
-  "description": "A tool to calculate car depreciation and fuel costs",
-  "main": "app.js",
+  "main": "javascript.js",
   "scripts": {
-    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.21.1"
   },
-  "author": "Your Name",
-  "license": "ISC"
+  "devDependencies": {},
+  "description": ""
 }
