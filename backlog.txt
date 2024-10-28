@@ -1,13 +1,15 @@
 Palvelupolku
 
 Alkuruudussa:
-- Kannattaako vaihtaa uudempaan -nappula
 - Kannattaako vaihtaa yksityisleasingiin?
 
 Releasea varten:
 
 
 Tehtävää
++ Kun painaa laskelmaa, niin pääotsikoidan tausta voisi olla keltainen, jotta ne erottuu paremmin
+
+
 + Info/tipit eri kenttiin (toast tms.)
 + Tallenna kyselyt ja niiden vastaukset tilastoon
 + Vertaa + tekstin ei tarvitse feidata hitaasti pois
@@ -36,6 +38,8 @@ https://caredge.com/tesla/depreciation
 
 
 Tehty
++
+- Kannattaako vaihtaa uudempaan -nappula
 + Vertailukortin skaalaus & asettelu mobiilissa jos ruutu pystyssä
 + Piilota nappuloita accordionin taakse
 + Huoltokustannukset lisättävä (nappula lisätty, logiikka ei)

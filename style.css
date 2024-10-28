@@ -394,3 +394,31 @@ h2.inline-h2 {
     z-index: 100; /* Varmistaa, että footer näkyy kaiken muun päällä */
 }
 
+/* Blog Container Styles */
+.blog-container {
+    max-width: 800px; /* Max width to match other containers */
+    margin: auto; /* Center the container */
+    background-color:  rgba(255, 255, 255, 0.90); /* White transparent background */
+    color: #000; /* Black text for readability */
+    padding: 20px; /* Padding inside the container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition for background changes */
+}
+
+h2.blog {
+    display: inline-block; /* Pitää elementin samalla rivillä */
+    font-size: 24px; /* Sama fonttikoko kuin domain-otsikossa */
+    margin-left: 10px; /* Pieni väli ensimmäisen osan jälkeen */
+    font-weight: normal; /* Voit säätää painotusta halutessasi */
+    color: #000; /* Tekstin väri */
+}
+
+
+/* Optional: Media Query for Responsiveness */
+@media screen and (max-width: 768px) {
+    .blog-container {
+        padding: 15px; /* Adjust padding for smaller screens */
+        max-width: 100%; /* Allow full width on mobile */
+    }
+}
