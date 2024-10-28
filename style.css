@@ -394,6 +394,30 @@ h2.inline-h2 {
     z-index: 100; /* Varmistaa, että footer näkyy kaiken muun päällä */
 }
 
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+/* Separator styling */
+.separator {
+    color: #fff;
+    display: inline; /* Default */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .footer-links a {
+        display: block; /* Stack links */
+        margin: 10px 0; /* Spacing for readability */
+    }
+    .separator {
+        display: none; /* Hide separators on mobile */
+    }
+}
+
 /* Blog Container Styles */
 .blog-container {
     max-width: 800px; /* Max width to match other containers */
@@ -422,3 +446,38 @@ h2.blog {
         max-width: 100%; /* Allow full width on mobile */
     }
 }
+
+.table-terms {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-terms th, 
+.table-terms td {
+    text-align: left; /* Asettaa tekstin vasempaan reunaan */
+    padding: 15px;   /* Lisää väliä solujen välillä */
+    border: 1px solid #ddd; /* Lisää raja soluille */
+    color: black; /* Tekstin väri mustaksi */
+}
+
+.table-terms th {
+    background-color: #f2f2f2; /* Taustaväri otsikoille */
+}
+
+.table-terms tr:nth-child(even) {
+    background-color: #f9f9f9; /* Vaihteleva taustaväri riveille */
+}
+
+.table-terms tr:nth-child(odd) {
+    background-color: #e0e0e0; /* Vaihteleva taustaväri riveille */
+}
+
+.terms-container {
+    max-width: 800px; /* Max width to match other containers */
+    margin: auto; /* Center the container */
+    background-color:  rgba(27, 38, 49, 0.7); /* White transparent background */
+    color: #fff; /* Black text for readability */
+    padding: 20px; /* Padding inside the container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition for background changes */
