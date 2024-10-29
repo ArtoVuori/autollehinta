@@ -654,3 +654,7 @@ async function logAddToCompare() {
     }
 }
 
+document.getElementById('mainButton').addEventListener('click', function() {
+    const footer = document.querySelector('.footer');
+    footer.classList.add('hidden-footer');
+});

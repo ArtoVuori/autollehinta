@@ -379,20 +379,30 @@ h2.inline-h2 {
     margin-bottom: 20px;
 }
 
-/* Footer Styles */
+/* Footer fixed at the bottom by default */
 .footer {
-    background-color: rgba(27, 38, 49, 0.7); /* Sama tausta kuin containerissa */
+    background-color: rgba(27, 38, 49, 0.7);
     color: #fff;
     text-align: center;
     padding: 10px;
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%; /* Koko sivun leveys */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sama varjo kuin containerissa */
-    border-radius: 5px 5px 0 0; /* Pyöristetyt kulmat yläosaan */
-    z-index: 100; /* Varmistaa, että footer näkyy kaiken muun päällä */
+    width: 100%; /* Full-width by default */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px 5px 0 0;
+    z-index: 100;
+    transition: all 0.3s ease; /* Smooth transition */
 }
+
+/* Hide footer */
+.hidden-footer {
+    display: none;
+}
+
+
+
+
 
 .footer-links a {
     color: #fff;
