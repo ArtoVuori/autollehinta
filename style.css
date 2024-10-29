@@ -395,11 +395,12 @@ h2.inline-h2 {
     transition: all 0.3s ease; /* Smooth transition */
 }
 
-/* Hide footer */
-.hidden-footer {
-    display: none;
+/* Hide footer only when the width is 770px or less */
+@media (max-width: 770px) {
+    .hidden-footer {
+        display: none;
+    }
 }
-
 
 
 
