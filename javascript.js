@@ -12,6 +12,7 @@ let globalTotalCosts = 0;
 let globalTotalIncludingCosts = 0;
 
 
+
 // Ladataan CSV-tiedostot ja käsitellään ne
 async function loadCSV(filePath) {
     console.log(`Ladataan CSV-tiedostoa: ${filePath}`);
@@ -252,42 +253,15 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
-
-
-
-// Näytetään tai piilotetaan mallivuosikenttä valintaruudun perusteella
-function toggleModelYear() {
-    console.log('Tarkistetaan käytetty auto -valinta.');
-    const usedCheckbox = document.getElementById('used');
-    const modelYearRow = document.getElementById('modelYearRow');
-    const priceLabel = document.getElementById('priceLabel');
-
-    if (!priceLabel) {
-        console.error('priceLabel-elementtiä ei löytynyt!');
-        return; // Lopeta suoritus, jos elementtiä ei ole löydetty
-    }
-
-    // Näytetään tai piilotetaan mallivuosikenttä
-    modelYearRow.style.display = usedCheckbox.checked ? 'block' : 'none';
-
-    // Muutetaan otsikko "Auton hankintahinta" tarpeen mukaan
-    if (usedCheckbox.checked) {
-        priceLabel.textContent = "Auton hankintahinta (käytettynä):";
-    } else {
-        priceLabel.textContent = "Auton hankintahinta:";
-    }
-}
-
 // Lasketaan auton arvonalenema ja kustannukset
 async function calculate() {
     console.log('Aloitetaan laskenta.');
-    
-    // Retrieve input values
+
+    // Hae syötearvot
     const fuelType = document.getElementById('fuelType').value;
     const selectedBrand = document.getElementById('brand').value;
     const selectedAge = parseInt(document.getElementById('age').value);
-    const price = parseFloat(document.getElementById('price').value);
-    const isUsed = document.getElementById('used').checked;
+    const price = parseFloat(document.getElementById(isUsed ? 'priceUsed' : 'price').value);
     const modelYear = isUsed ? parseInt(document.getElementById('modelYear').value) : new Date().getFullYear();
     const kilometers = parseFloat(document.getElementById('kilometers').value) || 0;
     const annualInsuranceCost = parseFloat(document.getElementById('insurance').value) || 0;
@@ -296,12 +270,12 @@ async function calculate() {
     const tires = parseFloat(document.getElementById('tires').value) || 0;
     const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
 
-    // Initialize the car details for display
-    carDetails = `${selectedBrand} (${fuelType}) <br>${modelYear}`;
-    if (isUsed) carDetails += ` (käytetty)`;
-    document.getElementById('addToCompareButton').style.display = 'inline-block';
+    // Lokita syötteet
+    console.log(`isUsed: ${isUsed}, price: ${price}, modelYear: ${modelYear}`);
+	
+	document.getElementById('addToCompareButton').style.display = 'inline-block';
 
-    // Validate essential inputs
+    // Tarkista pakolliset tiedot
     if (!selectedBrand || isNaN(price) || isNaN(selectedAge) || (isUsed && isNaN(modelYear))) {
         document.getElementById('result').innerHTML = 'Syötä kaikki tiedot ja arvot.';
         console.warn('Tietoja puuttuu.');
@@ -313,7 +287,7 @@ async function calculate() {
     let depreciation = 0;
     let futureValue = 0;
 
-    // Calculate depreciation based on age
+    // Laske arvonalenema
     if (devaluationData[selectedBrand]) {
         const depreciationArray = devaluationData[selectedBrand];
         let depreciationFactorCurrentAge = calculateDepreciation(currentAge, depreciationArray);
@@ -495,14 +469,14 @@ window.onload = async function() {
     await loadFuelData();
     updateBrandOptions();
     toggleFuelInputs(); // Piilotetaan lisäkentät aluksi
-    toggleModelYear(); // Tarkistetaan käytetyn auton valinta vasta DOM:n latauksen jälkeen
+    // toggleModelYear(); // Tarkistetaan käytetyn auton valinta vasta DOM:n latauksen jälkeen
     setRandomBackground(); // Invoke the background function
 };
 
 
 
 // Lisätään tapahtumakuuntelijat valintaruutuihin
-document.getElementById('used').addEventListener('change', toggleModelYear);
+/* document.getElementById('used').addEventListener('change', toggleModelYear);document.getElementById('used').addEventListener('change', toggleModelYear); */
 
 
 /* const iframe = document.getElementById('myIframe'); // Replace with your iframe's ID
@@ -658,3 +632,23 @@ document.getElementById('mainButton').addEventListener('click', function() {
     const footer = document.querySelector('.footer');
     footer.classList.add('hidden-footer');
 });
+
+let isUsed = false; // Oletusarvoisesti uusi auto
+
+function switchTab(tab) {
+    // Poistetaan aktiivinen luokka kaikista tabeista
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tabElement => tabElement.classList.remove('active'));
+
+    // Piilotetaan kaikki tabin sisältöalueet
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => content.style.display = 'none');
+
+    // Asetetaan valittu tab aktiiviseksi ja näytetään sen sisältö
+    document.getElementById(`tab-${tab}`).classList.add('active');
+    document.getElementById(`${tab}Content`).style.display = 'block';
+
+    // Päivitetään isUsed-arvo tabin perusteella
+    isUsed = (tab === 'used');
+    console.log(`isUsed päivitetty: ${isUsed}`);
+}

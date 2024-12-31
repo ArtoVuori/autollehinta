@@ -22,6 +22,8 @@ body {
 }
 
 
+
+
 /* Table Styles */
 .form-table {
     width: 100%;
@@ -108,8 +110,6 @@ select, input {
     animation: fadeIn 0.5s ease-in-out forwards; /* Kortti ilmestyy pehmeästi */
     transition: transform 0.5s ease, opacity 0.5s ease; /* Siirtymät */
 }
-
-
 
 /* Kun kortti poistetaan */
 .result-card.removing {
@@ -232,9 +232,6 @@ button#calculateButton:hover {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-
-
-
 button#clearButton {
     background: #d96fc5 !important;
     color: white !important;
@@ -267,6 +264,71 @@ button#clearButton:hover {
     background: #475ed1;
     transform: scale(1.02);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Tabs container */
+.tabs {
+    display: flex;
+    position: relative; /* For glider positioning */
+    margin-bottom: 10px;
+    border-bottom: 4px rgba(27, 38, 49, 0.7); /* Muuttaa taustan läpinäkyväksi */
+    width: 100%; /* Full width for tabs */
+    overflow: hidden; /* Prevent overflow during resizing */
+}
+
+/* Individual tabs */
+.tab {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    border-top-left-radius: 4px; /* Rounded top left */
+    border-top-right-radius: 4px; /* Rounded top right */
+    cursor: pointer;
+    background-color: #fff; /* Default background */
+    color: #000;
+    outline: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, flex-grow 0.3s ease;
+    flex: 1; /* Default width for equal spacing */
+	
+}
+
+.tab.active {
+    background-color: #c9b040; /* Active tab background */ 
+    color: #fff; /* Active tab text color */
+    z-index: 2; /* Ensure it stays above the glider */
+    flex-grow: 1.5; /* Highlight active tab by growing it */
+	
+}
+
+/* Glider for transition effect */
+.glider {
+    position: absolute;
+    height: 54px;
+    width: 0; /* Default width, adjusted dynamically */
+    background-color: var(--secondary-color);
+    border-radius: 99px; /* Pill effect */
+    z-index: 1;
+    transition: transform 0.25s ease-out, width 0.25s ease-out;
+}
+
+/* Radio button behavior */
+input[type="radio"] {
+    display: none; /* Hide radio buttons */
+}
+
+input[id="tab-1"]:checked ~ .glider {
+    transform: translateX(0); /* First tab position */
+}
+
+input[id="tab-2"]:checked ~ .glider {
+    transform: translateX(100%); /* Second tab position */
+}
+
+.tab-content.active {
+    display: block;
 }
 
 
@@ -401,9 +463,6 @@ h2.inline-h2 {
         display: none;
     }
 }
-
-
-
 
 .footer-links a {
     color: #fff;

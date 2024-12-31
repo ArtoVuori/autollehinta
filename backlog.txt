@@ -7,6 +7,8 @@ Releasea varten:
 
 
 Tehtävää
++ Käytetylle lähtökilometrit vaikuttamaan arvon määrittelyyn. Esim. 100, 200 ja 300tkm x arvonalenamakerroin
++ Käytetty-nappula paremmin näkyviin. Ekaksi tai joku liukuvalikko tai slider
 + Kun painaa laskelmaa, niin pääotsikoidan tausta voisi olla keltainen, jotta ne erottuu paremmin
 
 
