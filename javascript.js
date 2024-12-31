@@ -341,21 +341,22 @@ console.log("globalTotalIncludingCosts set to:", globalTotalIncludingCosts); // 
     const monthlyCostWithoutDepreciation = (totalCostWithoutDepreciation / totalMonths).toFixed(2);
 
     // Display the result in HTML
-    document.getElementById('result').innerHTML = `
-        <p>Auton arvo ${combinedAge} vuoden jälkeen on ${futureValue.toFixed(2)} €</p>
-        <ul style="font-size: smaller;">
-            <li>Arvon alenema seuraavan ${selectedAge} vuoden aikana on ${depreciation} €.</li>
-            ${annualFuelCost > 0 ? `<li>Vuosittaiset polttoainekustannukset ovat ${annualFuelCost.toFixed(2)} €.</li>` : ''}
-            ${annualInsuranceCost > 0 ? `<li>Vuosittaiset vakuutuskustannukset ovat ${annualInsuranceCost} €.</li>` : ''}
-            ${annualTaxCost > 0 ? `<li>Vuosittaiset verokustannukset ovat ${annualTaxCost} €.</li>` : ''}
-        </ul>
-        <p>Kokonaiskustannukset ${selectedAge} vuodelta ${globalTotalIncludingCosts} €.</p>
-        <ul style="font-size: smaller;">
-            <li>Kuukausikustannukset ${monthlyCost} €.</li>
-            <li>Arvon alenema kuukaudessa ${(monthlyCost - monthlyCostWithoutDepreciation).toFixed(2)} €.</li>
-            <li>Kuukausikustannukset ilman arvonalenemaa ${monthlyCostWithoutDepreciation} €.</li>
-        </ul>
-    `;
+	document.getElementById('result').innerHTML = `
+		<p class="result-paragraph">Auton arvo ${combinedAge} vuoden jälkeen on ${futureValue.toFixed(0)} €</p>
+		<ul style="font-size: smaller;">
+			<li>Arvon alenema seuraavan ${selectedAge} vuoden aikana on ${depreciation} €.</li>
+			${annualFuelCost > 0 ? `<li>Vuosittaiset polttoainekustannukset ovat ${annualFuelCost.toFixed(2)} €.</li>` : ''}
+			${annualInsuranceCost > 0 ? `<li>Vuosittaiset vakuutuskustannukset ovat ${annualInsuranceCost} €.</li>` : ''}
+			${annualTaxCost > 0 ? `<li>Vuosittaiset verokustannukset ovat ${annualTaxCost} €.</li>` : ''}
+		</ul>
+		<p class="result-paragraph">Kokonaiskustannukset ${selectedAge} vuodelta ${globalTotalIncludingCosts} €.</p>
+		<ul style="font-size: smaller;">
+			<li>Kuukausikustannukset ${monthlyCost} €.</li>
+			<li>Arvon alenema kuukaudessa ${(monthlyCost - monthlyCostWithoutDepreciation).toFixed(2)} €.</li>
+			<li>Kuukausikustannukset ilman arvonalenemaa ${monthlyCostWithoutDepreciation} €.</li>
+		</ul>
+	`;
+
 
     // Prepare content for comparison card
     comparisonContent = `

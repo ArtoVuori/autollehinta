@@ -21,6 +21,11 @@ body {
     color: #fff;
 }
 
+.result-paragraph {
+    background-color: #1b4965;
+    padding: 5px;
+    border-radius: 4px; /* Pyöristetyt reunat */
+}
 
 
 
