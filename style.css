@@ -181,7 +181,7 @@ select, input {
 
 /* General Button Styles */
 button {
-    background: #c9b040;
+    background: #D3AC37;
     color: white;
     cursor: pointer;
     border: none;
@@ -199,7 +199,7 @@ button {
 /* Hover and focus effects */
 button:hover, 
 button:focus {
-    background: #b39926;
+    background: #CBBB47;
     transform: scale(1.02); /* Slightly increase size on hover */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
     outline: none; /* Removes the outline */
@@ -296,7 +296,7 @@ button#clearButton:hover {
 }
 
 .tab.active {
-    background-color: #c9b040; /* Active tab background */ 
+    background-color: #D3AC37; /* Active tab background */ 
     color: #fff; /* Active tab text color */
     z-index: 2; /* Ensure it stays above the glider */
     flex-grow: 1.5; /* Highlight active tab by growing it */
@@ -384,7 +384,7 @@ input[id="tab-2"]:checked ~ .glider {
 
 /* Sama tyyli domain-otsikolle */
 h2.domain {
-    background: #c9b040;
+    background: #D3AC37;
     color: white;
     border-radius: 4px;
     padding: 10px 20px;
@@ -406,7 +406,7 @@ h2.inline-h2 {
 
 /* Styling for buttons */
 .expand-button {
-    background: #c9b040;
+    background: #D3AC37;
     color: white;
     cursor: pointer;
     border: none;
