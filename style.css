@@ -441,26 +441,31 @@ h2.inline-h2 {
     margin-bottom: 20px;
 }
 
-/* Footer fixed at the bottom by default */
+/* Oletusarvo: Footer kiinteä suuremmilla näytöillä */
 .footer {
     background-color: rgba(27, 38, 49, 0.7);
     color: #fff;
     text-align: center;
     padding: 10px;
-    position: fixed;
+    position: fixed; /* Kiinteä alareunassa oletuksena */
     bottom: 0;
     left: 0;
-    width: 100%; /* Full-width by default */
+    width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px 5px 0 0;
     z-index: 100;
-    transition: all 0.3s ease; /* Smooth transition */
+    transition: all 0.3s ease;
 }
 
-/* Hide footer only when the width is 770px or less */
+/* Mobiilinäkymässä footer mukautuu sisältöön */
 @media (max-width: 770px) {
-    .hidden-footer {
-        display: none;
+    .footer {
+        position: relative; /* Poistaa kiinteän alareunan asetuksen */
+        width: 100%; /* Koko ruudun leveys */
+        margin-top: 250px; /* Lisää reilu marginaali sisällön jälkeen */
+        border-radius: 0; /* Poista pyöristykset mobiilissa */
+        box-shadow: none; /* Poista varjo mobiilissa */
+        background-color: rgba(27, 38, 49, 0.7); /* Sama taustaväri */
     }
 }
 

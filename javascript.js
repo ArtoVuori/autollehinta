@@ -270,6 +270,12 @@ async function calculate() {
     const tires = parseFloat(document.getElementById('tires').value) || 0;
     const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
 
+	// Täytä carDetails
+    carDetails = `${selectedBrand} (${fuelType}), Hankintahinta: ${price} €, Pitoaika: ${selectedAge} vuotta`;
+
+    // Muut laskennat...
+    console.log(`carDetails päivitetty: ${carDetails}`);
+
     // Lokita syötteet
     console.log(`isUsed: ${isUsed}, price: ${price}, modelYear: ${modelYear}`);
 	
