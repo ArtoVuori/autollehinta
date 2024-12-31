@@ -8,7 +8,7 @@ Releasea varten:
 
 Tehtävää
 + Käytetylle lähtökilometrit vaikuttamaan arvon määrittelyyn. Esim. 100, 200 ja 300tkm x arvonalenamakerroin
-+ Käytetty-nappula paremmin näkyviin. Ekaksi tai joku liukuvalikko tai slider
+
 + Kun painaa laskelmaa, niin pääotsikoidan tausta voisi olla keltainen, jotta ne erottuu paremmin
 
 
@@ -40,7 +40,7 @@ https://caredge.com/tesla/depreciation
 
 
 Tehty
-+
++ Käytetty-nappula paremmin näkyviin. Ekaksi tai joku liukuvalikko tai slider
 - Kannattaako vaihtaa uudempaan -nappula
 + Vertailukortin skaalaus & asettelu mobiilissa jos ruutu pystyssä
 + Piilota nappuloita accordionin taakse

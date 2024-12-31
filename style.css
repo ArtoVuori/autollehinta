@@ -447,27 +447,32 @@ h2.inline-h2 {
     color: #fff;
     text-align: center;
     padding: 10px;
-    position: fixed; /* Kiinteä alareunassa oletuksena */
+    position: relative; /* Kiinteä alareunassa oletuksena */
     bottom: 0;
     left: 0;
-    width: 100%;
+    margin: 350px auto 0; /* Keskittää footerin ja lisää marginaalin ylhäältä */
+    max-width: 800px;
+	border-radius: 4;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px 5px 0 0;
     z-index: 100;
     transition: all 0.3s ease;
 }
 
+
 /* Mobiilinäkymässä footer mukautuu sisältöön */
-@media (max-width: 770px) {
+@media (max-width: 1000px) {
     .footer {
         position: relative; /* Poistaa kiinteän alareunan asetuksen */
-        width: 100%; /* Koko ruudun leveys */
-        margin-top: 250px; /* Lisää reilu marginaali sisällön jälkeen */
-        border-radius: 0; /* Poista pyöristykset mobiilissa */
+        width: 100%; /* Leveys 50% */
+        margin-top: 400px; /* Lisää reilu marginaali sisällön jälkeen */
+        margin-left: auto; /* Siirtää footerin oikealle */
+        border-radius: 4; /* Poista pyöristykset mobiilissa */
         box-shadow: none; /* Poista varjo mobiilissa */
         background-color: rgba(27, 38, 49, 0.7); /* Sama taustaväri */
     }
 }
+
 
 .footer-links a {
     color: #fff;
@@ -483,7 +488,7 @@ h2.inline-h2 {
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 770px) {
     .footer-links a {
         display: block; /* Stack links */
         margin: 10px 0; /* Spacing for readability */

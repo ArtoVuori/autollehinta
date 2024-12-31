@@ -271,7 +271,8 @@ async function calculate() {
     const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
 
 	// Täytä carDetails
-    carDetails = `${selectedBrand} (${fuelType}), Hankintahinta: ${price} €, Pitoaika: ${selectedAge} vuotta`;
+    carDetails = `${selectedBrand} ${isUsed ? "(käytetty)" : ""} (${fuelType}), Hankintahinta: ${price} €`;
+
 
     // Muut laskennat...
     console.log(`carDetails päivitetty: ${carDetails}`);
