@@ -12,9 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Debug: List files in repository root
-        run: ls -la /github/workspace
-
       - name: Get current Git tag
         id: get_tag
         run: echo "tag=$(git describe --tags --always)" >> $GITHUB_ENV
