@@ -395,6 +395,50 @@ input[id="tab-2"]:checked ~ .glider {
     display: block;
     max-height: 500px;
 }
+/* Kohdistus vain #introContainerin sisäiseen taulukkoon */
+#introContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 5px 0;
+    border: 1px solid rgba(27, 38, 49, 0.2);
+    table-layout: fixed; /* Tasaa sarakkeiden leveydet */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Taulukon varjo */
+    transition: box-shadow 0.3s ease; /* Smooth shadow change */
+    border-radius: 4px; /* Kulmien pyöristys */
+    overflow: hidden; /* Estää sisällön ylityksen pyöristyksen sisällä */
+}
+
+#introContainer th, #introContainer td {
+    padding: 10px;
+    border: 1px solid rgba(27, 38, 49, 0.2);
+    text-align: center; /* Tekstit keskitetään vaakasuunnassa */
+    vertical-align: middle; /* Tekstit keskitetään pystysuunnassa */
+    transition: transform 0.2s ease, background-color 0.3s ease, border-radius 0.3s ease; /* Hover animation */
+}
+
+#introContainer th {
+    background-color: #D3AC37;
+    color: #fff;
+    font-weight: bold;
+}
+
+#introContainer td {
+    /* background-color: #fff; */
+}
+
+/* Hover effect for table cells */
+#introContainer th:hover, #introContainer td:hover {
+    transform: scale(1.05); /* Pop-out effect */
+    background-color: rgba(27, 38, 49, 1); /* Subtle background color change */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for hover effect */
+    border-radius: 4px; /* Kulmien pyöristys soluille hover-tilassa */
+}
+
+/* Optional: Table shadow on hover */
+#introContainer table:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow intensity */
+}
+
 
 
 /* Sama tyyli domain-otsikolle */
@@ -417,6 +461,20 @@ h2.inline-h2 {
     margin-left: 10px; /* Pieni väli ensimmäisen osan jälkeen */
     font-weight: normal; /* Voit säätää painotusta halutessasi */
     color: #fff; /* Tekstin väri */
+}
+
+/* Media query näytöille alle 685px */
+@media screen and (max-width: 685px) {
+    h2.domain {
+        margin-bottom: -5px; /* Lisää väliä domain-otsikon alapuolelle */
+    }
+
+    h2.inline-h2 {
+        display: block; /* Vaihtaa otsikon allekkain-asetteluun */
+        font-size: 13px; /* Puolitetaan fonttikoko */
+        margin-left: 0; /* Poistetaan marginaali, koska ne ovat allekkain */
+		/* font-weight: bold; */
+    }
 }
 
 /* Styling for buttons */
@@ -576,3 +634,4 @@ h2.blog {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.3s ease; /* Smooth transition for background changes */
+	
