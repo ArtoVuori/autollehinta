@@ -8,13 +8,12 @@ Releasea varten:
 
 Tehtävää
 + Käytetylle lähtökilometrit vaikuttamaan arvon määrittelyyn. Esim. 100, 200 ja 300tkm x arvonalenamakerroin
-+ automaattinen versionumerointi päivittämään selain
+
 
 
 
 + Info/tipit eri kenttiin (toast tms.)
-+ Tallenna kyselyt ja niiden vastaukset tilastoon
-+ Vertaa + tekstin ei tarvitse feidata hitaasti pois
+
 
 + Validoinnit, jos jokin oleellinen tieto puuttuu
 + Käytetyllä ajettujen kilometrien määrän laskeminen
@@ -40,6 +39,10 @@ https://caredge.com/tesla/depreciation
 
 
 Tehty
++ Aloitusruutuun simppeli kuva tekstin sijaan
++ Tallenna kyselyt ja niiden vastaukset tilastoon
++ Vertaa + tekstin ei tarvitse feidata hitaasti pois
++ automaattinen versionumerointi päivittämään selain
 + Kun painaa laskelmaa, niin pääotsikoidan tausta voisi olla keltainen, jotta ne erottuu paremmin
 + Käytetty-nappula paremmin näkyviin. Ekaksi tai joku liukuvalikko tai slider
 - Kannattaako vaihtaa uudempaan -nappula
