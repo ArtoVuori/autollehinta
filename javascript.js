@@ -668,9 +668,9 @@ function switchTab(tab) {
     const data = await response.json();
     const currentVersion = localStorage.getItem('appVersion');
 
-    // Jos versio ei täsmää, päivitetään selain
+    // Jos versio ei täsmää, ilmoitetaan käyttäjälle ja päivitetään selain
     if (currentVersion !== data.version) {
-      console.log(`New version detected: ${data.version} (current: ${currentVersion})`);
+      alert('Uusi versio saatavilla. Sivua päivitetään...');
       localStorage.setItem('appVersion', data.version);
       location.reload(true); // Pakota sivun uudelleenlataus
     }
