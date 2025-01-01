@@ -16,18 +16,19 @@ jobs:
         id: get_tag
         run: echo "tag=$(git describe --tags --always)" >> $GITHUB_ENV
 
-      - name: Update version in index.html and version.json
+      - name: Update version in index.html, javascript.js, and style.css
         run: |
           VERSION=$tag
           sed -i "s/<title>.*<\/title>/<title>Auton Arvon Alenema ja Polttoainekustannukset v$VERSION<\/title>/" /github/workspace/index.html
           sed -i "s/<meta name=\"description\" content=\".*\">/<meta name=\"description\" content=\"Auton arvon alenema ja polttoainekustannukset v$VERSION\">/" /github/workspace/index.html
+          sed -i "s/version: '.*'/version: '$VERSION'/" /github/workspace/javascript.js
           echo "{\"version\": \"$VERSION\"}" > /github/workspace/version.json
 
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html version.json
+          git add index.html javascript.js style.css version.json
           git commit -m "Update version to $tag"
           git push
 
