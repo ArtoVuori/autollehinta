@@ -660,3 +660,21 @@ function switchTab(tab) {
     isUsed = (tab === 'used');
     console.log(`isUsed päivitetty: ${isUsed}`);
 }
+
+(async function checkVersion() {
+  try {
+    // Hakee version.json-tiedoston palvelimelta
+    const response = await fetch('/version.json', { cache: 'no-store' });
+    const data = await response.json();
+    const currentVersion = localStorage.getItem('appVersion');
+
+    // Jos versio ei täsmää, päivitetään selain
+    if (currentVersion !== data.version) {
+      console.log(`New version detected: ${data.version} (current: ${currentVersion})`);
+      localStorage.setItem('appVersion', data.version);
+      location.reload(true); // Pakota sivun uudelleenlataus
+    }
+  } catch (error) {
+    console.error('Error checking version:', error);
+  }
+})();
