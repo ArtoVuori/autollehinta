@@ -12,6 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Debug: List files in repository root
+        run: ls -la /github/workspace
+
       - name: Get current Git tag
         id: get_tag
         run: echo "tag=$(git describe --tags --always)" >> $GITHUB_ENV
@@ -19,9 +22,10 @@ jobs:
       - name: Update version in index.html, javascript.js, and style.css
         run: |
           VERSION=$tag
-          sed -i "s/<title>.*<\/title>/<title>Auton Arvon Alenema ja Polttoainekustannukset v$VERSION<\/title>/" /github/workspace/index.html
-          sed -i "s/<meta name=\"description\" content=\".*\">/<meta name=\"description\" content=\"Auton arvon alenema ja polttoainekustannukset v$VERSION\">/" /github/workspace/index.html
-          sed -i "s/version: '.*'/version: '$VERSION'/" /github/workspace/javascript.js
+          echo "Updating files with version $VERSION"
+          sed -i "s/<title>.*<\\/title>/<title>Auton Arvon Alenema ja Polttoainekustannukset v$VERSION<\\/title>/g" /github/workspace/index.html
+          sed -i "s/<meta name=\\\"description\\\" content=\\\".*\\\">/<meta name=\\\"description\\\" content=\\\"Auton arvon alenema ja polttoainekustannukset v$VERSION\\\">/g" /github/workspace/index.html
+          sed -i "s/version: '.*'/version: '$VERSION'/g" /github/workspace/javascript.js
           echo "{\"version\": \"$VERSION\"}" > /github/workspace/version.json
 
       - name: Commit and push changes
