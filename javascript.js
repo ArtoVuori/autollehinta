@@ -670,7 +670,7 @@ function switchTab(tab) {
 
     // Jos versio ei täsmää, ilmoitetaan käyttäjälle ja päivitetään selain
     if (currentVersion !== data.version) {
-      alert('Uusi versio saatavilla. Sivua päivitetään...');
+      /* alert('Uusi versio saatavilla. Sivua päivitetään...'); */
       localStorage.setItem('appVersion', data.version);
       location.reload(true); // Pakota sivun uudelleenlataus
     }
