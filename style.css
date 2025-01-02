@@ -417,7 +417,7 @@ input[id="tab-2"]:checked ~ .glider {
 }
 
 #introContainer th, #introContainer td {
-    padding: 10px;
+	padding: 10px 4px 10px 4px; 
     border: 1px solid rgba(27, 38, 49, 0.2);
     text-align: center; /* Tekstit keskitetään vaakasuunnassa */
     vertical-align: middle; /* Tekstit keskitetään pystysuunnassa */
@@ -432,6 +432,7 @@ input[id="tab-2"]:checked ~ .glider {
 
 #introContainer td {
     /* background-color: #fff; */
+	/* text-align: left; */
 }
 
 /* Hover effect for table cells */
@@ -535,8 +536,7 @@ h2.inline-h2 {
     max-width: 800px;
 	border-radius: 4;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px 5px 0 0;
-    z-index: 100;
+    border-radius: 4px;;
     transition: all 0.3s ease;
 }
 
@@ -545,7 +545,6 @@ h2.inline-h2 {
 @media (max-width: 1000px) {
     .footer {
         position: relative; /* Poistaa kiinteän alareunan asetuksen */
-        width: 100%; /* Leveys 50% */
         margin-top: 400px; /* Lisää reilu marginaali sisällön jälkeen */
         margin-left: auto; /* Siirtää footerin oikealle */
         border-radius: 4; /* Poista pyöristykset mobiilissa */
@@ -572,7 +571,7 @@ h2.inline-h2 {
 @media (max-width: 770px) {
     .footer-links a {
         display: block; /* Stack links */
-        margin: 10px 0; /* Spacing for readability */
+        margin: 5px 0; /* Spacing for readability */
     }
     .separator {
         display: none; /* Hide separators on mobile */
