@@ -1,9 +1,9 @@
 /* Body Styles */
 body {
-    font-family: 'Josefin Sans', sans-serif;
+	font-family: 'Josefin Sans', sans-serif;
     background-color: #fff;
     margin: 0;
-    padding: 20px;
+    padding: 300px;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
