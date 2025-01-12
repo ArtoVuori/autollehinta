@@ -678,3 +678,4 @@ function switchTab(tab) {
     console.error('Error checking version:', error);
   }
 })();
+

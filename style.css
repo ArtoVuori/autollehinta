@@ -10,6 +10,17 @@ body {
     background-position: center;
 }
 
+body.brand-page {
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 20px 20px 20px 20px; /* Ylhäältä 300px, oikealta 20px, alhaalta 20px, vasemmalta 20px */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
 /* Body Styles for screens 770px or smaller */
 @media (max-width: 770px) {
     body {
@@ -448,6 +459,63 @@ input[id="tab-2"]:checked ~ .glider {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow intensity */
 }
 
+/* Layerin oletustila (piilotettu) */
+#comparisonLayer {
+    position: fixed;
+    top: 50%;
+    right: -400px; /* Piilotettuna näytön ulkopuolella */
+    width: 350px;
+    background-color: rgba(27, 38, 49, 0.9); /* Tumma tausta */
+    color: #fff; /* Valkoinen teksti */
+    padding: 5px;
+    border-radius: 8px 0px 0px 8px; /* Pyöristetyt kulmat */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Hieno varjo */
+    transform: translateY(-50%); /* Keskitetty pystysuunnassa */
+    transition: right 0.5s ease-in-out; /* Sulava siirtymä */
+    z-index: 1000; /* Layer näkyy päällä */
+    text-align: center;
+}
+
+/* Piilotettu tila */
+#comparisonLayer.hidden {
+    right: -440px; /* Piilossa oikealla */
+}
+
+/* Näkyvä tila: liuku sisään */
+#comparisonLayer.slide-in {
+    right: 0px; /* Näkyvissä näytöllä */
+}
+
+#comparisonLayer .close-button {
+    position: absolute;
+    top: 2px; /* Etäisyys layerin yläreunasta */
+    right: 2px; /* Etäisyys layerin oikeasta reunasta */
+    cursor: pointer;
+    font-size: 24px; /* Ruksin koko */
+    color: #cc3333; /* Punainen väri */
+    font-weight: bold; /* Vahva fontti */
+    background: none; /* Ei taustaväriä */
+    border: none; /* Ei reunuksia */
+    outline: none; /* Ei korostusta */
+    z-index: 1100; /* Varmistaa, että se näkyy päällä */
+    transition: transform 0.3s ease, color 0.3s ease; /* Sulava hover-siirtymä */
+    box-shadow: none; /* Poistaa hoverilla näkyvän varjon */
+}
+
+#comparisonLayer .close-button:hover {
+    color: #b83131; /* Tummempi punainen hoverilla */
+    transform: scale(1.2); /* Suurentaa hoverilla */
+}
+
+/* Tekstin ja nappulan sisältö vasemmalle */
+#comparisonLayer p {
+    margin-top: 10px; /* Väli yläreunasta */
+    line-height: 2; /* Mukava riviväli */
+    text-align: left; /* Tasaus vasemmalle */
+    margin-left: 10px; /* Pieni sisennys vasemmalta */
+    margin-right: 0px; /* Pieni sisennys oikealta */
+}
+
 
 
 /* Sama tyyli domain-otsikolle */
@@ -641,4 +709,5 @@ h2.blog {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.3s ease; /* Smooth transition for background changes */
+	
 	

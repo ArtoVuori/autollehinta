@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volkswagen - Yleistä tietoa</title>
+    <meta name="description" content="Auton arvon alenema ja Volkswagenin mallisto">
+    <meta name="keywords" content="Volkswagen, auto, mallit, arvonkehitys, käyttövoimat">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function setRandomBackground() {
+            const maxImages = 10; // Päivitä tämä vastaamaan taustakuvien määrää
+            const randomNumber = Math.floor(Math.random() * maxImages) + 1;
+            const imageName = `back_${String(randomNumber).padStart(2, '0')}.jpg`;
+            document.body.style.backgroundImage = `url('${imageName}')`;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundRepeat = 'no-repeat';
+            document.body.style.backgroundAttachment = 'fixed';
+            document.body.style.backgroundPosition = 'center';
+        }
+    </script>
+	    <style>
+        #valueChart {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body onload="setRandomBackground()">
+    <div class="container">
+        <header>
+            <div id="pageReset">
+                <h2 class="domain">Autollehinta.fi</h2>
+                <h2 class="inline-h2">Volkswagen</h2>
+            </div>
+        </header>
+
+        <main>
+		<div id="introContainer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>💸<br>Keskimääräinen arvonalenema</th>
+                            <th>⌛<br>3 vuoden jälkeen</th>
+                            <th>✅<br>Keskimääräinen kulutus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Polttomoottoriautot: 50-60%<br>Hybridit: 40-50%<br>Sähköautot: 30-40%</td>
+                            <td>Keskimääräinen arvonalenema:<br>Polttomoottori 50%, hybridi 40%, sähkö 30%</td>
+                            <td>Per 100 km:<br>Polttomoottori: 6-8 l<br>Hybridit: 3-5 l<br>Sähköautot: 15-20 kWh</td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
+            <section>
+                <h2>Volkswagenin nykyiset mallit</h2>
+                <p>Volkswagen tarjoaa laajan valikoiman autoja, jotka kattavat eri tarpeet ja mieltymykset. Tässä on muutamia suosittuja malleja:</p>
+                <ul>
+                    <li>Volkswagen Golf (hatchback ja hybridiversiot)</li>
+                    <li>Volkswagen Passat (sedan ja farmari)</li>
+                    <li>Volkswagen Tiguan (kompakti SUV)</li>
+                    <li>Volkswagen ID.3 (täyssähköauto)</li>
+                    <li>Volkswagen ID.4 (täyssähköinen SUV)</li>
+                    <li>Volkswagen ID. Buzz (täyssähköinen pakettiauto)</li>
+                    <li>Volkswagen ID.7 (täyssähköinen sedan)</li>
+                </ul>
+            </section>
+			 <section>
+                <h2>Arvonkehitys käyttövoimittain</h2>
+                <canvas id="valueChart" width="600" height="400"></canvas>
+            </section>
+
+            <section>
+                <h2>Arvonkehitys eri käyttövoimilla</h2>
+                <p>Auton arvonkehitys riippuu monista tekijöistä, kuten polttoaineesta, teknologisista trendeistä ja markkinoiden kysynnästä. Tässä yleistä tietoa Volkswagenin autojen arvonkehityksestä:</p>
+                <ul>
+                    <li><strong>Polttomoottoriautot:</strong> Polttomoottoriautojen arvo laskee yleensä nopeammin johtuen siirtymisestä vähäpäästöisempiin teknologioihin ja kasvavista päästömaksuista.</li>
+                    <li><strong>Hybridit:</strong> Hybridimallien arvonkehitys on usein vakaampaa, koska ne tarjoavat siirtymävaiheen teknologian polttomoottoreista täyssähköön. Ne ovat houkuttelevia ostajille, jotka haluavat pienentää päästöjään tinkimättä ajomatkasta.</li>
+                    <li><strong>Täyssähköautot:</strong> Sähköautojen arvonkehitys riippuu akkuteknologiasta ja latausinfrastruktuurista. Volkswagenin ID-mallisto on suosittu ja säilyttää yleensä arvonsa suhteellisen hyvin.</li>
+                </ul>
+            </section>
+        </main>
+
+
+    </div>
+	
+	        <footer class="footer">
+            <div class="footer-links">
+                <a href="blog_01.html">Kannattaako auto päivittää uudempaan?</a>
+                <span class="separator">|</span>
+                <a href="blog_02.html">Yksityisleasingin kannattavuus vs. auton omistaminen</a>
+                <span class="separator">|</span>
+                <a href="/terms_explanations.html">Termit</a>
+                <span class="separator">|</span>
+                <a href="/terms.html">Käyttöehdot</a>
+                <span class="separator">|</span>
+                <a href="mailto:admin@autollehinta.fi">Ota yhteyttä</a>
+            </div>
+        </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('valueChart').getContext('2d');
+        const valueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['0 vuotta', '1 vuosi', '2 vuotta', '3 vuotta', '4 vuotta', '5 vuotta', '6 vuotta', '7 vuotta', '8 vuotta', '9 vuotta', '10 vuotta'],
+                datasets: [
+                    {
+                        label: 'Polttomoottoriautot',
+                        data: [100, 80, 65, 55, 45, 37, 30, 25, 20, 17, 15],
+                        borderColor: 'red',
+                        fill: false
+                    },
+                    {
+                        label: 'Hybridit',
+                        data: [100, 85, 75, 67, 60, 54, 49, 45, 42, 40, 38],
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Sähköautot',
+                        data: [100, 90, 83, 77, 72, 68, 65, 63, 62, 60, 59],
+                        borderColor: 'green',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Jäännösarvo (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Aika (vuosia)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

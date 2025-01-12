@@ -7,7 +7,11 @@ Releasea varten:
 
 
 Tehtävää
+
++ Merkkisivuille arvonalenemat depreciation-tiedostoista
 + Käytetylle lähtökilometrit vaikuttamaan arvon määrittelyyn. Esim. 100, 200 ja 300tkm x arvonalenamakerroin
++ Automaattinen sivugeneraattori: jokaiselle automerkille.Jotain yleistä jossa mitä malleja nyt on. Millainen arvonkehitys yleisesti. kortit: keskimääräinen arvonalenema per vuosi, 3v jälkeen jne.
+
 
 
 
@@ -39,6 +43,7 @@ https://caredge.com/tesla/depreciation
 
 
 Tehty
++ Brändisivulle popup, yritetty js:ää omaan brands-tiedostoon jottei brändisivuilla ole monta kertaa samakoodi
 + Aloitusruutuun simppeli kuva tekstin sijaan
 + Tallenna kyselyt ja niiden vastaukset tilastoon
 + Vertaa + tekstin ei tarvitse feidata hitaasti pois
