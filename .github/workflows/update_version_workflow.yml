@@ -36,16 +36,4 @@ jobs:
           git push
 
       - name: Deploy to server
-        run: |
-          echo "Deploying the updated version..."
-          # SCP to upload files to your Plesk server
-          scp -r ./index.html ./javascript.js ./style.css user@your-server-ip:/path/to/your/webroot
-
-          # Verify files are in the correct location (for debugging purposes)
-          ssh user@your-server-ip "ls -l /path/to/your/webroot"
-
-          # Set the correct permissions (if needed)
-          ssh user@your-server-ip "chmod -R 755 /path/to/your/webroot"
-
-          # Restart the web server to apply changes
-          ssh user@your-server-ip "sudo systemctl restart apache2"  # Or nginx if you're using that
+        run: echo "Deploying the updated version..."
