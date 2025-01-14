@@ -36,4 +36,19 @@ jobs:
           git push
 
       - name: Deploy to server
-        run: echo "Deploying the updated version..."
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "Deploying the updated version to Plesk server..."
+
+          # Configure SSH
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H your-server-ip >> ~/.ssh/known_hosts
+
+          # Transfer all files to Plesk server
+          rsync -avz --delete ./ username@your-server-ip:/path/to/plesk/directory
+
+          # Restart the web server if needed (optional)
+          ssh username@your-server-ip "sudo service apache2 restart || sudo service nginx restart"
