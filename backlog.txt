@@ -7,7 +7,8 @@ Releasea varten:
 
 
 Tehtävää
-
++ Dynaaminen footer, jottei joka sivulle tarvitse päivittää footeria erikseen
++ FAQ: 5 kysymystä per automerkki
 + Merkkisivuille arvonalenemat depreciation-tiedostoista
 + Käytetylle lähtökilometrit vaikuttamaan arvon määrittelyyn. Esim. 100, 200 ja 300tkm x arvonalenamakerroin
 + Automaattinen sivugeneraattori: jokaiselle automerkille.Jotain yleistä jossa mitä malleja nyt on. Millainen arvonkehitys yleisesti. kortit: keskimääräinen arvonalenema per vuosi, 3v jälkeen jne.
