@@ -1,15 +1,24 @@
-
 // Random background function
 function setRandomBackground() {
-    const maxImages = 10; // Päivitä tämä vastaamaan taustakuvien määrää
-    const randomNumber = Math.floor(Math.random() * maxImages) + 1;
-    const imageName = `back_${String(randomNumber).padStart(2, '0')}.jpg`;
-    document.body.style.backgroundImage = `url('${imageName}')`;
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundAttachment = 'fixed';
-    document.body.style.backgroundPosition = 'center';
+    try {
+        const maxImages = 10;
+        const randomNumber = Math.floor(Math.random() * maxImages) + 1;
+        const imageName = `back_${String(randomNumber).padStart(2, '0')}.jpg`;
+        document.body.style.backgroundImage = `url('${imageName}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundAttachment = 'fixed';
+        document.body.style.backgroundPosition = 'center';
+        
+        // Lisätään debug-tulostus konsoliin
+        console.log('Taustakuva asetettu:', imageName);
+    } catch (error) {
+        console.error('Virhe taustakuvan asettamisessa:', error);
+    }
 }
+
+// Kutsu setRandomBackground-funktiota sivun latautuessa
+document.addEventListener('DOMContentLoaded', setRandomBackground);
 
 document.addEventListener("DOMContentLoaded", () => {
     // Näytä layer 3 sekunnin jälkeen

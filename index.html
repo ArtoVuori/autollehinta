@@ -8,14 +8,14 @@
     <meta name="keywords" content="auton arvo, arvon aleneminen, polttoainekustannukset, auto, taloudellisuus, auton ylläpito, autovertailu, autolle hinta, autoilun kuukausikustannukset, Tarkista auton arvo laskurilla, Auton arvon aleneminen -laskuri, auton arvonalenema, Paljonko auton arvo alenee, Näin paljon autosi arvo alenee vuosittain, Auton kulut, autoilun kulut, Autoilun hinta-laskuri, auton käyttökulut, auton ylläpitokustannukset, kannattaako vaihtaa teslaan, auton arvonlasku, käytetyn auton arvo, auton arvon laskeminen, auton jälleenmyyntiarvo, käytetyn auton ostaminen, auton ylläpidon kustannukset, auton polttoainekulut, auton vakuutuskulut, sähköauton kannattavuus, auton vaihtoarvo, dieselauton ylläpitokustannukset, sähköauton huoltokulut, hybridiauton kustannukset, auton arvonkehitys, uuden auton ostaminen, vanhan auton arvo, auton vuosittaiset kustannukset, autoilun taloudellisuus, auton arvon vertailu, Tesla vs. polttomoottoriauto, id4 arvonalenema, leasing vs omistus">
 
     <!-- For .png format -->
-    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="icon" href="./favicon.png" type="image/png">
     <!-- Google Fonts - Josefin Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Linkki ulkoiseen tyylitiedostoon -->
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body onload="setRandomBackground()">
 <div class="container">
     <!-- Title and description with click-to-reset functionality -->
     <div id="pageReset">
@@ -165,30 +165,9 @@
 
 </div>
 
-<footer class="footer">
-    <div class="footer-links">
-        <a href="blog_01.html">Kannattaako auto päivittää uudempaan?</a>
-        <span class="separator">|</span>
-        <a href="blog_02.html">Yksityisleasingin kannattavuus vs. auton omistaminen</a>
-		<span class="separator">|</span>
-		<a href="/audi.html">Audi</a>
-		<span class="separator">|</span>
-		<a href="/tesla.html">Tesla</a>
-		<span class="separator">|</span>
-		<a href="/toyota.html">Toyota</a>
-		<span class="separator">|</span>
-		<a href="/vw.html">Volkswagen</a>
-		<span class="separator">|</span>
-		<a href="/terms_explanations.html">Termit</a>
-		<span class="separator">|</span>
-		<a href="/terms.html">Käyttöehdot</a>
-		<span class="separator">|</span>
-		<a href="mailto:admin@autollehinta.fi">Ota yhteyttä</a>
-    </div>
-</footer>
-
-
 <!-- Linkki ulkoiseen JavaScript-tiedostoon -->
+<script src="brands.js"></script>
 <script src="javascript.js"></script>
+<script src="footer.js"></script>
 </body>
 </html>

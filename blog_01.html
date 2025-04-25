@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="setRandomBackground()">
 <div class="blog-container">
     <div id="pageReset">
         <h2 class="domain">Autollehinta.fi</h2><h2 class="blog">Kannattaako auto päivittää uudempaan?</h2>
@@ -73,11 +73,8 @@
 </div>
 
 <!-- Linkki ulkoiseen JavaScript-tiedostoon -->
+<script src="brands.js"></script>
 <script src="javascript.js"></script>
-<script>
-    window.onload = function() {
-        setRandomBackground(); // Kutsu taustakuvan asetusta
-    };
-</script>
+<script src="footer.js"></script>
 </body>
 </html>

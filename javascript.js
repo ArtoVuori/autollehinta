@@ -462,14 +462,6 @@ function clearSavedResults() {
     savedResultsDiv.innerHTML = ''; // Clears all saved cards
 }
 
-function setRandomBackground() {
-    const maxImages = 10; // Update this number as you add more background images
-    const randomNumber = Math.floor(Math.random() * maxImages) + 1;
-    const imageName = `back_${String(randomNumber).padStart(2, '0')}.jpg`;
-    document.body.style.backgroundImage = `url('${imageName}')`;
-}
-
-
 // Sivun latautuessa täytetään ikävalinnat ja päivitetään auton merkit
 window.onload = async function() {
     console.log('Sivu ladattu, täytetään valinnat ja päivitetään merkit.');
@@ -478,7 +470,6 @@ window.onload = async function() {
     updateBrandOptions();
     toggleFuelInputs(); // Piilotetaan lisäkentät aluksi
     // toggleModelYear(); // Tarkistetaan käytetyn auton valinta vasta DOM:n latauksen jälkeen
-    setRandomBackground(); // Invoke the background function
 };
 
 
@@ -508,8 +499,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (pageReset) {
         pageReset.style.cursor = "pointer"; // Change cursor to pointer for better UX
         pageReset.addEventListener('click', function (e) {
-            e.preventDefault(); // Prevent any default behavior (if inside a form)
-            location.reload(); // Reloads the current page, effectively resetting it
+            // Jos klikattiin linkkiä, annetaan linkin toimia normaalisti
+            if (e.target.tagName === 'A' || e.target.parentElement.tagName === 'A') {
+                return;
+            }
+            // Muussa tapauksessa suoritetaan sivun nollaus
+            window.location.href = 'index.html';
         });
     } else {
         console.error('Page reset element is missing.');

@@ -7,7 +7,13 @@ const port = 3000;
 const csvHeaders = 'Type,Timestamp,Brand,FuelType,Age,Price,Kilometers,Insurance,Tax,FuelConsumption,ElectricConsumption,GasConsumption,Maintenance,Tires,OtherCosts,Depreciation,Costs,Total\n';
 
 app.use(express.json());
-app.use(express.static(path.resolve(__dirname)));
+app.use(express.static(path.resolve(__dirname), {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.jpg')) {
+            res.setHeader('Content-Type', 'image/jpeg');
+        }
+    }
+}));
 
 
 // Initialize CSV file if it doesn't exist
