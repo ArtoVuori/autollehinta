@@ -3,7 +3,7 @@ function setRandomBackground() {
     try {
         const maxImages = 10;
         const randomNumber = Math.floor(Math.random() * maxImages) + 1;
-        const imageName = `back_${String(randomNumber).padStart(2, '0')}.jpg`;
+        const imageName = `/back_${String(randomNumber).padStart(2, '0')}.jpg`;
         document.body.style.backgroundImage = `url('${imageName}')`;
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundRepeat = 'no-repeat';
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const compareButton = document.getElementById("compareButton");
     if (compareButton) {
         compareButton.addEventListener("click", () => {
-            window.location.href = "index.html";
+            window.location.href = "/";
         });
     }
 
