@@ -99,11 +99,11 @@ select, input {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.9) translateY(20px);
     }
     to {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0);
     }
 }
 
@@ -111,11 +111,11 @@ select, input {
 @keyframes fadeOut {
     from {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0);
     }
     to {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.9) translateY(-20px);
     }
 }
 
@@ -124,29 +124,29 @@ select, input {
     background-color: #fffafa;
     color: #000;
     padding: 8px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: calc(33% - 10px);
     box-sizing: border-box;
     position: relative;
-    opacity: 0; /* Aluksi kortti on näkymätön */
-    transform: scale(0.9); /* Aluksi hieman pienennettynä */
-    animation: fadeIn 0.5s ease-in-out forwards; /* Kortti ilmestyy pehmeästi */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Siirtymät hoverille */
-    z-index: 1; /* Varmista, että kortti on muiden elementtien päällä */
+    opacity: 0;
+    transform: scale(0.9);
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
 }
 
 /* Kortin hover-tila */
 .result-card:hover {
-    transform: scale(1.05); /* Suurentaa korttia hieman */
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2); /* Lisää syvemmän varjon */
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
 }
 
 /* Kun kortti poistetaan */
 .result-card.removing {
-    animation: fadeOut 0.5s ease-in-out;
-    opacity: 0; /* Kortti häipyy */
-    transform: scale(0.9); /* Kortti pienenee häipymisen aikana */
+    animation: fadeOut 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: scale(0.9);
 }
 
 .result-card .card-content {
@@ -160,18 +160,16 @@ select, input {
     top: 5px;
     right: 10px;
     cursor: pointer;
-    font-size: 32px; /* Suurempi fonttikoko */
+    font-size: 32px;
     color: #cc3333;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Poistoruksin hover-tila */
 .result-card .remove-button:hover {
     color: #b83131;
-    transform: scale(1.2); /* Suurentaa poistoruksia */
-    transition: color 0.3s ease, transform 0.3s ease; /* Lisää sulavan siirtymän */
+    transform: scale(1.2) rotate(90deg);
 }
-
-
 
 /* Mobile Responsive Layout */
 @media screen and (max-width: 768px) {
@@ -186,6 +184,16 @@ select, input {
 
     .button-container {
         flex-direction: column;
+    }
+
+    .result-card {
+        width: 100%;
+        margin-bottom: 15px;
+        transform: scale(0.95);
+    }
+    
+    .result-card:hover {
+        transform: translateY(-3px) scale(0.98);
     }
 }
 
@@ -219,24 +227,33 @@ button {
     color: white;
     cursor: pointer;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 10px 20px;
     display: inline-block;
     font-size: 16px;
     font-weight: bold;
-    font-family: inherit; /* Inherit font from parent (body) */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    font-family: inherit;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    white-space: nowrap; /* Prevents text from wrapping within buttons */
+    white-space: nowrap;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Pehmeämpi siirtymä */
+    position: relative;
+    overflow: hidden;
 }
 
 /* Hover and focus effects */
 button:hover, 
 button:focus {
     background: #CBBB47;
-    transform: scale(1.02); /* Slightly increase size on hover */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
-    outline: none; /* Removes the outline */
+    transform: translateY(-2px) scale(1.02); /* Yhdistetty leijunta ja kasvu */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+/* Active effect (painallus) */
+button:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Calculate Button Specific Styles */
@@ -560,20 +577,52 @@ h2.inline-h2 {
     color: white;
     cursor: pointer;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 10px 20px;
     display: inline-block;
     font-size: 16px;
     font-weight: bold;
     margin-top: 10px;
-	text-decoration: none; /* Poistaa alleviivauksen vain .expand-button-luokasta */
-	
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 .expand-button:hover {
     background: #b39926;
-    transform: scale(1.02);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.expand-button:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Add ripple effect */
+button::after,
+.expand-button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform 0.5s, opacity 1s;
+}
+
+button:active::after,
+.expand-button:active::after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
 }
 
 /* Smooth transition for the form display */
