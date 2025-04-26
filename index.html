@@ -35,13 +35,8 @@
                 </td>
                 <td>
                     <label for="fuelType">Käyttövoima:</label>
-                    <select id="fuelType" onchange="updateBrandOptions(); toggleFuelInputs();">
-                        <option value="bensiini">Bensiini</option>
-                        <option value="bensiini">Hybridi, bensiini</option>
-                        <option value="lataushybridi">Lataushybridi, bensiini</option>
-                        <option value="diesel">Diesel</option>
-                        <option value="kaasu">Kaasu</option>
-                        <option value="sahko">Sähkö</option>
+                    <select id="fuelType" onchange="toggleFuelInputs();">
+                        <!-- Käyttövoimavaihtoehdot lisätään dynaamisesti JavaScript-koodissa -->
                     </select>
                 </td>
             </tr>

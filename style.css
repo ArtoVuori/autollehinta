@@ -223,7 +223,7 @@ select, input {
 
 /* General Button Styles */
 button {
-    background: #D3AC37;
+    background: #3171af;
     color: white;
     cursor: pointer;
     border: none;
@@ -236,7 +236,7 @@ button {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
     white-space: nowrap;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Pehmeämpi siirtymä */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
@@ -244,8 +244,8 @@ button {
 /* Hover and focus effects */
 button:hover, 
 button:focus {
-    background: #CBBB47;
-    transform: translateY(-2px) scale(1.02); /* Yhdistetty leijunta ja kasvu */
+    background: #b0bedc;
+    transform: translateY(-2px) scale(1.02);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     outline: none;
 }
@@ -338,17 +338,20 @@ button#clearButton:hover {
     border-top-left-radius: 4px; /* Rounded top left */
     border-top-right-radius: 4px; /* Rounded top right */
     cursor: pointer;
-    background-color: #fff; /* Default background */
-    color: #000;
+    background-color: #3171af;
+    color: #fff;
     outline: none;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, flex-grow 0.3s ease;
     flex: 1; /* Default width for equal spacing */
 	
 }
 
+.tab:hover {
+    background-color: #b0bedc;
+}
+
 .tab.active {
-    background-color: #D3AC37; /* Active tab background */ 
-    color: #fff; /* Active tab text color */
+    background-color: #1b4965;
     z-index: 2; /* Ensure it stays above the glider */
     flex-grow: 1.5; /* Highlight active tab by growing it */
 	
@@ -397,7 +400,7 @@ input[id="tab-2"]:checked ~ .glider {
 }
 
 .accordion:hover {
-    background-color: #b39926;
+    background-color: #b0bedc;
 }
 
 .accordion.active::after {
@@ -453,7 +456,7 @@ input[id="tab-2"]:checked ~ .glider {
 }
 
 #introContainer th {
-    background-color: #D3AC37;
+    background-color: #3171af;
     color: #fff;
     font-weight: bold;
 }
@@ -537,12 +540,12 @@ input[id="tab-2"]:checked ~ .glider {
 
 /* Sama tyyli domain-otsikolle */
 h2.domain {
-    background: #D3AC37;
+    background: #3171af;
     color: white;
     border-radius: 4px;
     padding: 10px 20px;
-    display: inline-block; /* Jotta se pysyy samalla rivillä */
-    font-size: 24px; /* Voit säätää otsikon kokoa */
+    display: inline-block;
+    font-size: 24px;
     font-weight: bold;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -573,26 +576,25 @@ h2.inline-h2 {
 
 /* Styling for buttons */
 .expand-button {
-    background: #D3AC37;
+    background: #3171af;
     color: white;
     cursor: pointer;
     border: none;
+    padding: 15px 30px;
+    font-size: 18px;
     border-radius: 8px;
-    padding: 10px 20px;
-    display: inline-block;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 10px;
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
+    z-index: 1;
 }
 
 .expand-button:hover {
-    background: #b39926;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    background: #b0bedc;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .expand-button:active {
@@ -863,13 +865,11 @@ h2.blog {
 }
 
 #saveFuelSettings {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #3171af;
 }
 
 #resetFuelSettings {
-    background-color: #f44336;
-    color: white;
+    background-color: #3171af;
 }
 
 .settings-icon {
@@ -877,7 +877,7 @@ h2.blog {
     top: 0;
     right: 0;
     padding: 10px 14px;
-    background: #caaa3a;
+    background: #3171af;
     border-radius: 0 0 0 16px;
     color: #fff;
     font-size: 1.5em;
@@ -887,7 +887,7 @@ h2.blog {
 }
 
 .settings-icon:hover {
-    background: #b39926;
+    background: #b0bedc;
     transform: rotate(90deg);
 }
 

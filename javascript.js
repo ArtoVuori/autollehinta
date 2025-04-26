@@ -122,16 +122,19 @@ function clearResults() {
 
 // Täytetään auton merkit valinnoiksi ajoneuvotyypin perusteella
 async function updateBrandOptions() {
-    const fuelType = document.getElementById('fuelType').value;
     const brandSelect = document.getElementById('brand');
     const selectedBrand = brandSelect.value;  // Tallenna käyttäjän valitsema merkki
     brandSelect.innerHTML = "";  // Tyhjennetään vanhat valinnat
     
-    // Valitaan oikea CSV-tiedosto käyttövoiman perusteella
-    const devaluationFile = fuelType === 'sahko' ? 'devaluation_ev.csv' : 'devaluation.csv';
-    devaluationData = await loadCSV(devaluationFile);
+    // Ladataan molemmat CSV-tiedostot
+    const regularBrands = await loadCSV('devaluation.csv');
+    const evBrands = await loadCSV('devaluation_ev.csv');
     
-    Object.keys(devaluationData).forEach(brand => {
+    // Yhdistetään ja poistetaan duplikaatit
+    const allBrands = [...new Set([...Object.keys(regularBrands), ...Object.keys(evBrands)])].sort();
+    
+    // Lisätään kaikki merkit valikkoon
+    allBrands.forEach(brand => {
         const option = document.createElement('option');
         option.value = brand;
         option.textContent = brand;
@@ -139,10 +142,73 @@ async function updateBrandOptions() {
     });
 
     // Jos tallennettu merkki löytyy uudesta listasta, aseta se valituksi
-    if (selectedBrand && Object.keys(devaluationData).includes(selectedBrand)) {
+    if (selectedBrand && allBrands.includes(selectedBrand)) {
         brandSelect.value = selectedBrand;
     }
+
+    // Päivitä käyttövoimavaihtoehdot valitun merkin perusteella
+    updateFuelTypeOptions();
 }
+
+// Päivitetään käyttövoimavaihtoehdot merkin perusteella
+async function updateFuelTypeOptions() {
+    const brandSelect = document.getElementById('brand');
+    const fuelTypeSelect = document.getElementById('fuelType');
+    const selectedBrand = brandSelect.value;
+    const selectedFuelType = fuelTypeSelect.value; // Tallenna nykyinen valinta
+    
+    // Ladataan tiedot molemmista tiedostoista
+    const regularBrands = await loadCSV('devaluation.csv');
+    const evBrands = await loadCSV('devaluation_ev.csv');
+    
+    // Päivitä globaali devaluationData
+    devaluationData = {
+        ...regularBrands,
+        ...evBrands
+    };
+    
+    // Tyhjennä nykyiset vaihtoehdot
+    fuelTypeSelect.innerHTML = "";
+    
+    // Tarkista, missä tiedostoissa merkki esiintyy
+    const isInRegular = regularBrands[selectedBrand];
+    const isInEV = evBrands[selectedBrand];
+    
+    // Lisää käyttövoimavaihtoehdot sen mukaan, missä tiedostoissa merkki esiintyy
+    if (isInRegular) {
+        addFuelOption(fuelTypeSelect, 'bensiini', 'Bensiini');
+        addFuelOption(fuelTypeSelect, 'bensiini', 'Hybridi, bensiini');
+        addFuelOption(fuelTypeSelect, 'lataushybridi', 'Lataushybridi, bensiini');
+        addFuelOption(fuelTypeSelect, 'diesel', 'Diesel');
+        addFuelOption(fuelTypeSelect, 'kaasu', 'Kaasu');
+    }
+    
+    if (isInEV) {
+        addFuelOption(fuelTypeSelect, 'sahko', 'Sähkö');
+    }
+    
+    // Yritä palauttaa aiempi valinta, jos se on edelleen saatavilla
+    if (selectedFuelType && fuelTypeSelect.querySelector(`option[value="${selectedFuelType}"]`)) {
+        fuelTypeSelect.value = selectedFuelType;
+    } else if (fuelTypeSelect.options.length > 0) {
+        // Jos aiempaa valintaa ei löydy, valitse ensimmäinen vaihtoehto
+        fuelTypeSelect.value = fuelTypeSelect.options[0].value;
+    }
+    
+    // Päivitä kulutuskentät
+    toggleFuelInputs();
+}
+
+// Apufunktio käyttövoimavaihtoehdon lisäämiseen
+function addFuelOption(select, value, text) {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = text;
+    select.appendChild(option);
+}
+
+// Lisää tapahtumakuuntelija automerkin vaihtumiselle
+document.getElementById('brand').addEventListener('change', updateFuelTypeOptions);
 
 // Ladataan polttoainehinnan tiedot
 async function loadFuelData() {
@@ -343,6 +409,17 @@ async function calculate() {
     let combinedAge = currentAge + selectedAge;
     let depreciation = 0;
     let futureValue = 0;
+
+    // Varmista, että devaluationData on päivitetty
+    if (!devaluationData[selectedBrand]) {
+        // Jos dataa ei löydy, päivitä se
+        const regularBrands = await loadCSV('devaluation.csv');
+        const evBrands = await loadCSV('devaluation_ev.csv');
+        devaluationData = {
+            ...regularBrands,
+            ...evBrands
+        };
+    }
 
     // Laske arvonalenema
     if (devaluationData[selectedBrand]) {
