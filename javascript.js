@@ -1,3 +1,32 @@
+// Ladataan Google Fonts dynaamisesti
+function loadGoogleFonts() {
+    // Tarkistetaan onko fontti jo ladattu
+    if (document.querySelector('link[href*="Josefin+Sans"]')) {
+        return;
+    }
+
+    // Lisätään preconnect-linkit
+    const preconnectGoogle = document.createElement('link');
+    preconnectGoogle.rel = 'preconnect';
+    preconnectGoogle.href = 'https://fonts.googleapis.com';
+    document.head.appendChild(preconnectGoogle);
+
+    const preconnectGstatic = document.createElement('link');
+    preconnectGstatic.rel = 'preconnect';
+    preconnectGstatic.href = 'https://fonts.gstatic.com';
+    preconnectGstatic.crossOrigin = 'anonymous';
+    document.head.appendChild(preconnectGstatic);
+
+    // Lisätään fontti
+    const fontLink = document.createElement('link');
+    fontLink.rel = 'stylesheet';
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap';
+    document.head.appendChild(fontLink);
+}
+
+// Ladataan fontit heti kun skripti suoritetaan
+loadGoogleFonts();
+
 // Alustetaan globaalit muuttujat
 let devaluationData = {};
 let fuelData = {};
@@ -53,12 +82,31 @@ async function fillAgeOptions() {
 function toggleFuelInputs() {
     const fuelType = document.getElementById('fuelType').value;
     console.log(`Polttoainetyyppi valittu: ${fuelType}`);
-    document.getElementById('fuelConsumption').style.display = (fuelType === 'bensiini' || fuelType === 'diesel') ? 'block' : 'none';
-    document.getElementById('electricConsumption').style.display = (fuelType === 'sahko' || fuelType === 'bensiini') ? 'block' : 'none';
-    document.getElementById('gasConsumption').style.display = (fuelType === 'kaasu') ? 'block' : 'none';
+    
+    // Näytetään polttoainekenttä bensiinille, dieselille ja lataushybridille
+    document.getElementById('fuelConsumption').style.display = 
+        (fuelType === 'bensiini' || fuelType === 'diesel' || fuelType === 'lataushybridi') ? 'block' : 'none';
+    
+    // Näytetään sähkökenttä sähköautolle ja lataushybridille
+    document.getElementById('electricConsumption').style.display = 
+        (fuelType === 'sahko' || fuelType === 'lataushybridi') ? 'block' : 'none';
+    
+    // Näytetään kaasukenttä vain kaasukäyttöisille
+    document.getElementById('gasConsumption').style.display = 
+        (fuelType === 'kaasu') ? 'block' : 'none';
+    
+    // Tyhjennetään kentät
     document.getElementById('fuelPer100Km').value = '';
     document.getElementById('electricPer100Km').value = '';
     document.getElementById('gasPer100Km').value = '';
+    
+    // Avataan kulutustiedot-accordion uudelleen
+    const kulutusAccordion = document.querySelector('.accordion');
+    const kulutusContent = kulutusAccordion.nextElementSibling;
+    kulutusAccordion.classList.add("active");
+    kulutusContent.classList.add("show");
+    kulutusContent.style.maxHeight = kulutusContent.scrollHeight + "px";
+    
     clearResults();
 }
 
@@ -78,6 +126,8 @@ async function updateBrandOptions() {
     const brandSelect = document.getElementById('brand');
     const selectedBrand = brandSelect.value;  // Tallenna käyttäjän valitsema merkki
     brandSelect.innerHTML = "";  // Tyhjennetään vanhat valinnat
+    
+    // Valitaan oikea CSV-tiedosto käyttövoiman perusteella
     const devaluationFile = fuelType === 'sahko' ? 'devaluation_ev.csv' : 'devaluation.csv';
     devaluationData = await loadCSV(devaluationFile);
     
@@ -398,12 +448,32 @@ console.log("globalTotalIncludingCosts set to:", globalTotalIncludingCosts); // 
 // Lasketaan polttoainekustannukset tyypin ja käytön perusteella
 function calculateFuelCosts(fuelType, kilometers) {
     console.log(`Lasketaan polttoainekustannukset polttoainetyypille: ${fuelType}, ajomäärä: ${kilometers} km`);
-    let fuelCost = 0;
-    const fuelConsumption = parseFloat(document.getElementById(fuelType === 'sahko' ? 'electricPer100Km' : fuelType === 'kaasu' ? 'gasPer100Km' : 'fuelPer100Km').value) || 0;
-    const fuelPrice = parseFloat(fuelData[fuelType][0]) || 0;
-    fuelCost = (kilometers * fuelConsumption / 100 * fuelPrice);
-    console.log(`Lasketut polttoainekustannukset: ${fuelCost} €`);
-    return fuelCost;
+    let totalCost = 0;
+
+    if (fuelType === 'lataushybridi') {
+        // Lataushybridille lasketaan sekä polttoaine- että sähkökustannukset
+        const fuelConsumption = parseFloat(document.getElementById('fuelPer100Km').value) || 0;
+        const electricConsumption = parseFloat(document.getElementById('electricPer100Km').value) || 0;
+        const fuelPrice = parseFloat(fuelData['bensiini'][0]) || 0;
+        const electricPrice = parseFloat(fuelData['sahko'][0]) || 0;
+
+        // Oletetaan että 50% ajosta sähköllä ja 50% bensiinillä
+        const electricKm = kilometers * 0.5;
+        const fuelKm = kilometers * 0.5;
+
+        const fuelCost = (fuelKm * fuelConsumption / 100 * fuelPrice);
+        const electricCost = (electricKm * electricConsumption / 100 * electricPrice);
+        
+        totalCost = fuelCost + electricCost;
+    } else {
+        // Muille käyttövoimille lasketaan vain yhden energialähteen kustannukset
+        const consumption = parseFloat(document.getElementById(fuelType === 'sahko' ? 'electricPer100Km' : fuelType === 'kaasu' ? 'gasPer100Km' : 'fuelPer100Km').value) || 0;
+        const price = parseFloat(fuelData[fuelType][0]) || 0;
+        totalCost = (kilometers * consumption / 100 * price);
+    }
+
+    console.log(`Lasketut polttoainekustannukset: ${totalCost} €`);
+    return totalCost;
 }
 
 // Funktio poistamaan kortti fade-animaation kanssa
@@ -673,4 +743,89 @@ function switchTab(tab) {
     console.error('Error checking version:', error);
   }
 })();
+
+// Fuel Settings Modal functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('fuelSettingsModal');
+    const settingsIcon = document.getElementById('fuelSettingsIcon');
+    const closeBtn = document.querySelector('.close');
+    const saveBtn = document.getElementById('saveFuelSettings');
+    const resetBtn = document.getElementById('resetFuelSettings');
+
+    // Load saved fuel prices or defaults
+    function loadFuelPrices() {
+        const savedPrices = JSON.parse(localStorage.getItem('fuelPrices')) || {};
+        document.getElementById('electricPrice').value = savedPrices.electric || 0.20;
+        document.getElementById('electricCommercialPrice').value = savedPrices.electricCommercial || 0.22;
+        document.getElementById('electricCCSPrice').value = savedPrices.electricCCS || 0.36;
+        document.getElementById('gasolinePrice').value = savedPrices.gasoline || 1.85;
+        document.getElementById('dieselPrice').value = savedPrices.diesel || 1.45;
+        document.getElementById('gasPrice').value = savedPrices.gas || 1.10;
+    }
+
+    // Save fuel prices to localStorage
+    function saveFuelPrices() {
+        const prices = {
+            electric: parseFloat(document.getElementById('electricPrice').value),
+            electricCommercial: parseFloat(document.getElementById('electricCommercialPrice').value),
+            electricCCS: parseFloat(document.getElementById('electricCCSPrice').value),
+            gasoline: parseFloat(document.getElementById('gasolinePrice').value),
+            diesel: parseFloat(document.getElementById('dieselPrice').value),
+            gas: parseFloat(document.getElementById('gasPrice').value)
+        };
+        localStorage.setItem('fuelPrices', JSON.stringify(prices));
+        updateFuelData(prices);
+    }
+
+    // Update the global fuelData object
+    function updateFuelData(prices) {
+        fuelData = {
+            sahko: [prices.electric],
+            sahkoCommercial: [prices.electricCommercial],
+            sahkoCCS: [prices.electricCCS],
+            bensiini: [prices.gasoline],
+            diesel: [prices.diesel],
+            kaasu: [prices.gas],
+            lataushybridi: [prices.gasoline] // Lisätään lataushybridille bensiinin hinta
+        };
+    }
+
+    // Reset to default values
+    function resetFuelPrices() {
+        document.getElementById('electricPrice').value = 0.20;
+        document.getElementById('electricCommercialPrice').value = 0.22;
+        document.getElementById('electricCCSPrice').value = 0.36;
+        document.getElementById('gasolinePrice').value = 1.85;
+        document.getElementById('dieselPrice').value = 1.45;
+        document.getElementById('gasPrice').value = 1.10;
+        saveFuelPrices();
+    }
+
+    // Event listeners
+    settingsIcon.addEventListener('click', function() {
+        modal.classList.add('show');
+        loadFuelPrices();
+    });
+
+    closeBtn.addEventListener('click', function() {
+        modal.classList.remove('show');
+    });
+
+    saveBtn.addEventListener('click', function() {
+        saveFuelPrices();
+        modal.classList.remove('show');
+    });
+
+    resetBtn.addEventListener('click', resetFuelPrices);
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+
+    // Load initial fuel prices
+    loadFuelPrices();
+});
 

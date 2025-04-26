@@ -9,14 +9,14 @@
 
     <!-- For .png format -->
     <link rel="icon" href="/favicon.png" type="image/png">
-    <!-- Google Fonts - Josefin Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Linkki ulkoiseen tyylitiedostoon -->
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body onload="setRandomBackground()">
-<div class="container">
+<div class="container" style="position: relative;">
+    <i class="fas fa-cog settings-icon" id="fuelSettingsIcon" tabindex="0"></i>
     <!-- Title and description with click-to-reset functionality -->
     <div id="pageReset">
         <h2 class="domain">Autollehinta.fi</h2>
@@ -38,7 +38,7 @@
                     <select id="fuelType" onchange="updateBrandOptions(); toggleFuelInputs();">
                         <option value="bensiini">Bensiini</option>
                         <option value="bensiini">Hybridi, bensiini</option>
-                        <option value="bensiini">Lataushybridi, bensiini</option>
+                        <option value="lataushybridi">Lataushybridi, bensiini</option>
                         <option value="diesel">Diesel</option>
                         <option value="kaasu">Kaasu</option>
                         <option value="sahko">Sähkö</option>
@@ -82,7 +82,9 @@
 				</div>
                 </td>
                 <td>
-                    <button class="accordion active">Kulutustiedot</button>
+                    <button class="accordion active" type="button">
+                        <span class="accordion-title">Kulutustiedot</span>
+                    </button>
                     <div class="accordion-content" style="max-height: 500px; overflow: hidden;">
                         <div style="margin-top: 10px; margin-left: 10px;" class="grid-item fuel-inputs" id="fuelConsumption">
                             <label for="fuelConsumption">Polttoaine (l/100km):</label>
@@ -169,5 +171,40 @@
 <script src="/brands.js"></script>
 <script src="/javascript.js"></script>
 <script src="/footer.js"></script>
+
+<!-- Add this at the end of the body, before the closing </body> tag -->
+<div id="fuelSettingsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Polttoainehintojen asetukset</h2>
+        <div class="fuel-settings-grid">
+            <div class="fuel-setting-group">
+                <h3>Sähkö</h3>
+                <div class="fuel-setting"><label for="electricPrice">Kotilataus (€/kWh):</label><input type="number" step="0.01" id="electricPrice" value="0.20"></div>
+                <div class="fuel-setting"><label for="electricCommercialPrice">Asiointilataus 11-22kw (€/kWh):</label><input type="number" step="0.01" id="electricCommercialPrice" value="0.22"></div>
+                <div class="fuel-setting"><label for="electricCCSPrice">Pikalataus 50-400kw (€/kWh):</label><input type="number" step="0.01" id="electricCCSPrice" value="0.36"></div>
+            </div>
+            <div class="fuel-setting-group">
+                <h3>Polttoaineet</h3>
+                <div class="fuel-setting">
+                    <label for="gasolinePrice">Bensiini (€/l):</label>
+                    <input type="number" step="0.01" id="gasolinePrice" value="1.85">
+                </div>
+                <div class="fuel-setting">
+                    <label for="dieselPrice">Diesel (€/l):</label>
+                    <input type="number" step="0.01" id="dieselPrice" value="1.45">
+                </div>
+                <div class="fuel-setting">
+                    <label for="gasPrice">Kaasu (€/kg):</label>
+                    <input type="number" step="0.01" id="gasPrice" value="1.10">
+                </div>
+            </div>
+        </div>
+        <div class="modal-buttons">
+            <button id="saveFuelSettings">Tallenna</button>
+            <button id="resetFuelSettings">Palauta oletusarvot</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
