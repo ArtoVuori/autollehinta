@@ -175,23 +175,61 @@
         <div class="fuel-settings-grid">
             <div class="fuel-setting-group">
                 <h3>Sähkö</h3>
-                <div class="fuel-setting"><label for="electricPrice">Kotilataus (€/kWh):</label><input type="number" step="0.01" id="electricPrice" value="0.20"></div>
-                <div class="fuel-setting"><label for="electricCommercialPrice">Asiointilataus 11-22kw (€/kWh):</label><input type="number" step="0.01" id="electricCommercialPrice" value="0.22"></div>
-                <div class="fuel-setting"><label for="electricCCSPrice">Pikalataus 50-400kw (€/kWh):</label><input type="number" step="0.01" id="electricCCSPrice" value="0.36"></div>
+                <div class="fuel-settings-grid">
+                    <div class="grid-header">
+                        <div class="type-price">Lataustyyppi ja hinta</div>
+                        <div class="share">Latauksen osuus (%)</div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="type-price">
+                            <span class="label">Kotilataus (€/kWh):</span>
+                            <input type="number" step="0.01" id="electricPrice" value="0.20">
+                        </div>
+                        <div class="share">
+                            <input type="number" step="1" min="0" max="100" id="electricPriceShare" value="90">
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="type-price">
+                            <span class="label">Asiointilataus 11-22kw (€/kWh):</span>
+                            <input type="number" step="0.01" id="electricCommercialPrice" value="0.22">
+                        </div>
+                        <div class="share">
+                            <input type="number" step="1" min="0" max="100" id="electricCommercialShare" value="5">
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="type-price">
+                            <span class="label">Pikalataus 50-400kw (€/kWh):</span>
+                            <input type="number" step="0.01" id="electricCCSPrice" value="0.36">
+                        </div>
+                        <div class="share">
+                            <input type="number" step="1" min="0" max="100" id="electricCCSShare" value="5">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="fuel-setting-group">
-                <h3>Polttoaineet</h3>
-                <div class="fuel-setting">
-                    <label for="gasolinePrice">Bensiini (€/l):</label>
-                    <input type="number" step="0.01" id="gasolinePrice" value="1.85">
-                </div>
-                <div class="fuel-setting">
-                    <label for="dieselPrice">Diesel (€/l):</label>
-                    <input type="number" step="0.01" id="dieselPrice" value="1.45">
-                </div>
-                <div class="fuel-setting">
-                    <label for="gasPrice">Kaasu (€/kg):</label>
-                    <input type="number" step="0.01" id="gasPrice" value="1.10">
+                <h3>Muut polttoaineet</h3>
+                <div class="fuel-settings-grid">
+                    <div class="grid-row">
+                        <div class="type-price">
+                            <span class="label">Bensiini (€/l):</span>
+                            <input type="number" step="0.01" id="gasolinePrice" value="1.85">
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="type-price">
+                            <span class="label">Diesel (€/l):</span>
+                            <input type="number" step="0.01" id="dieselPrice" value="1.45">
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="type-price">
+                            <span class="label">Kaasu (€/kg):</span>
+                            <input type="number" step="0.01" id="gasPrice" value="1.10">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -373,7 +373,7 @@ document.addEventListener("DOMContentLoaded", function () {
 async function calculate() {
     console.log('Aloitetaan laskenta.');
 
-    // Hae syötearvot
+    // Haetaan syötteet
     const fuelType = document.getElementById('fuelType').value;
     const selectedBrand = document.getElementById('brand').value;
     const selectedAge = parseInt(document.getElementById('age').value);
@@ -532,7 +532,7 @@ function calculateFuelCosts(fuelType, kilometers) {
         const fuelConsumption = parseFloat(document.getElementById('fuelPer100Km').value) || 0;
         const electricConsumption = parseFloat(document.getElementById('electricPer100Km').value) || 0;
         const fuelPrice = parseFloat(fuelData['bensiini'][0]) || 0;
-        const electricPrice = parseFloat(fuelData['sahko'][0]) || 0;
+        const electricPrice = calculateElectricityPrice(); // Käytetään painotettua sähkön hintaa
 
         // Oletetaan että 50% ajosta sähköllä ja 50% bensiinillä
         const electricKm = kilometers * 0.5;
@@ -542,9 +542,14 @@ function calculateFuelCosts(fuelType, kilometers) {
         const electricCost = (electricKm * electricConsumption / 100 * electricPrice);
         
         totalCost = fuelCost + electricCost;
+    } else if (fuelType === 'sahko') {
+        // Sähköautolle käytetään painotettua sähkön hintaa
+        const electricConsumption = parseFloat(document.getElementById('electricPer100Km').value) || 0;
+        const electricPrice = calculateElectricityPrice();
+        totalCost = (kilometers * electricConsumption / 100 * electricPrice);
     } else {
         // Muille käyttövoimille lasketaan vain yhden energialähteen kustannukset
-        const consumption = parseFloat(document.getElementById(fuelType === 'sahko' ? 'electricPer100Km' : fuelType === 'kaasu' ? 'gasPer100Km' : 'fuelPer100Km').value) || 0;
+        const consumption = parseFloat(document.getElementById(fuelType === 'kaasu' ? 'gasPer100Km' : 'fuelPer100Km').value) || 0;
         const price = parseFloat(fuelData[fuelType][0]) || 0;
         totalCost = (kilometers * consumption / 100 * price);
     }
@@ -905,4 +910,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load initial fuel prices
     loadFuelPrices();
 });
+
+function calculateElectricityPrice() {
+    // Haetaan lataushinnat
+    const homePrice = parseFloat(document.getElementById('electricPrice').value) || 0;
+    const commercialPrice = parseFloat(document.getElementById('electricCommercialPrice').value) || 0;
+    const ccsPrice = parseFloat(document.getElementById('electricCCSPrice').value) || 0;
+
+    // Haetaan latausosuudet
+    const homeShare = parseFloat(document.getElementById('electricPriceShare').value) || 0;
+    const commercialShare = parseFloat(document.getElementById('electricCommercialShare').value) || 0;
+    const ccsShare = parseFloat(document.getElementById('electricCCSShare').value) || 0;
+
+    // Lasketaan painotettu keskihinta
+    const weightedPrice = (
+        (homePrice * (homeShare / 100)) +
+        (commercialPrice * (commercialShare / 100)) +
+        (ccsPrice * (ccsShare / 100))
+    );
+
+    return weightedPrice;
+}
 
