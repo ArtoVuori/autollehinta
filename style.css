@@ -1093,4 +1093,160 @@ input[type="number"]:-webkit-autofill:focus {
     font-size: 14px;
 }
 
+/* Mobiiliresponsiivisuus polttoaineasetuksille */
+@media screen and (max-width: 768px) {
+    .modal {
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .modal-content {
+        width: 100%;
+        margin: 0;
+        padding: 15px;
+        border-radius: 8px;
+        max-height: 95vh;
+        overflow-y: auto;
+    }
+
+    /* Säilytetään grid-rakenne myös mobiilissa */
+    .grid-header, .grid-row {
+        grid-template-columns: 2fr 1fr; /* Säilytetään kaksi saraketta */
+        gap: 10px;
+        align-items: center;
+    }
+
+    .type-price {
+        flex-direction: row; /* Pidetään elementit rivissä */
+        align-items: center;
+        gap: 8px;
+    }
+
+    .type-price .label {
+        width: auto;
+        margin-bottom: 0;
+        font-size: 12px;
+        flex: 1;
+        white-space: normal; /* Sallitaan tekstin rivittyminen */
+    }
+
+    .type-price input[type="number"] {
+        width: 70px; /* Kiinteä leveys numerolle */
+        min-width: 70px;
+    }
+
+    .share input[type="number"] {
+        width: 50px; /* Pienempi leveys prosenttikentälle */
+        min-width: 50px;
+    }
+
+    .share {
+        margin-top: 0;
+        width: auto;
+        justify-content: flex-end;
+    }
+
+    .grid-header .share {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    /* Optimoidaan otsikot */
+    .fuel-setting-group h3 {
+        font-size: 14px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+
+    /* Optimoidaan syöttökentät */
+    .fuel-setting input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    /* Muut mobiilioptimoidut tyylit */
+    .modal-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .modal-buttons button {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .close {
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 28px;
+    }
+
+    /* Vierityspalkin tyylit */
+    .modal-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .modal-content::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    /* Vierityksen indikaattorit */
+    .modal-content::after {
+        content: '';
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: linear-gradient(to top, rgba(27, 38, 49, 0.7), transparent);
+        pointer-events: none;
+    }
+
+    .modal-content::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: linear-gradient(to bottom, rgba(27, 38, 49, 0.7), transparent);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* Lisätään apuviivat taulukon selkeyttämiseksi */
+    .grid-row {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 8px 0;
+    }
+
+    .grid-row:last-child {
+        border-bottom: none;
+    }
+}
+
+/* Tablet-optimointi */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .modal-content {
+        width: 90%;
+        max-width: 600px;
+    }
+
+    .type-price input[type="number"] {
+        width: 100px;
+    }
+
+    .share input[type="number"] {
+        width: 80px;
+    }
+}
+
 	
