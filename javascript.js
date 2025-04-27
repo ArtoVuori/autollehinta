@@ -30,6 +30,7 @@ loadGoogleFonts();
 // Alustetaan globaalit muuttujat
 let devaluationData = {};
 let fuelData = {};
+let mileageFactors = {}; // Lisätään uusi globaali muuttuja kilometrikertoimille
 let annualFuelCost = 0;
 let annualElectricCost = 0;
 let annualGasCost = 0;
@@ -217,19 +218,109 @@ async function loadFuelData() {
     console.log('Polttoainetiedot ladattu:', fuelData);
 }
 
-// Lasketaan arvonalenema, käyttämällä sopivaa kerrointa
-function calculateDepreciation(age, depreciationArray) {
-    console.log(`Lasketaan arvonalenema iälle: ${age}`);
+// Ladataan kilometrikertoimet CSV-tiedostosta
+async function loadMileageFactors() {
+    console.log('Ladataan kilometrikertoimia...');
+    try {
+        const response = await fetch('mileage_factors.csv');
+        const data = await response.text();
+        const rows = data.split('\n').slice(1); // Poistetaan otsikkorivi
+        
+        rows.forEach(row => {
+            if (!row.trim()) return; // Ohitetaan tyhjät rivit
+            const cols = row.split(';').map(col => col.trim());
+            const brand = cols[0];
+            const factors = {
+                '50000': parseFloat(cols[1]),
+                '100000': parseFloat(cols[2]),
+                '150000': parseFloat(cols[3]),
+                '200000': parseFloat(cols[4]),
+                '250000': parseFloat(cols[5]),
+                '300000': parseFloat(cols[6]),
+                'yli300000': parseFloat(cols[7])
+            };
+            mileageFactors[brand] = factors;
+        });
+        
+        console.log('Kilometrikertoimet ladattu:', mileageFactors);
+    } catch (error) {
+        console.error('Virhe kilometrikertoimien latauksessa:', error);
+        // Asetetaan oletuskertoimet jos lataus epäonnistuu
+        mileageFactors = {
+            'default': {
+                '50000': 1.0,
+                '100000': 1.10,
+                '150000': 1.20,
+                '200000': 1.30,
+                '250000': 1.40,
+                '300000': 1.50,
+                'yli300000': 1.60
+            }
+        };
+    }
+}
+
+// Haetaan kilometrikerroin
+function getMileageFactor(brand, kilometers, fuelType, age) {
+    // Lisätään _ev pääte sähköautoille
+    const brandKey = fuelType === 'sahko' ? `${brand}_ev` : brand;
     
-    // Jos ikä ylittää 10 vuotta, käytetään jäännösarvoa
-    if (age >= 10) {  
-        console.warn(`Ikä ${age} ylittää 10 vuotta. Käytetään 10 % jäännösarvoa.`);
-        return 0.9; // 90 % alenema eli 10 % jäännösarvo
+    // Haetaan merkin kertoimet tai oletuskertoimet
+    const factors = mileageFactors[brandKey] || mileageFactors['default'];
+    
+    // Valitaan oikea kerroin kilometrien ja iän perusteella
+    let baseKerroin;
+    if (kilometers <= 50000) baseKerroin = factors['50000'];
+    else if (kilometers <= 100000) baseKerroin = factors['100000'];
+    else if (kilometers <= 150000) baseKerroin = factors['150000'];
+    else if (kilometers <= 200000) baseKerroin = factors['200000'];
+    else if (kilometers <= 250000) baseKerroin = factors['250000'];
+    else if (kilometers <= 300000) baseKerroin = factors['300000'];
+    else baseKerroin = factors['yli300000'];
+    
+    // Sovelletaan ikäkorjausta
+    if (age <= 2) return baseKerroin;
+    else if (age <= 5) return baseKerroin * 0.95;
+    else if (age <= 8) return baseKerroin * 0.9;
+    else return baseKerroin * 0.85;
+}
+
+// Lasketaan arvonalenema, käyttämällä sopivaa kerrointa
+function calculateDepreciation(age, depreciationArray, brand, kilometers, fuelType) {
+    console.log(`Lasketaan arvonalenema iälle: ${age}, kilometrit: ${kilometers}`);
+    
+    // Laajennetaan ikärajaa 20 vuoteen
+    if (age >= 20) {  
+        console.warn(`Ikä ${age} ylittää 20 vuotta. Käytetään 95 % alenemaa.`);
+        return 0.95; // 95 % alenema eli 5 % jäännösarvo
     }
     
-    // Hae oikea kerroin iälle
-    let depreciationFactor = parseFloat(depreciationArray[age - 1]); // Haetaan oikea kerroin iälle
-    console.log(`Käytetty kerroin iälle ${age} on: ${depreciationFactor}`);
+    // 10-20 vuotiaille autoille sovelletaan asteittaista alenemaa
+    if (age >= 10) {
+        // Lasketaan lisäalenema vuosille 10-20
+        // Alenema kasvaa hitaammin vanhemmilla autoilla
+        const baseDepreciation = 0.9; // 10v auton perusarvonalenema
+        const additionalYears = age - 10;
+        const yearlyIncrease = 0.005; // 0.5% lisäalenema per vuosi
+        
+        return Math.min(0.95, baseDepreciation + (additionalYears * yearlyIncrease));
+    }
+    
+    // Hae peruskerroin iälle
+    let depreciationFactor = parseFloat(depreciationArray[age - 1]);
+    
+    // Hae kilometrikerroin jos kilometrit on annettu
+    if (kilometers > 0) {
+        const mileageFactor = getMileageFactor(brand, kilometers, fuelType, age);
+        console.log(`Kilometrikerroin: ${mileageFactor} (${kilometers} km)`);
+        // Sovelletaan kilometrikerrointa
+        depreciationFactor = depreciationFactor * mileageFactor;
+    }
+    
+    // Varmista ettei alenema ylitä 95%
+    depreciationFactor = Math.min(depreciationFactor, 0.95);
+    
+    console.log(`Käytetty kokonaiskerroin: ${depreciationFactor}`);
     return depreciationFactor;
 }
 
@@ -373,13 +464,19 @@ document.addEventListener("DOMContentLoaded", function () {
 async function calculate() {
     console.log('Aloitetaan laskenta.');
 
+    // Varmistetaan että kilometrikertoimet on ladattu
+    if (Object.keys(mileageFactors).length === 0) {
+        await loadMileageFactors();
+    }
+
     // Haetaan syötteet
     const fuelType = document.getElementById('fuelType').value;
     const selectedBrand = document.getElementById('brand').value;
     const selectedAge = parseInt(document.getElementById('age').value);
     const price = parseFloat(document.getElementById(isUsed ? 'priceUsed' : 'price').value);
     const modelYear = isUsed ? parseInt(document.getElementById('modelYear').value) : new Date().getFullYear();
-    const kilometers = parseFloat(document.getElementById('kilometers').value) || 0;
+    const kilometers = isUsed ? parseFloat(document.getElementById('drivenKilometers').value) || 0 : 0;
+    const annualKilometers = parseFloat(document.getElementById('kilometers').value) || 0;
     const annualInsuranceCost = parseFloat(document.getElementById('insurance').value) || 0;
     const annualTaxCost = parseFloat(document.getElementById('tax').value) || 0;
     const maintenance = parseFloat(document.getElementById('maintenance').value) || 0;
@@ -424,8 +521,8 @@ async function calculate() {
     // Laske arvonalenema
     if (devaluationData[selectedBrand]) {
         const depreciationArray = devaluationData[selectedBrand];
-        let depreciationFactorCurrentAge = calculateDepreciation(currentAge, depreciationArray);
-        let depreciationFactorCombinedAge = calculateDepreciation(combinedAge, depreciationArray);
+        let depreciationFactorCurrentAge = calculateDepreciation(currentAge, depreciationArray, selectedBrand, kilometers, fuelType);
+        let depreciationFactorCombinedAge = calculateDepreciation(combinedAge, depreciationArray, selectedBrand, kilometers + (annualKilometers * selectedAge), fuelType);
 
         if (combinedAge > 10) {
             futureValue = price;
@@ -433,8 +530,9 @@ async function calculate() {
             depreciation = (price - futureValue).toFixed(2);
         } else {
             if (isUsed) {
-                let initialPrice = price / (1 - depreciationFactorCurrentAge);
-                futureValue = initialPrice * (1 - depreciationFactorCombinedAge);
+                // Palautetaan alkuperäinen logiikka käytetylle autolle
+                // Tämä käyttää nykyistä hintaa ja soveltaa siihen tulevaa arvonalenemaa
+                futureValue = price * (1 - depreciationFactorCombinedAge) / (1 - depreciationFactorCurrentAge);
             } else {
                 futureValue = price * (1 - depreciationFactorCombinedAge);
             }
@@ -454,11 +552,17 @@ async function calculate() {
     globalDepreciation = parseFloat(depreciation);
 
     // Calculate annual costs
-    let annualFuelCost = calculateFuelCosts(fuelType, kilometers);
-    globalTotalCosts = annualFuelCost + annualInsuranceCost + annualTaxCost + maintenance + tires + otherCosts;
+    let annualFuelCost = calculateFuelCosts(fuelType, annualKilometers);
+    
+    // Calculate annual maintenance costs
+    const annualMaintenance = maintenance / selectedAge;
+    const annualTires = tires / selectedAge;
+    const annualOtherCosts = otherCosts / selectedAge;
+    
+    globalTotalCosts = annualFuelCost + annualInsuranceCost + annualTaxCost + annualMaintenance + annualTires + annualOtherCosts;
 
     // Calculate total cost including depreciation
-   const totalCostWithoutDepreciation = globalTotalCosts * selectedAge;
+    const totalCostWithoutDepreciation = globalTotalCosts * selectedAge;
 globalTotalIncludingCosts = parseFloat((totalCostWithoutDepreciation + globalDepreciation).toFixed(2));
 
 console.log("globalTotalIncludingCosts set to:", globalTotalIncludingCosts); // Check the value here
@@ -469,7 +573,7 @@ console.log("globalTotalIncludingCosts set to:", globalTotalIncludingCosts); // 
 
     // Display the result in HTML
 	document.getElementById('result').innerHTML = `
-		<p class="result-paragraph">Auton arvo ${combinedAge} vuoden jälkeen on ${futureValue.toFixed(0)} €</p>
+		<p class="result-paragraph">Auton arvo ${combinedAge} vuoden jälkeen on ${futureValue.toFixed(0)} € (${new Date().getFullYear() + selectedAge})</p>
 		<ul style="font-size: smaller;">
 			<li>Arvon alenema seuraavan ${selectedAge} vuoden aikana on ${depreciation} €.</li>
 			${annualFuelCost > 0 ? `<li>Vuosittaiset polttoainekustannukset ovat ${annualFuelCost.toFixed(2)} €.</li>` : ''}
@@ -532,16 +636,25 @@ function calculateFuelCosts(fuelType, kilometers) {
         const fuelConsumption = parseFloat(document.getElementById('fuelPer100Km').value) || 0;
         const electricConsumption = parseFloat(document.getElementById('electricPer100Km').value) || 0;
         const fuelPrice = parseFloat(fuelData['bensiini'][0]) || 0;
-        const electricPrice = calculateElectricityPrice(); // Käytetään painotettua sähkön hintaa
+        const electricPrice = calculateElectricityPrice();
 
-        // Oletetaan että 50% ajosta sähköllä ja 50% bensiinillä
-        const electricKm = kilometers * 0.5;
-        const fuelKm = kilometers * 0.5;
+        // Lasketaan sähköllä ajettava osuus auton sähköisen toimintamatkan perusteella
+        const electricRange = 50; // Keskimääräinen sähköinen toimintamatka km
+        const dailyKm = kilometers / 365; // Keskimääräinen päivittäinen ajomatka
+        
+        // Jos päivittäinen ajomatka on alle sähköisen toimintamatkan, käytetään enemmän sähköä
+        let electricShare = Math.min(0.8, electricRange / dailyKm);
+        electricShare = Math.max(0.2, electricShare); // Vähintään 20% sähköllä
+        
+        const electricKm = kilometers * electricShare;
+        const fuelKm = kilometers * (1 - electricShare);
 
         const fuelCost = (fuelKm * fuelConsumption / 100 * fuelPrice);
         const electricCost = (electricKm * electricConsumption / 100 * electricPrice);
         
         totalCost = fuelCost + electricCost;
+        
+        console.log(`Lataushybridin jako: ${(electricShare*100).toFixed(1)}% sähköllä, ${((1-electricShare)*100).toFixed(1)}% polttoaineella`);
     } else if (fuelType === 'sahko') {
         // Sähköautolle käytetään painotettua sähkön hintaa
         const electricConsumption = parseFloat(document.getElementById('electricPer100Km').value) || 0;
@@ -556,6 +669,41 @@ function calculateFuelCosts(fuelType, kilometers) {
 
     console.log(`Lasketut polttoainekustannukset: ${totalCost} €`);
     return totalCost;
+}
+
+function calculateElectricityPrice() {
+    // Haetaan lataushinnat
+    const homePrice = parseFloat(document.getElementById('electricPrice').value) || 0;
+    const commercialPrice = parseFloat(document.getElementById('electricCommercialPrice').value) || 0;
+    const ccsPrice = parseFloat(document.getElementById('electricCCSPrice').value) || 0;
+
+    // Haetaan latausosuudet
+    let homeShare = parseFloat(document.getElementById('electricPriceShare').value) || 0;
+    let commercialShare = parseFloat(document.getElementById('electricCommercialShare').value) || 0;
+    let ccsShare = parseFloat(document.getElementById('electricCCSShare').value) || 0;
+
+    // Normalisoidaan osuudet summautumaan 100%
+    const totalShare = homeShare + commercialShare + ccsShare;
+    if (totalShare > 0) {
+        homeShare = (homeShare / totalShare) * 100;
+        commercialShare = (commercialShare / totalShare) * 100;
+        ccsShare = (ccsShare / totalShare) * 100;
+    } else {
+        // Jos kaikki osuudet ovat 0, käytetään oletusjakaumaa
+        homeShare = 90;
+        commercialShare = 5;
+        ccsShare = 5;
+    }
+
+    // Lasketaan painotettu keskihinta
+    const weightedPrice = (
+        (homePrice * (homeShare / 100)) +
+        (commercialPrice * (commercialShare / 100)) +
+        (ccsPrice * (ccsShare / 100))
+    );
+
+    console.log(`Painotettu sähkön hinta: ${weightedPrice.toFixed(3)} €/kWh (Koti: ${homeShare.toFixed(1)}%, Asiointi: ${commercialShare.toFixed(1)}%, Pika: ${ccsShare.toFixed(1)}%)`);
+    return weightedPrice;
 }
 
 // Funktio poistamaan kortti fade-animaation kanssa
@@ -910,25 +1058,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load initial fuel prices
     loadFuelPrices();
 });
-
-function calculateElectricityPrice() {
-    // Haetaan lataushinnat
-    const homePrice = parseFloat(document.getElementById('electricPrice').value) || 0;
-    const commercialPrice = parseFloat(document.getElementById('electricCommercialPrice').value) || 0;
-    const ccsPrice = parseFloat(document.getElementById('electricCCSPrice').value) || 0;
-
-    // Haetaan latausosuudet
-    const homeShare = parseFloat(document.getElementById('electricPriceShare').value) || 0;
-    const commercialShare = parseFloat(document.getElementById('electricCommercialShare').value) || 0;
-    const ccsShare = parseFloat(document.getElementById('electricCCSShare').value) || 0;
-
-    // Lasketaan painotettu keskihinta
-    const weightedPrice = (
-        (homePrice * (homeShare / 100)) +
-        (commercialPrice * (commercialShare / 100)) +
-        (ccsPrice * (ccsShare / 100))
-    );
-
-    return weightedPrice;
-}
 
