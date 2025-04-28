@@ -567,9 +567,9 @@ async function calculate() {
 
     // Calculate total cost including depreciation
     const totalCostWithoutDepreciation = globalTotalCosts * selectedAge;
-globalTotalIncludingCosts = parseFloat((totalCostWithoutDepreciation + globalDepreciation).toFixed(2));
+    globalTotalIncludingCosts = parseFloat((totalCostWithoutDepreciation + globalDepreciation).toFixed(2));
 
-console.log("globalTotalIncludingCosts set to:", globalTotalIncludingCosts); // Check the value here
+    console.log("globalTotalIncludingCosts set to:", globalTotalIncludingCosts);
 
     const totalMonths = selectedAge * 12;
     const monthlyCost = (globalTotalIncludingCosts / totalMonths).toFixed(2);
