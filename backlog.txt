@@ -1,3 +1,7 @@
+Korjaa:
+- arvonalenama ei toimi oikein
+
+
 Arvonalenemalaskenta 2.0
 
 Merkit

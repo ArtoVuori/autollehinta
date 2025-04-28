@@ -289,32 +289,24 @@ function getMileageFactor(brand, kilometers, fuelType, age) {
 function calculateDepreciation(age, depreciationArray, brand, kilometers, fuelType) {
     console.log(`Lasketaan arvonalenema iälle: ${age}, kilometrit: ${kilometers}`);
     
-    // Laajennetaan ikärajaa 20 vuoteen
+    // Jos ikä ylittää 20 vuotta, käytetään 95% alenemaa
     if (age >= 20) {  
         console.warn(`Ikä ${age} ylittää 20 vuotta. Käytetään 95 % alenemaa.`);
-        return 0.95; // 95 % alenema eli 5 % jäännösarvo
+        return 0.95;
     }
     
-    // 10-20 vuotiaille autoille sovelletaan asteittaista alenemaa
-    if (age >= 10) {
-        // Lasketaan lisäalenema vuosille 10-20
-        // Alenema kasvaa hitaammin vanhemmilla autoilla
-        const baseDepreciation = 0.9; // 10v auton perusarvonalenema
-        const additionalYears = age - 10;
-        const yearlyIncrease = 0.005; // 0.5% lisäalenema per vuosi
-        
-        return Math.min(0.95, baseDepreciation + (additionalYears * yearlyIncrease));
-    }
-    
-    // Hae peruskerroin iälle
-    let depreciationFactor = parseFloat(depreciationArray[age - 1]);
+    // Hae arvonalenema CSV-tiedostosta
+    let depreciationFactor = parseFloat(depreciationArray[age]);
     
     // Hae kilometrikerroin jos kilometrit on annettu
     if (kilometers > 0) {
         const mileageFactor = getMileageFactor(brand, kilometers, fuelType, age);
         console.log(`Kilometrikerroin: ${mileageFactor} (${kilometers} km)`);
-        // Sovelletaan kilometrikerrointa
-        depreciationFactor = depreciationFactor * mileageFactor;
+        // Sovelletaan kilometrikerrointa - suurempi kerroin tarkoittaa suurempaa alenemaa
+        // Jos kilometrikerroin on 1.2, alenema kasvaa 20% jäljellä olevasta arvosta
+        const remainingValue = 1 - depreciationFactor;
+        const additionalDepreciation = remainingValue * (mileageFactor - 1);
+        depreciationFactor = depreciationFactor + additionalDepreciation;
     }
     
     // Varmista ettei alenema ylitä 95%
@@ -325,12 +317,6 @@ function calculateDepreciation(age, depreciationArray, brand, kilometers, fuelTy
 }
 
 // Käsitellään tapahtumat DOM:n latautumisen jälkeen
-document.addEventListener("DOMContentLoaded", function () {
-    console.log('DOM ladattu, lisätään tapahtumakuuntelijat.');
-
-
-   // Alustetaan "Tyhjennä"-nappula
-    const clearButton = document.getElementById('clearButton');
 document.addEventListener("DOMContentLoaded", function () {
     console.log('DOM ladattu, lisätään tapahtumakuuntelijat.');
 
@@ -359,8 +345,6 @@ document.addEventListener("DOMContentLoaded", function () {
         clearSavedResults(); // Tyhjennä tallennetut tulokset
         this.style.display = 'none'; // Piilota Tyhjennä-nappula
     });
-});
-
 
     // Lisää tapahtumakuuntelija Lisää vertailuun -napille
     document.getElementById('addToCompareButton').addEventListener('click', function() {
@@ -374,19 +358,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // Näytetään "Tyhjennä"-nappula kun "Lisää vertailuun" -nappulaa on painettu
         clearButton.style.display = 'inline-block';
     });
-    // Lisää tapahtumakuuntelija Tyhjennä-napille
-    clearButton.addEventListener('click', function() {
-        clearSavedResults(); // Tyhjennä tallennetut tulokset
-        // Piilota "Tyhjennä"-nappula kun sitä on painettu
-        this.style.display = 'none';
-    });
-	
-
 
     // Täytetään auton iät ja merkit
     fillAgeOptions();
     loadFuelData();
-    updateBrandOptions();
+    updateBrandOptions(); // Tämä on ainoa paikka, jossa automerkit päivitetään
 
     // Accordion-ominaisuus
     const accordions = document.querySelectorAll(".accordion");
@@ -418,9 +394,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-});
-
-
+    });
 
     // Lisää tapahtumakuuntelija "Vertaa tästä" -painikkeelle
     document.getElementById('mainButton').addEventListener('click', function() {
@@ -524,20 +498,14 @@ async function calculate() {
         let depreciationFactorCurrentAge = calculateDepreciation(currentAge, depreciationArray, selectedBrand, kilometers, fuelType);
         let depreciationFactorCombinedAge = calculateDepreciation(combinedAge, depreciationArray, selectedBrand, kilometers + (annualKilometers * selectedAge), fuelType);
 
-        if (combinedAge > 10) {
-            futureValue = price;
-            for (let i = 0; i < selectedAge; i++) futureValue *= 0.9;
-            depreciation = (price - futureValue).toFixed(2);
+        if (isUsed) {
+            // Palautetaan alkuperäinen logiikka käytetylle autolle
+            // Tämä käyttää nykyistä hintaa ja soveltaa siihen tulevaa arvonalenemaa
+            futureValue = price * (1 - (depreciationFactorCombinedAge - depreciationFactorCurrentAge));
         } else {
-            if (isUsed) {
-                // Palautetaan alkuperäinen logiikka käytetylle autolle
-                // Tämä käyttää nykyistä hintaa ja soveltaa siihen tulevaa arvonalenemaa
-                futureValue = price * (1 - depreciationFactorCombinedAge) / (1 - depreciationFactorCurrentAge);
-            } else {
-                futureValue = price * (1 - depreciationFactorCombinedAge);
-            }
-            depreciation = Math.abs((price - futureValue).toFixed(2));
+            futureValue = price * (1 - depreciationFactorCombinedAge);
         }
+        depreciation = Math.abs((price - futureValue).toFixed(2));
 
         futureValue = Math.max(0, futureValue);
     } else {
@@ -572,15 +540,18 @@ console.log("globalTotalIncludingCosts set to:", globalTotalIncludingCosts); // 
     const monthlyCostWithoutDepreciation = (totalCostWithoutDepreciation / totalMonths).toFixed(2);
 
     // Display the result in HTML
+    const startYear = isUsed ? modelYear : new Date().getFullYear();
+    const endYear = startYear + selectedAge;
+    
 	document.getElementById('result').innerHTML = `
-		<p class="result-paragraph">Auton arvo ${combinedAge} vuoden jälkeen on ${futureValue.toFixed(0)} € (${new Date().getFullYear() + selectedAge})</p>
+		<p class="result-paragraph">Auton arvo ${combinedAge} vuoden jälkeen on ${futureValue.toFixed(0)} € (${endYear})</p>
 		<ul style="font-size: smaller;">
 			<li>Arvon alenema seuraavan ${selectedAge} vuoden aikana on ${depreciation} €.</li>
 			${annualFuelCost > 0 ? `<li>Vuosittaiset polttoainekustannukset ovat ${annualFuelCost.toFixed(2)} €.</li>` : ''}
 			${annualInsuranceCost > 0 ? `<li>Vuosittaiset vakuutuskustannukset ovat ${annualInsuranceCost} €.</li>` : ''}
 			${annualTaxCost > 0 ? `<li>Vuosittaiset verokustannukset ovat ${annualTaxCost} €.</li>` : ''}
 		</ul>
-		<p class="result-paragraph">Kokonaiskustannukset ${selectedAge} vuodelta ${globalTotalIncludingCosts} €.</p>
+		<p class="result-paragraph">Kokonaiskustannukset ${selectedAge} vuodelta ${globalTotalIncludingCosts} € (${startYear}-${endYear}).</p>
 		<ul style="font-size: smaller;">
 			<li>Kuukausikustannukset ${monthlyCost} €.</li>
 			<li>Arvon alenema kuukaudessa ${(monthlyCost - monthlyCostWithoutDepreciation).toFixed(2)} €.</li>
@@ -880,7 +851,7 @@ async function logCalculate() {
 }
 
 // Tallennetaan Vertailuun lisäykset palvelimelle
-async function logAddToCompare() {
+async function logAddToCompare(details) {
     console.log("logAddToCompare() kutsuttu");
 
     // Log global variables to confirm correct values
