@@ -278,11 +278,29 @@ function getMileageFactor(brand, kilometers, fuelType, age) {
     else if (kilometers <= 300000) baseKerroin = factors['300000'];
     else baseKerroin = factors['yli300000'];
     
+    // Varmistetaan että peruskerroin on järkevä
+    if (isNaN(baseKerroin) || baseKerroin <= 0) {
+        console.warn(`Virheellinen peruskerroin: ${baseKerroin}, käytetään oletusarvoa 1.0`);
+        baseKerroin = 1.0;
+    }
+    
     // Sovelletaan ikäkorjausta
-    if (age <= 2) return baseKerroin;
-    else if (age <= 5) return baseKerroin * 0.95;
-    else if (age <= 8) return baseKerroin * 0.9;
-    else return baseKerroin * 0.85;
+    let ageFactor = 1.0;
+    if (age <= 2) ageFactor = 1.0;
+    else if (age <= 5) ageFactor = 0.95;
+    else if (age <= 8) ageFactor = 0.9;
+    else ageFactor = 0.85;
+    
+    // Lasketaan lopullinen kerroin
+    const finalKerroin = baseKerroin * ageFactor;
+    
+    // Varmistetaan että lopullinen kerroin on järkevä
+    if (isNaN(finalKerroin) || finalKerroin <= 0) {
+        console.warn(`Virheellinen lopullinen kerroin: ${finalKerroin}, käytetään oletusarvoa 1.0`);
+        return 1.0;
+    }
+    
+    return finalKerroin;
 }
 
 // Lasketaan arvonalenema, käyttämällä sopivaa kerrointa
@@ -295,22 +313,40 @@ function calculateDepreciation(age, depreciationArray, brand, kilometers, fuelTy
         return 0.95;
     }
     
+    // Varmistetaan että ikä on järkevä
+    if (age < 0 || age >= depreciationArray.length) {
+        console.warn(`Virheellinen ikä: ${age}, käytetään oletusarvoa 0.95`);
+        return 0.95;
+    }
+    
     // Hae arvonalenema CSV-tiedostosta
     let depreciationFactor = parseFloat(depreciationArray[age]);
+    
+    // Varmistetaan että arvonalenema on järkevä
+    if (isNaN(depreciationFactor) || depreciationFactor < 0) {
+        console.warn(`Virheellinen arvonalenema: ${depreciationFactor}, käytetään oletusarvoa 0.95`);
+        depreciationFactor = 0.95;
+    }
     
     // Hae kilometrikerroin jos kilometrit on annettu
     if (kilometers > 0) {
         const mileageFactor = getMileageFactor(brand, kilometers, fuelType, age);
         console.log(`Kilometrikerroin: ${mileageFactor} (${kilometers} km)`);
+        
+        // Varmistetaan että kilometrikerroin on järkevä
+        if (isNaN(mileageFactor) || mileageFactor <= 0) {
+            console.warn(`Virheellinen kilometrikerroin: ${mileageFactor}, käytetään oletusarvoa 1.0`);
+            return depreciationFactor;
+        }
+        
         // Sovelletaan kilometrikerrointa - suurempi kerroin tarkoittaa suurempaa alenemaa
-        // Jos kilometrikerroin on 1.2, alenema kasvaa 20% jäljellä olevasta arvosta
         const remainingValue = 1 - depreciationFactor;
         const additionalDepreciation = remainingValue * (mileageFactor - 1);
         depreciationFactor = depreciationFactor + additionalDepreciation;
     }
     
-    // Varmista ettei alenema ylitä 95%
-    depreciationFactor = Math.min(depreciationFactor, 0.95);
+    // Varmista ettei alenema ylitä 95% tai ole negatiivinen
+    depreciationFactor = Math.min(Math.max(depreciationFactor, 0), 0.95);
     
     console.log(`Käytetty kokonaiskerroin: ${depreciationFactor}`);
     return depreciationFactor;
@@ -542,6 +578,8 @@ console.log("globalTotalIncludingCosts set to:", globalTotalIncludingCosts); // 
     // Display the result in HTML
     const startYear = isUsed ? modelYear : new Date().getFullYear();
     const endYear = startYear + selectedAge;
+    const currentMileage = isUsed ? parseFloat(document.getElementById('drivenKilometers').value) || 0 : 0;
+    const futureMileage = currentMileage + (annualKilometers * selectedAge);
     
 	document.getElementById('result').innerHTML = `
 		<p class="result-paragraph">Auton arvo ${combinedAge} vuoden jälkeen on ${futureValue.toFixed(0)} € (${endYear})</p>
@@ -556,6 +594,7 @@ console.log("globalTotalIncludingCosts set to:", globalTotalIncludingCosts); // 
 			<li>Kuukausikustannukset ${monthlyCost} €.</li>
 			<li>Arvon alenema kuukaudessa ${(monthlyCost - monthlyCostWithoutDepreciation).toFixed(2)} €.</li>
 			<li>Kuukausikustannukset ilman arvonalenemaa ${monthlyCostWithoutDepreciation} €.</li>
+			<li>Auton mittarilukema ${futureMileage.toFixed(0)} km.</li>
 		</ul>
 	`;
 
