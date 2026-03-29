@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "main": "javascript.js",
   "scripts": {
-    "test": "echo \"Test",
-    "start": "node server.js"
+    "test": "echo \"Error: no tests\" && exit 1",
+    "start": "node server.js",
+    "data:refresh": "node scripts/run_merge_and_build.mjs",
+    "build:market": "node scripts/build_market_stats.mjs --input data/merged_parsed.json --output data/market_stats.json",
+    "extract:brand-template": "node scripts/generate_brand_pages.mjs --extract-template",
+    "generate:brands": "node scripts/generate_brand_pages.mjs"
   },
   "keywords": [],
   "author": "",

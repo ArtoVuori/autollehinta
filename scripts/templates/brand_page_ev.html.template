@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="{{BASE_URL}}/{{SLUG}}.html" />
+    <title>{{BRAND}}: arvonalenema ja kulutus | Autollehinta.fi</title>
+    <meta name="description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: {{BRAND}}. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
+    <meta name="keywords" content="{{BRAND}}, arvonalenema, auton kulutus, käyttövoima, kuukausikustannus, Autollehinta">
+    <meta name="robots" content="index, follow">
+    <meta property="og:site_name" content="Autollehinta.fi">
+    <meta property="og:locale" content="fi_FI">
+    <meta property="og:title" content="{{BRAND}}: arvonalenema ja kulutus | Autollehinta.fi">
+    <meta property="og:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: {{BRAND}}. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{BASE_URL}}/{{SLUG}}.html">
+    <meta property="og:image" content="{{BASE_URL}}/og-default.svg">
+    <meta property="og:image:alt" content="{{BRAND}} – arvonalenema ja kulutus">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{BRAND}}: arvonalenema ja kulutus | Autollehinta.fi">
+    <meta name="twitter:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: {{BRAND}}. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
+    <meta name="twitter:image" content="{{BASE_URL}}/og-default.svg">
+    <link rel="stylesheet" href="/style.css">
+	<!-- <script src="brands.js"></script> -->
+</head>
+<body class="brand-page" onload="setRandomBackground()">
+
+    <div class="container">
+        <header>
+            <div id="pageReset">
+                <h2 class="domain">
+					<a href="/" style="text-decoration: none; color: inherit;">Autollehinta.fi</a>
+				</h2>
+                <h2 class="inline-h2">{{BRAND}}</h2>
+            </div>
+        </header>
+        <main>
+            <div id="introContainer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>💸<br>Keskimääräinen arvonalenema</th>
+                            <th>⌛<br>3 vuoden jälkeen</th>
+                            <th>✅<br>Keskimääräinen kulutus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sähköautot: 20-30%</td>
+                            <td>Keskimääräinen arvonalenema: Sähkö 25%</td>
+                            <td>Per 100 km:<br>Sähköautot: 15-18 kWh</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <section>
+                <h2>{{BRAND}}-merkiltä löytyy muun muassa malleja:</h2>
+                <ul>
+{{TOP_MODELS_LIST}}
+                </ul>
+            </section>
+
+
+            <section>
+                <h2>Arvonkehitys {{BRAND}}-merkillä</h2>
+                <p>Sähköauton käytettyyn hintaan vaikuttavat akun kunto ja ilmoitettu toimintamatka, latausteho, varusteet sekä markkinan kysyntä sähköajoneuvoille. Sivun tilastot kuvaavat tyypillistä jakaumaa; yksittäisen auton arvo riippuu aina kunnosta ja historiasta.</p>
+                <ul>
+                    <li><strong>Akku ja toimintamatka:</strong> Ostajat vertailevat usein kapasiteettia ja käytännön rangea; epävarmuus akun kunnosta näkyy usein hinnassa.</li>
+                    <li><strong>Päivitykset ja varusteet:</strong> Ohjelmistopäivitykset, lämmitys ja avustavat järjestelmät vaikuttavat koettuun arvoon eri vuosimalleissa.</li>
+                    <li><strong>Markkina:</strong> Uusien sähkömallien tarjonta, latausverkoston kehitys ja sähkönhinta vaikuttavat käytettyjen sähköautojen kysyntään.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+	<div id="comparisonLayer" class="hidden">
+		<button class="close-button" id="closeLayer">&times;</button>
+		<p><button id="compareButton" class="expand-button">Vertaa tästä</button> nykyisen autosi kuluja<br>Kannattaisiko vaihtaa tähän automerkkiin?</p>
+	</div>
+
+	<script src="/brands.js"></script>
+	<script src="/javascript.js"></script>
+	<script src="/footer.js"></script>
+
+</body>
+</html>

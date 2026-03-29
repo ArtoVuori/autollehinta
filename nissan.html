@@ -21,14 +21,6 @@
     <meta name="twitter:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: Nissan. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
     <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -55,38 +47,40 @@
                         <tr>
                             <td>Polttomoottoriautot: 30-40%<br>Hybridit: 25-35%<br>Lataushybridit: 20-30%<br>Sähköautot: 20-30%</td>
                             <td>Keskimääräinen arvonalenema:<br>Polttomoottorit 35%<br>Hybridit 30%<br>Lataushybridit 25%<br>Sähkö 25%</td>
-                            <td>Per 100 km:<br>Polttomoottorit: 6-9 l<br>Hybridit: 4-6 l<br>Lataushybridit: 2-4 l ja 12-15 kWh<br>Sähköautot: 16-19 kWh</td>
+                            <td>Per 100 km:<br>Polttomoottorit: 7-10 l<br>Hybridit: 4-6 l<br>Lataushybridit: 3-5 l ja 10-13 kWh<br>Sähköautot: 15-18 kWh</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <section>
-                <h2>Nissanin nykyiset mallit</h2>
-                <p>Nissan tarjoaa monipuolisen valikoiman autoja eri käyttövoimilla. Tässä on muutamia suosittuja malleja:</p>
+                <h2>Nissan-merkiltä löytyy muun muassa malleja:</h2>
                 <ul>
-                    <li>Nissan Leaf (sähköauto)</li>
-                    <li>Nissan Ariya (sähköauto)</li>
-                    <li>Nissan Qashqai (polttomoottori ja hybridi)</li>
-                    <li>Nissan X-Trail (polttomoottori ja hybridi)</li>
-                    <li>Nissan Juke (polttomoottori ja hybridi)</li>
-                    <li>Nissan Townstar (polttomoottori ja sähkö)</li>
-                    <li>Nissan Primastar (polttomoottori)</li>
-                    <li>Nissan Interstar (polttomoottori)</li>
+                    <li>Qashqai</li>
+                    <li>Leaf</li>
+                    <li>Juke</li>
+                    <li>Ariya</li>
+                    <li>X-Trail</li>
+                    <li>Micra</li>
+                    <li>Qashqai+2</li>
+                    <li>Navara</li>
+                    <li>Note</li>
+                    <li>Nv300</li>
+                    <li>Nv400</li>
+                    <li>Primastar</li>
+                    <li>Pulsar</li>
+                    <li>E-Nv200</li>
+                    <li>Townstar</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
-                <h2>Arvonkehitys Nissanilla</h2>
-                <p>Nissanin arvonkehitys riippuu käyttövoimasta ja markkinatilanteesta. Merkki on tunnettu erityisesti sähköautojen edelläkävijänä. Arvonkehitykseen vaikuttavat:</p>
+                <h2>Arvonkehitys Nissan-merkillä</h2>
+                <p>Käytetyn auton hintaan vaikuttavat muun muassa ikä, ajokilometrit, kunto ja huoltohistoria, varustelu, käyttövoima sekä markkinan tilanne. Sivun yläosan hintakatsaus ja arvonalenemataulukot kuvaavat tyypillistä hintakehitystä; yksittäisen auton hinta riippuu aina omista tiedoistaan.</p>
                 <ul>
-                    <li><strong>Sähköautojen pioneeri:</strong> Nissan Leaf oli ensimmäisiä massatuotettuja sähköautoja, mikä on tuonut merkkiin luotettavuutta.</li>
-                    <li><strong>Monipuolinen mallisto:</strong> Nissan tarjoaa autoja eri kokoluokissa ja käyttövoimilla.</li>
-                    <li><strong>Teknologinen kehitys:</strong> Nissan on panostanut vahvasti sähköistymiseen ja autonomiseen ajamiseen.</li>
-                    <li><strong>Luotettavuus:</strong> Nissanin autot tunnetaan luotettavuudestaan ja kestävyydestään.</li>
+                    <li><strong>Malli ja vuosimalli:</strong> Samankin merkin eri mallit ja vuosikerät käyttäytyvät hinnassa eri tavoin kysynnän ja tarjonnan vuoksi.</li>
+                    <li><strong>Kilometrit ja ylläpito:</strong> Korkea mittarilukema ja näkyvä kuluminen laskevat yleensä hintaa; säännöllisesti huollettu auto on helpompi myydä.</li>
+                    <li><strong>Markkinatilanne:</strong> Polttoaine-, sähkö- ja korkotaso sekä uusien autojen saatavuus vaikuttavat siihen, millainen hintataso Nissan-merkkisistä käytetyistä muodostuu kulloinkin.</li>
                 </ul>
             </section>
         </main>
@@ -100,77 +94,6 @@
     <script src="/brands.js"></script>
     <script src="/javascript.js"></script>
     <script src="/footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Polttomoottorit',
-                        data: [100, 80, 70, 60, 52, 45, 40, 35, 30, 26, 22],
-                        borderColor: 'red',
-                        fill: false
-                    },
-                    {
-                        label: 'Hybridit',
-                        data: [100, 85, 75, 65, 58, 52, 47, 42, 38, 35, 32],
-                        borderColor: 'blue',
-                        fill: false
-                    },
-                    {
-                        label: 'Lataushybridit',
-                        data: [100, 88, 78, 70, 63, 57, 52, 48, 44, 41, 38],
-                        borderColor: 'purple',
-                        fill: false
-                    },
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 90, 80, 70, 62, 55, 49, 44, 40, 37, 34],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia)'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
-</html> 
+</html>

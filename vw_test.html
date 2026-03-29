@@ -7,14 +7,6 @@
     <meta name="description" content="Auton arvon alenema ja Volkswagenin mallisto">
     <meta name="keywords" content="Volkswagen, auto, mallit, arvonkehitys, käyttövoimat">
     <link rel="stylesheet" href="style.css">
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -58,10 +50,7 @@
                     <li>Volkswagen Touareg (luksus-SUV, lataushybridi)</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
                 <h2>Arvonkehitys Volkswagenilla</h2>
@@ -83,77 +72,6 @@
     <script src="brands.js"></script>
     <script src="javascript.js"></script>
     <script src="footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Polttomoottorit',
-                        data: [100, 90, 80, 70, 65, 60, 55, 50, 48, 45, 40],
-                        borderColor: 'red',
-                        fill: false
-                    },
-                    {
-                        label: 'Hybridit',
-                        data: [100, 92, 85, 78, 72, 67, 62, 58, 55, 52, 50],
-                        borderColor: 'blue',
-                        fill: false
-                    },
-                    {
-                        label: 'Lataushybridit',
-                        data: [100, 94, 88, 82, 78, 74, 70, 66, 63, 60, 58],
-                        borderColor: 'purple',
-                        fill: false
-                    },
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 95, 90, 85, 80, 75, 70, 65, 60, 58, 55],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia) '
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
 </html>

@@ -21,14 +21,6 @@
     <meta name="twitter:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: Peugeot. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
     <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -55,39 +47,44 @@
                         <tr>
                             <td>Polttomoottoriautot: 30-40%<br>Hybridit: 25-35%<br>Lataushybridit: 20-30%<br>Sähköautot: 20-30%</td>
                             <td>Keskimääräinen arvonalenema:<br>Polttomoottorit 35%<br>Hybridit 30%<br>Lataushybridit 25%<br>Sähkö 25%</td>
-                            <td>Per 100 km:<br>Polttomoottorit: 5-8 l<br>Hybridit: 4-6 l<br>Lataushybridit: 2-4 l ja 12-15 kWh<br>Sähköautot: 15-18 kWh</td>
+                            <td>Per 100 km:<br>Polttomoottorit: 7-10 l<br>Hybridit: 4-6 l<br>Lataushybridit: 3-5 l ja 10-13 kWh<br>Sähköautot: 15-18 kWh</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <section>
-                <h2>Peugeotin nykyiset mallit</h2>
-                <p>Peugeot tarjoaa laajan valikoiman autoja eri käyttövoimilla. Tässä on muutamia suosittuja malleja:</p>
+                <h2>Peugeot-merkiltä löytyy muun muassa malleja:</h2>
                 <ul>
-                    <li>Peugeot 208 (polttomoottori ja sähkö)</li>
-                    <li>Peugeot 2008 (polttomoottori ja sähkö)</li>
-                    <li>Peugeot 308 (polttomoottori, lataushybridi ja sähkö)</li>
-                    <li>Peugeot 3008 (polttomoottori, lataushybridi ja sähkö)</li>
-                    <li>Peugeot 408 (polttomoottori ja lataushybridi)</li>
-                    <li>Peugeot 508 (polttomoottori ja lataushybridi)</li>
-                    <li>Peugeot 5008 (polttomoottori)</li>
-                    <li>Peugeot e-Partner (sähköinen pakettiauto)</li>
-                    <li>Peugeot e-Expert (sähköinen pakettiauto)</li>
+                    <li>3008</li>
+                    <li>308</li>
+                    <li>208</li>
+                    <li>2008</li>
+                    <li>E-2008</li>
+                    <li>Expert</li>
+                    <li>Boxer</li>
+                    <li>508</li>
+                    <li>5008</li>
+                    <li>E-208</li>
+                    <li>408</li>
+                    <li>E-3008</li>
+                    <li>E-308</li>
+                    <li>E-Expert</li>
+                    <li>Rifter</li>
+                    <li>Partner</li>
+                    <li>Rcz</li>
+                    <li>E-5008</li>
+                    <li>Traveller</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
-                <h2>Arvonkehitys Peugeotilla</h2>
-                <p>Peugeotin arvonkehitys riippuu käyttövoimasta ja markkinatilanteesta. Merkki on tunnettu tyylikkäästä muotoilustaan ja innovatiivisista ratkaisuistaan. Arvonkehitykseen vaikuttavat:</p>
+                <h2>Arvonkehitys Peugeot-merkillä</h2>
+                <p>Käytetyn auton hintaan vaikuttavat muun muassa ikä, ajokilometrit, kunto ja huoltohistoria, varustelu, käyttövoima sekä markkinan tilanne. Sivun yläosan hintakatsaus ja arvonalenemataulukot kuvaavat tyypillistä hintakehitystä; yksittäisen auton hinta riippuu aina omista tiedoistaan.</p>
                 <ul>
-                    <li><strong>Muotoilu:</strong> Peugeot tunnetaan tyylikkäästä ja modernista muotoilustaan.</li>
-                    <li><strong>Teknologinen kehitys:</strong> Peugeot on panostanut vahvasti sähköistymiseen ja hybriditeknologiaan.</li>
-                    <li><strong>Ajettavuus:</strong> Peugeotit tunnetaan hyvästä ajettavuudestaan ja mukavuudestaan.</li>
-                    <li><strong>Monipuolinen mallisto:</strong> Peugeot tarjoaa laajan valikoiman eri kokoluokkien autoja ja käyttövoimia.</li>
+                    <li><strong>Malli ja vuosimalli:</strong> Samankin merkin eri mallit ja vuosikerät käyttäytyvät hinnassa eri tavoin kysynnän ja tarjonnan vuoksi.</li>
+                    <li><strong>Kilometrit ja ylläpito:</strong> Korkea mittarilukema ja näkyvä kuluminen laskevat yleensä hintaa; säännöllisesti huollettu auto on helpompi myydä.</li>
+                    <li><strong>Markkinatilanne:</strong> Polttoaine-, sähkö- ja korkotaso sekä uusien autojen saatavuus vaikuttavat siihen, millainen hintataso Peugeot-merkkisistä käytetyistä muodostuu kulloinkin.</li>
                 </ul>
             </section>
         </main>
@@ -101,77 +98,6 @@
     <script src="/brands.js"></script>
     <script src="/javascript.js"></script>
     <script src="/footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Polttomoottorit',
-                        data: [100, 80, 70, 60, 52, 45, 40, 35, 30, 26, 22],
-                        borderColor: 'red',
-                        fill: false
-                    },
-                    {
-                        label: 'Hybridit',
-                        data: [100, 85, 75, 65, 58, 52, 47, 42, 38, 35, 32],
-                        borderColor: 'blue',
-                        fill: false
-                    },
-                    {
-                        label: 'Lataushybridit',
-                        data: [100, 88, 78, 70, 63, 57, 52, 48, 44, 41, 38],
-                        borderColor: 'purple',
-                        fill: false
-                    },
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 90, 80, 70, 62, 55, 49, 44, 40, 37, 34],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia)'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
-</html> 
+</html>

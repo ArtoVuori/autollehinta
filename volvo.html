@@ -21,14 +21,6 @@
     <meta name="twitter:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: Volvo. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
     <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -55,40 +47,49 @@
                         <tr>
                             <td>Polttomoottoriautot: 30-40%<br>Hybridit: 25-35%<br>Lataushybridit: 20-30%<br>Sähköautot: 20-30%</td>
                             <td>Keskimääräinen arvonalenema:<br>Polttomoottorit 35%<br>Hybridit 30%<br>Lataushybridit 25%<br>Sähkö 25%</td>
-                            <td>Per 100 km:<br>Polttomoottorit: 7-10 l<br>Hybridit: 5-7 l<br>Lataushybridit: 3-5 l ja 15-18 kWh<br>Sähköautot: 18-22 kWh</td>
+                            <td>Per 100 km:<br>Polttomoottorit: 7-10 l<br>Hybridit: 4-6 l<br>Lataushybridit: 3-5 l ja 10-13 kWh<br>Sähköautot: 15-18 kWh</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <section>
-                <h2>Volvon nykyiset mallit</h2>
-                <p>Volvo tarjoaa laajan valikoiman autoja eri käyttövoimilla. Tässä on muutamia suosittuja malleja:</p>
+                <h2>Volvo-merkiltä löytyy muun muassa malleja:</h2>
                 <ul>
-                    <li>Volvo XC40 (polttomoottori, lataushybridi ja sähkö)</li>
-                    <li>Volvo XC60 (polttomoottori, lataushybridi)</li>
-                    <li>Volvo XC90 (polttomoottori, lataushybridi)</li>
-                    <li>Volvo V60 (polttomoottori, lataushybridi)</li>
-                    <li>Volvo V90 (polttomoottori, lataushybridi)</li>
-                    <li>Volvo S60 (polttomoottori, lataushybridi)</li>
-                    <li>Volvo S90 (polttomoottori, lataushybridi)</li>
-                    <li>Volvo C40 (sähköauto)</li>
-                    <li>Volvo EX30 (sähköauto)</li>
-                    <li>Volvo EX90 (sähköauto)</li>
+                    <li>Xc60</li>
+                    <li>V60</li>
+                    <li>Xc40</li>
+                    <li>V90</li>
+                    <li>Xc90</li>
+                    <li>C40</li>
+                    <li>S60</li>
+                    <li>Ex30</li>
+                    <li>V40</li>
+                    <li>S90</li>
+                    <li>V70</li>
+                    <li>Ex40</li>
+                    <li>V90 Cross Country</li>
+                    <li>V60 Cross Country</li>
+                    <li>Ec40</li>
+                    <li>V40 Cross Country</li>
+                    <li>Xc70</li>
+                    <li>V50</li>
+                    <li>Ex90</li>
+                    <li>S80</li>
+                    <li>S40</li>
+                    <li>Es90</li>
+                    <li>C30</li>
+                    <li>Ex30 Cross Country</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
-                <h2>Arvonkehitys Volvolla</h2>
-                <p>Volvon arvonkehitys on tyypillistä premium-autojen arvonkehitystä. Merkki on tunnettu ja sen arvonkehitykseen vaikuttavat:</p>
+                <h2>Arvonkehitys Volvo-merkillä</h2>
+                <p>Käytetyn auton hintaan vaikuttavat muun muassa ikä, ajokilometrit, kunto ja huoltohistoria, varustelu, käyttövoima sekä markkinan tilanne. Sivun yläosan hintakatsaus ja arvonalenemataulukot kuvaavat tyypillistä hintakehitystä; yksittäisen auton hinta riippuu aina omista tiedoistaan.</p>
                 <ul>
-                    <li><strong>Premium-asema:</strong> Volvo on tunnettu premium-automerkkinä, mikä vaikuttaa positiivisesti arvonkehitykseen.</li>
-                    <li><strong>Turvallisuus:</strong> Volvo on tunnettu turvallisuudestaan, mikä pitää yllä autojen arvoa.</li>
-                    <li><strong>Teknologinen kehitys:</strong> Volvo on sitoutunut sähköistymiseen ja kehittää aktiivisesti uusia teknologioita.</li>
-                    <li><strong>Laatu ja luotettavuus:</strong> Volvon autot ovat tunnettuja korkeasta laadusta ja luotettavuudesta.</li>
+                    <li><strong>Malli ja vuosimalli:</strong> Samankin merkin eri mallit ja vuosikerät käyttäytyvät hinnassa eri tavoin kysynnän ja tarjonnan vuoksi.</li>
+                    <li><strong>Kilometrit ja ylläpito:</strong> Korkea mittarilukema ja näkyvä kuluminen laskevat yleensä hintaa; säännöllisesti huollettu auto on helpompi myydä.</li>
+                    <li><strong>Markkinatilanne:</strong> Polttoaine-, sähkö- ja korkotaso sekä uusien autojen saatavuus vaikuttavat siihen, millainen hintataso Volvo-merkkisistä käytetyistä muodostuu kulloinkin.</li>
                 </ul>
             </section>
         </main>
@@ -102,77 +103,6 @@
     <script src="/brands.js"></script>
     <script src="/javascript.js"></script>
     <script src="/footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Polttomoottorit',
-                        data: [100, 80, 70, 60, 52, 45, 40, 35, 30, 26, 22],
-                        borderColor: 'red',
-                        fill: false
-                    },
-                    {
-                        label: 'Hybridit',
-                        data: [100, 85, 75, 65, 58, 52, 47, 42, 38, 35, 32],
-                        borderColor: 'blue',
-                        fill: false
-                    },
-                    {
-                        label: 'Lataushybridit',
-                        data: [100, 88, 78, 70, 63, 57, 52, 48, 44, 41, 38],
-                        borderColor: 'purple',
-                        fill: false
-                    },
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 90, 80, 70, 62, 55, 49, 44, 40, 37, 34],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia)'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
-</html> 
+</html>

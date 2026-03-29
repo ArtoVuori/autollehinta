@@ -21,14 +21,6 @@
     <meta name="twitter:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: Toyota. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
     <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -55,35 +47,55 @@
                         <tr>
                             <td>Polttomoottoriautot: 30-40%<br>Hybridit: 25-35%<br>Lataushybridit: 20-30%<br>Sähköautot: 20-30%</td>
                             <td>Keskimääräinen arvonalenema:<br>Polttomoottorit 35%<br>Hybridit 30%<br>Lataushybridit 25%<br>Sähkö 25%</td>
-                            <td>Per 100 km:<br>Polttomoottorit: 6-9 l<br>Hybridit: 4-6 l<br>Lataushybridit: 2-4 l ja 12-15 kWh<br>Sähköautot: 15-18 kWh</td>
+                            <td>Per 100 km:<br>Polttomoottorit: 7-10 l<br>Hybridit: 4-6 l<br>Lataushybridit: 3-5 l ja 10-13 kWh<br>Sähköautot: 15-18 kWh</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <section>
-                <h2>Toyotan nykyiset mallit</h2>
-                <p>Toyota tarjoaa laajan valikoiman autoja, jotka kattavat polttomoottoriautot, hybridit, lataushybridit ja sähköautot. Tässä on muutamia suosittuja malleja:</p>
+                <h2>Toyota-merkiltä löytyy muun muassa malleja:</h2>
                 <ul>
-                    <li>Toyota Corolla (polttomoottori ja hybridi)</li>
-                    <li>Toyota Camry (lataushybridi ja polttomoottori)</li>
-                    <li>Toyota Prius (hybridi)</li>
-                    <li>Toyota Yaris Cross (sähköinen ja hybridi SUV)</li>
-                    <li>Toyota RAV4 (polttomoottori, hybridi ja lataushybridi)</li>
-                    <li>Toyota Land Cruiser (SUV, polttomoottori)</li>
+                    <li>Corolla</li>
+                    <li>Yaris</li>
+                    <li>Rav4</li>
+                    <li>C-Hr</li>
+                    <li>Proace</li>
+                    <li>Auris</li>
+                    <li>Avensis</li>
+                    <li>Yaris Cross</li>
+                    <li>Hilux</li>
+                    <li>Bz4x</li>
+                    <li>Corolla Cross</li>
+                    <li>Camry</li>
+                    <li>Land Cruiser</li>
+                    <li>Hiace</li>
+                    <li>Verso</li>
+                    <li>Proace Verso</li>
+                    <li>Aygo X</li>
+                    <li>Prius</li>
+                    <li>Prius Plug-In</li>
+                    <li>Aygo</li>
+                    <li>Verso-S</li>
+                    <li>Proace Max</li>
+                    <li>Proace City</li>
+                    <li>Prius Phev</li>
+                    <li>Urban Cruiser</li>
+                    <li>Prius+</li>
+                    <li>Gr Yaris</li>
+                    <li>C-Hr+</li>
+                    <li>Proace City Verso</li>
+                    <li>Proace Verso Ev</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
-                <h2>Arvonkehitys Toyotalla</h2>
-                <p>Toyotan arvonkehitys riippuu käyttövoimasta ja markkinatilanteesta. Yleisesti Toyota tunnetaan luotettavuudestaan ja hyvästä jälleenmyyntiarvosta. Suosittuja syitä ovat:</p>
+                <h2>Arvonkehitys Toyota-merkillä</h2>
+                <p>Käytetyn auton hintaan vaikuttavat muun muassa ikä, ajokilometrit, kunto ja huoltohistoria, varustelu, käyttövoima sekä markkinan tilanne. Sivun yläosan hintakatsaus ja arvonalenemataulukot kuvaavat tyypillistä hintakehitystä; yksittäisen auton hinta riippuu aina omista tiedoistaan.</p>
                 <ul>
-                    <li><strong>Luotettavuus:</strong> Toyota on tunnettu kestävyydestään ja luotettavuudestaan.</li>
-                    <li><strong>Polttoainetaloudellisuus:</strong> Toyotalla on laaja hybridi- ja sähköautomallisto.</li>
-                    <li><strong>Teknologiset innovaatiot:</strong> Toyota on edelläkävijä hybriditeknologiassa.</li>
+                    <li><strong>Malli ja vuosimalli:</strong> Samankin merkin eri mallit ja vuosikerät käyttäytyvät hinnassa eri tavoin kysynnän ja tarjonnan vuoksi.</li>
+                    <li><strong>Kilometrit ja ylläpito:</strong> Korkea mittarilukema ja näkyvä kuluminen laskevat yleensä hintaa; säännöllisesti huollettu auto on helpompi myydä.</li>
+                    <li><strong>Markkinatilanne:</strong> Polttoaine-, sähkö- ja korkotaso sekä uusien autojen saatavuus vaikuttavat siihen, millainen hintataso Toyota-merkkisistä käytetyistä muodostuu kulloinkin.</li>
                 </ul>
             </section>
         </main>
@@ -97,77 +109,6 @@
     <script src="/brands.js"></script>
     <script src="/javascript.js"></script>
     <script src="/footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Polttomoottorit',
-                        data: [100, 90, 80, 70, 65, 60, 55, 50, 48, 45, 40],
-                        borderColor: 'red',
-                        fill: false
-                    },
-                    {
-                        label: 'Hybridit',
-                        data: [100, 92, 85, 78, 72, 67, 62, 58, 55, 52, 50],
-                        borderColor: 'blue',
-                        fill: false
-                    },
-                    {
-                        label: 'Lataushybridit',
-                        data: [100, 94, 88, 82, 78, 74, 70, 66, 63, 60, 58],
-                        borderColor: 'purple',
-                        fill: false
-                    },
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 95, 90, 85, 80, 75, 70, 65, 60, 58, 55],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia) '
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
 </html>

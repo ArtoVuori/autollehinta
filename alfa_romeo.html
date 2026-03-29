@@ -21,14 +21,6 @@
     <meta name="twitter:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: Alfa Romeo. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
     <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -53,36 +45,31 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Polttomoottoriautot: 35-45%<br>Hybridit: 30-40%<br>Lataushybridit: 25-35%<br>Sähköautot: 25-35%</td>
-                            <td>Keskimääräinen arvonalenema:<br>Polttomoottorit 40%<br>Hybridit 35%<br>Lataushybridit 30%<br>Sähkö 30%</td>
-                            <td>Per 100 km:<br>Polttomoottorit: 6-9 l<br>Hybridit: 5-7 l<br>Lataushybridit: 3-5 l ja 12-15 kWh<br>Sähköautot: 16-20 kWh</td>
+                            <td>Polttomoottoriautot: 30-40%<br>Hybridit: 25-35%<br>Lataushybridit: 20-30%<br>Sähköautot: 20-30%</td>
+                            <td>Keskimääräinen arvonalenema:<br>Polttomoottorit 35%<br>Hybridit 30%<br>Lataushybridit 25%<br>Sähkö 25%</td>
+                            <td>Per 100 km:<br>Polttomoottorit: 7-10 l<br>Hybridit: 4-6 l<br>Lataushybridit: 3-5 l ja 10-13 kWh<br>Sähköautot: 15-18 kWh</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <section>
-                <h2>Alfa Romeon nykyiset mallit</h2>
-                <p>Alfa Romeo tarjoaa urheilullisen valikoiman autoja eri käyttövoimilla. Tässä on muutamia suosittuja malleja:</p>
+                <h2>Alfa Romeo-merkiltä löytyy muun muassa malleja:</h2>
                 <ul>
-                    <li>Alfa Romeo Giulia (polttomoottori ja hybridi)</li>
-                    <li>Alfa Romeo Stelvio (polttomoottori ja hybridi)</li>
-                    <li>Alfa Romeo Tonale (hybridi ja lataushybridi)</li>
-                    <li>Alfa Romeo 33 Stradale (sähköauto)</li>
+                    <li>Tonale</li>
+                    <li>Giulia</li>
+                    <li>Giulietta</li>
+                    <li>Stelvio</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
-                <h2>Arvonkehitys Alfa Romeolla</h2>
-                <p>Alfa Romeon arvonkehitys vaihtelee malleittain ja käyttövoimittain. Merkki on tunnettu urheilullisista ja dynaamisista autoistaan. Arvonkehitykseen vaikuttavat:</p>
+                <h2>Arvonkehitys Alfa Romeo-merkillä</h2>
+                <p>Käytetyn auton hintaan vaikuttavat muun muassa ikä, ajokilometrit, kunto ja huoltohistoria, varustelu, käyttövoima sekä markkinan tilanne. Sivun yläosan hintakatsaus ja arvonalenemataulukot kuvaavat tyypillistä hintakehitystä; yksittäisen auton hinta riippuu aina omista tiedoistaan.</p>
                 <ul>
-                    <li><strong>Urheilullinen imago:</strong> Alfa Romeo tunnetaan dynaamisesta ajettavuudesta ja sporttisesta muotoilusta.</li>
-                    <li><strong>Laatu ja teknologia:</strong> Alfa Romeo käyttää korkealaatuisia komponentteja ja kehittynyttä teknologiaa.</li>
-                    <li><strong>Harvinaisuus:</strong> Alfa Romeon autoja on suhteellisen vähän markkinoilla, mikä voi vaikuttaa positiivisesti arvonkehitykseen.</li>
-                    <li><strong>Sähköistyminen:</strong> Alfa Romeo on alkanut siirtyä sähköautomarkkinoille, mikä vahvistaa brändin tulevaisuudennäkymiä.</li>
+                    <li><strong>Malli ja vuosimalli:</strong> Samankin merkin eri mallit ja vuosikerät käyttäytyvät hinnassa eri tavoin kysynnän ja tarjonnan vuoksi.</li>
+                    <li><strong>Kilometrit ja ylläpito:</strong> Korkea mittarilukema ja näkyvä kuluminen laskevat yleensä hintaa; säännöllisesti huollettu auto on helpompi myydä.</li>
+                    <li><strong>Markkinatilanne:</strong> Polttoaine-, sähkö- ja korkotaso sekä uusien autojen saatavuus vaikuttavat siihen, millainen hintataso Alfa Romeo-merkkisistä käytetyistä muodostuu kulloinkin.</li>
                 </ul>
             </section>
         </main>
@@ -96,77 +83,6 @@
     <script src="/brands.js"></script>
     <script src="/javascript.js"></script>
     <script src="/footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Polttomoottorit',
-                        data: [100, 75, 65, 60, 55, 50, 45, 40, 35, 30, 25],
-                        borderColor: 'red',
-                        fill: false
-                    },
-                    {
-                        label: 'Hybridit',
-                        data: [100, 80, 70, 65, 60, 55, 50, 45, 40, 35, 30],
-                        borderColor: 'blue',
-                        fill: false
-                    },
-                    {
-                        label: 'Lataushybridit',
-                        data: [100, 85, 75, 70, 65, 60, 55, 50, 45, 40, 35],
-                        borderColor: 'purple',
-                        fill: false
-                    },
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 85, 75, 70, 65, 60, 55, 50, 45, 40, 35],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia)'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
-</html> 
+</html>

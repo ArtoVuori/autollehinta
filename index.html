@@ -47,11 +47,20 @@
                     </select>
                 </td>
                 <td>
+                    <label for="marketModel">Malli (valinnainen, markkinaviite)</label>
+                    <select id="marketModel">
+                        <option value="">— Ei mallia (vain merkki + vuosi) —</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <label for="fuelType">Käyttövoima:</label>
                     <select id="fuelType" onchange="toggleFuelInputs();">
                         <!-- Käyttövoimavaihtoehdot lisätään dynaamisesti JavaScript-koodissa -->
                     </select>
                 </td>
+                <td></td>
             </tr>
             <tr>
                 <td>
@@ -146,6 +155,7 @@
         
         <!-- Result section -->
         <div class="result" id="result">Valitse tiedot ja paina nappia nähdäksesi tulokset.</div>
+        <aside id="marketReference" class="market-reference market-reference--hidden" aria-live="polite" aria-label="Markkinaviite"></aside>
         
         <!-- New section for displaying saved results -->
         <div class="saved-results" id="savedResults"></div> 
@@ -179,6 +189,7 @@
 
 <!-- Linkki ulkoiseen JavaScript-tiedostoon -->
 <script src="/brands.js"></script>
+<script src="/market_reference.js"></script>
 <script src="/javascript.js"></script>
 <script src="/footer.js"></script>
 

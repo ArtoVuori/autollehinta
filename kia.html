@@ -21,14 +21,6 @@
     <meta name="twitter:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: Kia. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
     <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -61,29 +53,42 @@
                 </table>
             </div>
             <section>
-                <h2>Kian nykyiset mallit</h2>
-                <p>Kia tarjoaa laajan valikoiman autoja, jotka kattavat polttomoottoriautot, hybridit, lataushybridit ja sähköautot. Tässä on muutamia suosittuja malleja:</p>
+                <h2>Kia-merkiltä löytyy muun muassa malleja:</h2>
                 <ul>
-                    <li>Kia Ceed (polttomoottori ja hybridi)</li>
-                    <li>Kia Sportage (lataushybridi ja polttomoottori)</li>
-                    <li>Kia Niro (sähköauto ja hybridi)</li>
-                    <li>Kia EV6 (sähköauto)</li>
-                    <li>Kia Sorento (hybridi ja polttomoottori)</li>
-                    <li>Kia EV9 (sähköinen SUV)</li>
+                    <li>Ceed</li>
+                    <li>Niro</li>
+                    <li>Rio</li>
+                    <li>Sportage</li>
+                    <li>Ev6</li>
+                    <li>Stonic</li>
+                    <li>Sorento</li>
+                    <li>Optima</li>
+                    <li>Xceed</li>
+                    <li>Picanto</li>
+                    <li>Ev3</li>
+                    <li>Proceed</li>
+                    <li>Ev9</li>
+                    <li>Niro Plug-In</li>
+                    <li>Niro Electric</li>
+                    <li>Ev4</li>
+                    <li>Ev5</li>
+                    <li>K4</li>
+                    <li>Carens</li>
+                    <li>Soul</li>
+                    <li>Venga</li>
+                    <li>Pv5 Cargo</li>
+                    <li>E-Soul</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
-                <h2>Arvonkehitys Kialla</h2>
-                <p>Kian arvonkehitys on parantunut merkittävästi viime vuosina. Merkki on noussut laadukkaaksi vaihtoehdoksi ja sen arvonkehitykseen vaikuttavat:</p>
+                <h2>Arvonkehitys Kia-merkillä</h2>
+                <p>Käytetyn auton hintaan vaikuttavat muun muassa ikä, ajokilometrit, kunto ja huoltohistoria, varustelu, käyttövoima sekä markkinan tilanne. Sivun yläosan hintakatsaus ja arvonalenemataulukot kuvaavat tyypillistä hintakehitystä; yksittäisen auton hinta riippuu aina omista tiedoistaan.</p>
                 <ul>
-                    <li><strong>Laatu ja luotettavuus:</strong> Kia on noussut tunnustetuksi merkiksi laadun ja luotettavuuden suhteen.</li>
-                    <li><strong>Takuu ja huolto:</strong> Kian laaja takuu ja huoltoverkosto vaikuttavat positiivisesti arvonkehitykseen.</li>
-                    <li><strong>Design ja teknologia:</strong> Merkki on tunnettu uraauurtavasta designistaan ja teknologisista ratkaisuistaan.</li>
+                    <li><strong>Malli ja vuosimalli:</strong> Samankin merkin eri mallit ja vuosikerät käyttäytyvät hinnassa eri tavoin kysynnän ja tarjonnan vuoksi.</li>
+                    <li><strong>Kilometrit ja ylläpito:</strong> Korkea mittarilukema ja näkyvä kuluminen laskevat yleensä hintaa; säännöllisesti huollettu auto on helpompi myydä.</li>
+                    <li><strong>Markkinatilanne:</strong> Polttoaine-, sähkö- ja korkotaso sekä uusien autojen saatavuus vaikuttavat siihen, millainen hintataso Kia-merkkisistä käytetyistä muodostuu kulloinkin.</li>
                 </ul>
             </section>
         </main>
@@ -97,77 +102,6 @@
     <script src="/brands.js"></script>
     <script src="/javascript.js"></script>
     <script src="/footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Polttomoottorit',
-                        data: [100, 80, 70, 60, 52, 45, 40, 35, 30, 26, 22],
-                        borderColor: 'red',
-                        fill: false
-                    },
-                    {
-                        label: 'Hybridit',
-                        data: [100, 85, 75, 65, 58, 52, 47, 42, 38, 35, 32],
-                        borderColor: 'blue',
-                        fill: false
-                    },
-                    {
-                        label: 'Lataushybridit',
-                        data: [100, 88, 78, 70, 63, 57, 52, 48, 44, 41, 38],
-                        borderColor: 'purple',
-                        fill: false
-                    },
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 90, 80, 70, 62, 55, 49, 44, 40, 37, 34],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia)'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
-</html> 
+</html>

@@ -22,14 +22,6 @@
     <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
 	<!-- <script src="brands.js"></script> -->
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -62,29 +54,23 @@
                 </table>
             </div>
             <section>
-                <h2>Teslan nykyiset mallit</h2>
-                <p>Tesla tarjoaa innovatiivisia ja suosittuja sähköautoja, jotka kattavat eri tarpeet ja mieltymykset. Tässä on muutamia suosittuja malleja:</p>
+                <h2>Tesla-merkiltä löytyy muun muassa malleja:</h2>
                 <ul>
-                    <li>Tesla Model 3 (sedan)</li>
-                    <li>Tesla Model Y (kompakti SUV)</li>
-                    <li>Tesla Model S (luksus-sedan)</li>
-                    <li>Tesla Model X (luksus-SUV)</li>
-                    <li>Tesla Cybertruck (sähköinen lava-auto, tuleva)</li>
-                    <li>Tesla Roadster (urheiluauto, tuleva)</li>
+                    <li>Model 3</li>
+                    <li>Model Y</li>
+                    <li>Model S</li>
+                    <li>Model X</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
-                <h2>Arvonkehitys sähköautoilla</h2>
-                <p>Auton arvonkehitys riippuu monista tekijöistä, kuten akkuteknologiasta, latausinfrastruktuurista ja markkinoiden kysynnästä. Teslan mallit ovat arvostettuja, ja niiden jäännösarvo on yleensä korkea. Suosittuja syitä Teslan arvon säilymiseen ovat:</p>
+                <h2>Arvonkehitys Tesla-merkillä</h2>
+                <p>Sähköauton käytettyyn hintaan vaikuttavat akun kunto ja ilmoitettu toimintamatka, latausteho, varusteet sekä markkinan kysyntä sähköajoneuvoille. Sivun tilastot kuvaavat tyypillistä jakaumaa; yksittäisen auton arvo riippuu aina kunnosta ja historiasta.</p>
                 <ul>
-                    <li><strong>Teknologia:</strong> Teslan jatkuvat ohjelmistopäivitykset pitävät autot ajantasaisina.</li>
-                    <li><strong>Akkuteknologia:</strong> Teslan akut tunnetaan pitkästä käyttöiästä ja hyvästä suorituskyvystä.</li>
-                    <li><strong>Latausverkosto:</strong> Teslan laaja Supercharger-verkosto tekee autoista houkuttelevia ostajille.</li>
+                    <li><strong>Akku ja toimintamatka:</strong> Ostajat vertailevat usein kapasiteettia ja käytännön rangea; epävarmuus akun kunnosta näkyy usein hinnassa.</li>
+                    <li><strong>Päivitykset ja varusteet:</strong> Ohjelmistopäivitykset, lämmitys ja avustavat järjestelmät vaikuttavat koettuun arvoon eri vuosimalleissa.</li>
+                    <li><strong>Markkina:</strong> Uusien sähkömallien tarjonta, latausverkoston kehitys ja sähkönhinta vaikuttavat käytettyjen sähköautojen kysyntään.</li>
                 </ul>
             </section>
         </main>
@@ -98,59 +84,6 @@
 	<script src="/brands.js"></script>
 	<script src="/javascript.js"></script>
 	<script src="/footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 95, 90, 85, 80, 75, 70, 65, 60, 58, 55],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-						min: 0,
-						max: 100,
-						ticks: {
-						stepSize: 10 // Määritä tiheys: väli 5 yksikköä
-						},
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia) '
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
 </html>

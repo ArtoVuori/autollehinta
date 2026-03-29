@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://autollehinta.fi/schemas/market_stats.schema.json",
+  "title": "Autollehinta market_stats.json",
+  "description": "Aggregoitu käytettyjen autojen hintadata. Tuotetaan scripts/build_market_stats.mjs -skriptillä.",
+  "type": "object",
+  "required": ["meta", "byBrandModelYear", "byBrandYear", "topModelsByBrand"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["schemaVersion", "generatedAt", "minSampleSize", "disclaimerFi"],
+      "properties": {
+        "schemaVersion": { "type": "integer", "const": 1 },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "sourceFile": { "type": "string" },
+        "sourceFiles": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Kaikki syöte-JSONit, jos useita --input"
+        },
+        "sourceSnapshot": { "type": ["string", "null"] },
+        "minSampleSize": { "type": "integer", "minimum": 1, "description": "Minimimäärä ilmoituksia ennen kuin segmentti näytetään UI:ssa" },
+        "disclaimerFi": { "type": "string" },
+        "methodologyFi": { "type": "string" }
+      }
+    },
+    "byBrandModelYear": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/segmentStats" }
+        }
+      }
+    },
+    "byBrandYear": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "$ref": "#/$defs/segmentStats" }
+      }
+    },
+    "topModelsByBrand": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["model", "listingCount"],
+          "properties": {
+            "model": { "type": "string", "description": "Normalisoitu mallinimi (pienet kirjaimet)" },
+            "listingCount": { "type": "integer", "minimum": 0 },
+            "medianPrice": { "type": "integer", "description": "Mediaanihinta (€), koko mallin otoksessa" },
+            "p25": { "type": "integer", "description": "Alakvartiili (€)" },
+            "p75": { "type": "integer", "description": "Yläkvartiili (€)" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "segmentStats": {
+      "type": "object",
+      "required": ["count", "medianPrice", "p25", "p75", "meanPrice"],
+      "properties": {
+        "count": { "type": "integer" },
+        "medianPrice": { "type": "integer" },
+        "p25": { "type": "integer" },
+        "p75": { "type": "integer" },
+        "meanPrice": { "type": "integer" },
+        "medianKm": { "type": ["integer", "null"] }
+      }
+    }
+  }
+}

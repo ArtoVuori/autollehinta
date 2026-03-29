@@ -92,6 +92,9 @@ function clearResults() {
     annualFuelCost = 0;
     annualElectricCost = 0;
     annualGasCost = 0;
+    if (typeof window.clearMarketReference === 'function') {
+        window.clearMarketReference();
+    }
 }
 
 // Täytetään auton merkit valinnoiksi ajoneuvotyypin perusteella
@@ -121,7 +124,10 @@ async function updateBrandOptions() {
     }
 
     // Päivitä käyttövoimavaihtoehdot valitun merkin perusteella
-    updateFuelTypeOptions();
+    await updateFuelTypeOptions();
+    if (typeof window.populateMarketModelSelect === 'function') {
+        await window.populateMarketModelSelect(brandSelect.value);
+    }
 }
 
 // Päivitetään käyttövoimavaihtoehdot merkin perusteella
@@ -182,7 +188,12 @@ function addFuelOption(select, value, text) {
 }
 
 // Lisää tapahtumakuuntelija automerkin vaihtumiselle
-document.getElementById('brand').addEventListener('change', updateFuelTypeOptions);
+document.getElementById('brand').addEventListener('change', async function () {
+    await updateFuelTypeOptions();
+    if (typeof window.populateMarketModelSelect === 'function') {
+        await window.populateMarketModelSelect(document.getElementById('brand').value);
+    }
+});
 
 // Ladataan polttoainehinnan tiedot
 async function loadFuelData() {
@@ -371,7 +382,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Täytetään auton iät ja merkit
     fillAgeOptions();
     loadFuelData();
-    updateBrandOptions(); // Tämä on ainoa paikka, jossa automerkit päivitetään
+    void updateBrandOptions(); // Tämä on ainoa paikka, jossa automerkit päivitetään (async; mallivalikko täyttyy perästä)
 
     // Accordion-ominaisuus
     const accordions = document.querySelectorAll(".accordion");
@@ -446,6 +457,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // Lasketaan auton arvonalenema ja kustannukset
 async function calculate() {
     console.log('Aloitetaan laskenta.');
+    if (typeof window.clearMarketReference === 'function') {
+        window.clearMarketReference();
+    }
 
     // Varmistetaan että kilometrikertoimet on ladattu
     if (Object.keys(mileageFactors).length === 0) {
@@ -482,6 +496,9 @@ async function calculate() {
     if (!selectedBrand || isNaN(price) || isNaN(selectedAge) || (isUsed && isNaN(modelYear))) {
         document.getElementById('result').innerHTML = 'Syötä kaikki tiedot ja arvot.';
         console.warn('Tietoja puuttuu.');
+        if (typeof window.clearMarketReference === 'function') {
+            window.clearMarketReference();
+        }
         return;
     }
 
@@ -520,6 +537,9 @@ async function calculate() {
     } else {
         document.getElementById('result').innerHTML = `Tietoa ei löydy merkille ${selectedBrand}.`;
         console.warn(`Tietoa ei löydy merkille ${selectedBrand}`);
+        if (typeof window.clearMarketReference === 'function') {
+            window.clearMarketReference();
+        }
         return;
     }
 
@@ -611,6 +631,25 @@ async function calculate() {
             </tr>
         </table>
     `;
+
+    const fuelSelect = document.getElementById('fuelType');
+    const fuelLabel =
+        fuelSelect && fuelSelect.options[fuelSelect.selectedIndex]
+            ? fuelSelect.options[fuelSelect.selectedIndex].textContent.trim()
+            : fuelType;
+    const marketModelEl = document.getElementById('marketModel');
+    const modelInput = marketModelEl ? marketModelEl.value : '';
+    if (isUsed && typeof window.updateMarketReference === 'function') {
+        window.updateMarketReference({
+            brand: selectedBrand,
+            modelInput,
+            year: modelYear,
+            userPrice: price,
+            fuelLabel,
+        });
+    } else if (typeof window.clearMarketReference === 'function') {
+        window.clearMarketReference();
+    }
 }
 
 
@@ -740,6 +779,9 @@ function addToComparison() {
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = 'Valitse tiedot ja paina nappia nähdäksesi tulokset.';
     comparisonContent = ""; // Tyhjennetään sisältö tulevaa käyttöä varten
+    if (typeof window.clearMarketReference === 'function') {
+        window.clearMarketReference();
+    }
 }
 
 
@@ -755,7 +797,7 @@ window.onload = async function() {
     console.log('Sivu ladattu, täytetään valinnat ja päivitetään merkit.');
     await fillAgeOptions();
     await loadFuelData();
-    updateBrandOptions();
+    await updateBrandOptions();
     toggleFuelInputs(); // Piilotetaan lisäkentät aluksi
     // toggleModelYear(); // Tarkistetaan käytetyn auton valinta vasta DOM:n latauksen jälkeen
 };
@@ -942,6 +984,9 @@ function switchTab(tab) {
     // Päivitetään isUsed-arvo tabin perusteella
     isUsed = (tab === 'used');
     console.log(`isUsed päivitetty: ${isUsed}`);
+    if (tab === 'new' && typeof window.clearMarketReference === 'function') {
+        window.clearMarketReference();
+    }
 }
 
 (async function checkVersion() {

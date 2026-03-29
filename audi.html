@@ -21,14 +21,6 @@
     <meta name="twitter:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: Audi. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
     <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -61,29 +53,43 @@
                 </table>
             </div>
             <section>
-                <h2>Audin nykyiset mallit</h2>
-                <p>Audi tarjoaa laajan valikoiman autoja, jotka kattavat polttomoottoriautot, hybridit, lataushybridit ja sähköautot. Tässä on muutamia suosittuja malleja:</p>
+                <h2>Audi-merkiltä löytyy muun muassa malleja:</h2>
                 <ul>
-                    <li>Audi A3 (polttomoottori ja hybridi)</li>
-                    <li>Audi A4 (lataushybridi ja polttomoottori)</li>
-                    <li>Audi Q5 (hybridi ja polttomoottori)</li>
-                    <li>Audi e-tron (sähköinen SUV)</li>
-                    <li>Audi Q7 (polttomoottori, hybridi ja lataushybridit)</li>
-                    <li>Audi A6 (polttomoottori ja hybridi)</li>
+                    <li>A4</li>
+                    <li>A3</li>
+                    <li>A6</li>
+                    <li>Q4 E-Tron</li>
+                    <li>E-Tron</li>
+                    <li>Q5</li>
+                    <li>A5</li>
+                    <li>Q3</li>
+                    <li>Q7</li>
+                    <li>Q8 E-Tron</li>
+                    <li>Q6 E-Tron</li>
+                    <li>A6 E-Tron</li>
+                    <li>A1</li>
+                    <li>Q2</li>
+                    <li>A7</li>
+                    <li>E-Tron Gt</li>
+                    <li>Q8</li>
+                    <li>S3</li>
+                    <li>Sq6 E-Tron</li>
+                    <li>A8</li>
+                    <li>S6 E-Tron</li>
+                    <li>Tt</li>
+                    <li>Sq8 E-Tron</li>
+                    <li>Rs6</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
-                <h2>Arvonkehitys Audilla</h2>
-                <p>Audin arvonkehitys riippuu käyttövoimasta ja markkinatilanteesta. Yleisesti Audi tunnetaan luksusautoistaan ja erinomaisesta jälleenmyyntiarvostaan. Suosittuja syitä ovat:</p>
+                <h2>Arvonkehitys Audi-merkillä</h2>
+                <p>Käytetyn auton hintaan vaikuttavat muun muassa ikä, ajokilometrit, kunto ja huoltohistoria, varustelu, käyttövoima sekä markkinan tilanne. Sivun yläosan hintakatsaus ja arvonalenemataulukot kuvaavat tyypillistä hintakehitystä; yksittäisen auton hinta riippuu aina omista tiedoistaan.</p>
                 <ul>
-                    <li><strong>Laatu ja luksus:</strong> Audi on tunnettu korkeasta laadustaan ja premium-tasostaan.</li>
-                    <li><strong>Teknologinen edelläkävijä:</strong> Audi on edelläkävijä niin polttomoottori- kuin sähköautoteknologiassa.</li>
-                    <li><strong>Jälleenmyyntiarvo:</strong> Audin autot pitävät hyvin arvonsa.</li>
+                    <li><strong>Malli ja vuosimalli:</strong> Samankin merkin eri mallit ja vuosikerät käyttäytyvät hinnassa eri tavoin kysynnän ja tarjonnan vuoksi.</li>
+                    <li><strong>Kilometrit ja ylläpito:</strong> Korkea mittarilukema ja näkyvä kuluminen laskevat yleensä hintaa; säännöllisesti huollettu auto on helpompi myydä.</li>
+                    <li><strong>Markkinatilanne:</strong> Polttoaine-, sähkö- ja korkotaso sekä uusien autojen saatavuus vaikuttavat siihen, millainen hintataso Audi-merkkisistä käytetyistä muodostuu kulloinkin.</li>
                 </ul>
             </section>
         </main>
@@ -97,77 +103,6 @@
     <script src="/brands.js"></script>
     <script src="/javascript.js"></script>
     <script src="/footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Polttomoottorit',
-                        data: [100, 90, 80, 70, 65, 60, 55, 50, 48, 45, 40],
-                        borderColor: 'red',
-                        fill: false
-                    },
-                    {
-                        label: 'Hybridit',
-                        data: [100, 92, 85, 78, 72, 67, 62, 58, 55, 52, 50],
-                        borderColor: 'blue',
-                        fill: false
-                    },
-                    {
-                        label: 'Lataushybridit',
-                        data: [100, 94, 88, 82, 78, 74, 70, 66, 63, 60, 58],
-                        borderColor: 'purple',
-                        fill: false
-                    },
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 95, 90, 85, 80, 75, 70, 65, 60, 58, 55],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia)'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
 </html>

@@ -21,14 +21,7 @@
     <meta name="twitter:description" content="Tyypillinen arvon alenema, kulutusluvut ja käyttövoimat: BYD. Katso yhteenveto ja laske omien autokustannustesi arvio etusivun laskurilla.">
     <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        #valueChart {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+	<!-- <script src="brands.js"></script> -->
 </head>
 <body class="brand-page" onload="setRandomBackground()">
 
@@ -36,8 +29,8 @@
         <header>
             <div id="pageReset">
                 <h2 class="domain">
-                    <a href="/" style="text-decoration: none; color: inherit;">Autollehinta.fi</a>
-                </h2>
+					<a href="/" style="text-decoration: none; color: inherit;">Autollehinta.fi</a>
+				</h2>
                 <h2 class="inline-h2">BYD</h2>
             </div>
         </header>
@@ -54,101 +47,50 @@
                     <tbody>
                         <tr>
                             <td>Sähköautot: 20-30%</td>
-                            <td>Keskimääräinen arvonalenema:<br>Sähkö 25%</td>
+                            <td>Keskimääräinen arvonalenema: Sähkö 25%</td>
                             <td>Per 100 km:<br>Sähköautot: 15-18 kWh</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <section>
-                <h2>BYD:n nykyiset mallit</h2>
-                <p>BYD on kiinalainen sähköautojen valmistaja, joka on noussut nopeasti kansainvälisesti tunnetuksi. Tässä on muutamia suosittuja malleja:</p>
+                <h2>BYD-merkiltä löytyy muun muassa malleja:</h2>
                 <ul>
-                    <li>BYD Atto 3 (sähköinen crossover)</li>
-                    <li>BYD Dolphin (sähköinen hatchback)</li>
-                    <li>BYD Seal (sähköinen sedan)</li>
-                    <li>BYD Tang (sähköinen SUV)</li>
-                    <li>BYD Han (sähköinen premium-sedan)</li>
+                    <li>Atto 3</li>
+                    <li>Seal</li>
+                    <li>Etp3</li>
+                    <li>Tang</li>
+                    <li>Seal U</li>
+                    <li>Sealion 7</li>
+                    <li>Dolphin</li>
+                    <li>Dolphin Surf</li>
+                    <li>Han</li>
+                    <li>Seal U Dm-I</li>
+                    <li>Seal 6 Dm-I</li>
                 </ul>
             </section>
-            <section>
-                <h2>Arvonkehitys käyttövoimittain</h2>
-                <canvas id="valueChart" width="600" height="300"></canvas>
-            </section>
+
 
             <section>
-                <h2>Arvonkehitys BYD:llä</h2>
-                <p>BYD:n arvonkehitys on tyypillistä sähköautojen arvonkehitystä. Merkki on noussut nopeasti ja sen arvonkehitykseen vaikuttavat:</p>
+                <h2>Arvonkehitys BYD-merkillä</h2>
+                <p>Sähköauton käytettyyn hintaan vaikuttavat akun kunto ja ilmoitettu toimintamatka, latausteho, varusteet sekä markkinan kysyntä sähköajoneuvoille. Sivun tilastot kuvaavat tyypillistä jakaumaa; yksittäisen auton arvo riippuu aina kunnosta ja historiasta.</p>
                 <ul>
-                    <li><strong>Teknologinen kehitys:</strong> BYD on tunnettu omasta akkuteknologiastaan ja innovatiivisista ratkaisuistaan.</li>
-                    <li><strong>Laatu ja luotettavuus:</strong> Merkki on saavuttanut hyvän maineen laadun ja luotettavuuden suhteen.</li>
-                    <li><strong>Markkina-asema:</strong> BYD:n kasvava markkina-asema ja tunnettuus vaikuttavat positiivisesti arvonkehitykseen.</li>
+                    <li><strong>Akku ja toimintamatka:</strong> Ostajat vertailevat usein kapasiteettia ja käytännön rangea; epävarmuus akun kunnosta näkyy usein hinnassa.</li>
+                    <li><strong>Päivitykset ja varusteet:</strong> Ohjelmistopäivitykset, lämmitys ja avustavat järjestelmät vaikuttavat koettuun arvoon eri vuosimalleissa.</li>
+                    <li><strong>Markkina:</strong> Uusien sähkömallien tarjonta, latausverkoston kehitys ja sähkönhinta vaikuttavat käytettyjen sähköautojen kysyntään.</li>
                 </ul>
             </section>
         </main>
     </div>
 
-    <div id="comparisonLayer" class="hidden">
-        <button class="close-button" id="closeLayer">&times;</button>
-        <p><button id="compareButton" class="expand-button">Vertaa tästä</button> nykyisen autosi kuluja<br>Kannattaisiko vaihtaa tähän automerkkiin?</p>
-    </div>
+	<div id="comparisonLayer" class="hidden">
+		<button class="close-button" id="closeLayer">&times;</button>
+		<p><button id="compareButton" class="expand-button">Vertaa tästä</button> nykyisen autosi kuluja<br>Kannattaisiko vaihtaa tähän automerkkiin?</p>
+	</div>
 
-    <script src="/brands.js"></script>
-    <script src="/javascript.js"></script>
-    <script src="/footer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('valueChart').getContext('2d');
-        const valueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [
-                    {
-                        label: 'Sähköautot',
-                        data: [100, 80, 70, 60, 52, 45, 39, 34, 29, 25, 21],
-                        borderColor: 'green',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw + '%';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Jäännösarvo (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Aika (vuosia)'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
+	<script src="/brands.js"></script>
+	<script src="/javascript.js"></script>
+	<script src="/footer.js"></script>
 
 </body>
-</html> 
+</html>
