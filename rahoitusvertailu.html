@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://autollehinta.fi/rahoitusvertailu.html" />
+    <title>Rahoitusvertailu: uusi vs. käytetty auto – korko ja kokonaiskustannus | Autollehinta.fi</title>
+    <meta name="description" content="Vertaa uuden ja käytetyn auton rahoitusta: korko, käsiraha, käsittely- ja perustamismaksut sekä laina-aika. Näe heti, kumpi tulee halvemmaksi.">
+    <meta name="keywords" content="autorahoitus, uusi auto, käytetty auto, autolaina, korko, rahoitusvertailu, Autollehinta">
+    <meta name="robots" content="index, follow">
+    <meta property="og:site_name" content="Autollehinta.fi">
+    <meta property="og:locale" content="fi_FI">
+    <meta property="og:title" content="Rahoitusvertailu: uusi vs. käytetty auto | Autollehinta.fi">
+    <meta property="og:description" content="Laske kokonaiskustannus koroilla ja maksuilla – kumpi kannattaa: uusi vai käytetty?">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://autollehinta.fi/rahoitusvertailu.html">
+    <meta property="og:image" content="https://autollehinta.fi/og-default.svg">
+    <meta property="og:image:alt" content="Auton rahoitusvertailu – uusi vs. käytetty">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rahoitusvertailu: uusi vs. käytetty auto | Autollehinta.fi">
+    <meta name="twitter:description" content="Korko, käsiraha ja maksut: laske kumpi vaihtoehto on halvempi.">
+    <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body class="brand-page">
+<div class="container fin-page" style="position: relative;">
+    <a href="index.html" class="fin-back">← Takaisin etusivulle</a>
+
+    <h1>Uusi vai käytetty auto – kumpi tulee halvemmaksi rahoituksella?</h1>
+
+    <div class="fin-field">
+        <label for="finPriceNew">Uuden auton hinta</label>
+        <div class="fin-stepper">
+            <button type="button" id="finPriceNewMinus" aria-label="Vähennä">−</button>
+            <input type="number" id="finPriceNew" value="46500" min="0" step="100">
+            <button type="button" id="finPriceNewPlus" aria-label="Lisää">+</button>
+        </div>
+    </div>
+
+    <div class="fin-field">
+        <label for="finPriceUsed">Käytetyn auton hinta</label>
+        <div class="fin-stepper">
+            <button type="button" id="finPriceUsedMinus" aria-label="Vähennä">−</button>
+            <input type="number" id="finPriceUsed" value="33500" min="0" step="100">
+            <button type="button" id="finPriceUsedPlus" aria-label="Lisää">+</button>
+        </div>
+    </div>
+
+    <div class="fin-result-box" id="finResultBox">
+        <h2>Rahoituskustannukset <span id="finTitleYears">6</span> vuodessa</h2>
+        <p class="fin-result-lead" id="finResultLead">Lasketaan…</p>
+        <p class="fin-result-sub" id="finResultSub"></p>
+        <p class="fin-result-breakeven" id="finBreakEven"></p>
+    </div>
+
+    <div class="fin-bars">
+        <div class="fin-bar-row">
+            <span class="fin-bar-label">Uusi</span>
+            <div class="fin-bar-track">
+                <div class="fin-bar-fill fin-bar-fill--new" id="finBarNew" style="width: 50%;"></div>
+            </div>
+            <span class="fin-bar-value" id="finBarNewVal">—</span>
+        </div>
+        <div class="fin-bar-row">
+            <span class="fin-bar-label">Käytetty</span>
+            <div class="fin-bar-track">
+                <div class="fin-bar-fill fin-bar-fill--used" id="finBarUsed" style="width: 50%;"></div>
+            </div>
+            <span class="fin-bar-value" id="finBarUsedVal">—</span>
+        </div>
+    </div>
+
+    <div class="fin-cards">
+        <div class="fin-card">
+            <h3>Uusi</h3>
+            <p class="fin-card-total" id="finCardNewTotal">—</p>
+            <p>Kk-erä <span id="finCardNewPmt">—</span></p>
+            <p>Korko <span id="finCardNewRate">—</span></p>
+        </div>
+        <div class="fin-card">
+            <h3>Käytetty</h3>
+            <p class="fin-card-total" id="finCardUsedTotal">—</p>
+            <p>Kk-erä <span id="finCardUsedPmt">—</span></p>
+            <p>Korko <span id="finCardUsedRate">—</span></p>
+        </div>
+    </div>
+
+    <div class="fin-advanced" style="margin-top: 24px;">
+        <button class="accordion" type="button">
+            <span class="accordion-title">Muuta laskelman oletuksia</span>
+        </button>
+        <div class="accordion-content">
+            <div class="fin-advanced-inner">
+                <div class="fin-settings-grid">
+                    <div class="fin-field">
+                        <label for="finRateNew">Uuden auton korko (%)</label>
+                        <input type="number" id="finRateNew" value="0.99" min="0" step="0.01">
+                    </div>
+                    <div class="fin-field">
+                        <label for="finRateUsed">Käytetyn auton korko (%)</label>
+                        <input type="number" id="finRateUsed" value="7.95" min="0" step="0.01">
+                    </div>
+                    <div class="fin-field">
+                        <label for="finDown">Käsiraha (€)</label>
+                        <input type="number" id="finDown" value="5400" min="0" step="100">
+                    </div>
+                    <div class="fin-field">
+                        <label for="finFeeNew">Käsittelymaksu, uusi (€/kk)</label>
+                        <input type="number" id="finFeeNew" value="15" min="0" step="1">
+                    </div>
+                    <div class="fin-field">
+                        <label for="finFeeUsed">Käsittelymaksu, käytetty (€/kk)</label>
+                        <input type="number" id="finFeeUsed" value="15" min="0" step="1">
+                    </div>
+                    <div class="fin-field">
+                        <label for="finOrigNew">Lainan perustamismaksu, uusi (€)</label>
+                        <input type="number" id="finOrigNew" value="600" min="0" step="50">
+                    </div>
+                    <div class="fin-field">
+                        <label for="finOrigUsed">Lainan perustamismaksu, käytetty (€)</label>
+                        <input type="number" id="finOrigUsed" value="600" min="0" step="50">
+                    </div>
+                </div>
+                <div class="fin-settings-full">
+                    <label>Laina-aika</label>
+                    <input type="hidden" id="finLoanYears" value="6">
+                    <div class="fin-chips" id="finYearChips">
+                        <button type="button" class="fin-chip" data-years="2">2 v</button>
+                        <button type="button" class="fin-chip" data-years="3">3 v</button>
+                        <button type="button" class="fin-chip" data-years="4">4 v</button>
+                        <button type="button" class="fin-chip" data-years="5">5 v</button>
+                        <button type="button" class="fin-chip is-active" data-years="6">6 v</button>
+                        <button type="button" class="fin-chip" data-years="7">7 v</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="fin-disclaimer">
+        Laskelma on arvio: todellinen korko, ehdot ja maksut riippuvat rahoittajasta ja luottopäätöksestä.
+        Ei rahoitusneuvontaa.
+    </p>
+</div>
+
+<script src="/brands.js"></script>
+<script src="/financing-calculator.js"></script>
+<script src="/footer.js"></script>
+</body>
+</html>

@@ -1,49 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Josefin+Sans:wght@400;500;600;700&display=swap');
+
+/* Värimaailma 2026: syvä siniharmaa, teal-aksentti (EV/tech), violetit korostukset, slate-äänet */
+:root {
+    --color-bg-canvas: #080c10;
+    --color-panel: rgba(14, 22, 30, 0.9);
+    --color-panel-soft: rgba(20, 30, 40, 0.8);
+    --color-panel-border: rgba(255, 255, 255, 0.09);
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-accent: #14b8a6;
+    --color-accent-hover: #2dd4bf;
+    --color-accent-active: #0f766e;
+    --color-secondary: #8b7cf8;
+    --color-secondary-hover: #a78bfa;
+    --color-success: #4ade80;
+    --color-success-hover: #22c55e;
+    --color-magenta: #fb7185;
+    --color-magenta-hover: #f43f5e;
+    --color-compare: #818cf8;
+    --color-compare-hover: #a5b4fc;
+    --color-danger: #fb7185;
+    --color-danger-hover: #f43f5e;
+    --color-result-pill: rgba(15, 118, 110, 0.5);
+    --color-focus-ring: #5eead4;
+    --color-bar-muted: #64748b;
+    --color-overlay-gradient: linear-gradient(
+        165deg,
+        rgba(6, 14, 20, 0.55) 0%,
+        rgba(8, 22, 28, 0.7) 48%,
+        rgba(4, 12, 18, 0.82) 100%
+    );
+    --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.22);
+    --shadow-md: 0 10px 32px rgba(0, 0, 0, 0.28);
+    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.35);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --space-xs: 6px;
+    --space-sm: 12px;
+    --space-md: 20px;
+    --space-lg: 28px;
+    --font-display: 'Josefin Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    --container-max: 800px;
+    --secondary-color: rgba(20, 184, 166, 0.32);
+    --line-prose: 1.65;
+    --text-base: 1rem;
+    --text-lead: clamp(1.05rem, 2.5vw, 1.125rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 /* Body Styles */
 body {
-    font-family: 'Josefin Sans', sans-serif;
-    background-color: #fff;
+    font-family: var(--font-body);
+    background-color: var(--color-bg-canvas);
     margin: 0;
-    padding: 300px 20px 20px 20px; /* Ylhäältä 300px, oikealta 20px, alhaalta 20px, vasemmalta 20px */
+    padding: clamp(80px, 18vh, 220px) var(--space-md) var(--space-md);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+    color: var(--color-text);
+    line-height: 1.5;
+    position: relative;
+    isolation: isolate;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: var(--color-overlay-gradient);
+}
+
+body .container,
+body > footer.footer {
+    position: relative;
+    z-index: 1;
 }
 
 body.brand-page {
-    font-family: 'Josefin Sans', sans-serif;
-    background-color: #fff;
+    font-family: var(--font-body);
+    background-color: var(--color-bg-canvas);
     margin: 0;
-    padding: 20px 20px 20px 20px; /* Ylhäältä 300px, oikealta 20px, alhaalta 20px, vasemmalta 20px */
+    padding: var(--space-md);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+    color: var(--color-text);
+    line-height: 1.5;
+    position: relative;
+    isolation: isolate;
+}
+
+body.brand-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: var(--color-overlay-gradient);
+}
+
+body.brand-page .container,
+body.brand-page > footer.footer {
+    position: relative;
+    z-index: 1;
+}
+
+body > .blog-container,
+body > .terms-container {
+    position: relative;
+    z-index: 1;
 }
 
 /* Body Styles for screens 770px or smaller */
 @media (max-width: 770px) {
-    body {
-        padding: 20px; /* Uniform padding for all sides */
+    body,
+    body.brand-page {
+        padding: var(--space-md);
+        background-attachment: scroll;
     }
 }
 
+h1,
+h2,
+h3,
+h4,
+h2.domain,
+h2.inline-h2,
+h2.blog {
+    font-family: var(--font-display);
+}
+
+h1 {
+    font-size: clamp(1.35rem, 4vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.25;
+}
 
 /* Container */
 .container {
-    max-width: 800px;
+    max-width: var(--container-max);
     margin: auto;
-    background-color: rgba(27, 38, 49, 0.7); /* Muuttaa taustan läpinäkyväksi */
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #fff;
+    background-color: var(--color-panel);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    border: 1px solid var(--color-panel-border);
+}
+
+@supports (backdrop-filter: blur(10px)) {
+    .container {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
 }
 
 .result-paragraph {
-    background-color: #1b4965;
-    padding: 5px;
-    border-radius: 4px; /* Pyöristetyt reunat */
+    background-color: var(--color-result-pill);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
 }
 
 
@@ -65,32 +195,62 @@ body.brand-page {
 }
 
 /* Form Field Styles */
-select, input {
+select,
+input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: #000;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: var(--radius-sm);
+    color: #1a1f26;
     background-color: #fff;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: var(--font-body);
+    font-size: var(--text-base, 1rem);
     box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-color: var(--color-accent);
+}
+
+button:focus-visible,
+.tab:focus-visible,
+.accordion:focus-visible,
+.expand-button:focus-visible,
+a.expand-button:focus-visible,
+.fin-chip:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 3px;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
 }
 
 /* Result Section */
 .result {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #fff;
+    margin-top: var(--space-md);
+    font-size: var(--text-lead, 1.125rem);
+    line-height: var(--line-prose);
+    color: var(--color-text);
+    font-family: var(--font-body);
 }
 
 /* Saved Results Styles */
 /* Container Flexbox Setup */
+/* Automaattinen sarakeleveys: kortit leveämpiä kuin kiinteä 1/3-rivi */
 .saved-results {
-    display: flex;
-    flex-wrap: wrap; /* Kortit ryhmittyvät useammalle riville tarvittaessa */
-    gap: 10px; /* Lisää pieni väli korttien välille */
-    transition: all 0.5s ease; /* Transition, joka tekee uudelleenjärjestäytymisen sulavaksi */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: var(--space-sm);
+    transition: all 0.5s ease;
 }
 
 
@@ -119,27 +279,31 @@ select, input {
     }
 }
 
-/* Korttien siirtymät ja ilmestyminen */
+/* Vertailukortit: sama henkisyys kuin rahoitusvertailun fin-result-box */
 .result-card {
-    background-color: #fffafa;
-    color: #000;
-    padding: 8px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: calc(33% - 10px);
+    background: var(--color-result-pill);
+    color: var(--color-text);
+    padding: var(--space-md);
+    padding-top: calc(var(--space-md) + 4px);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-panel-border);
+    width: 100%;
+    min-width: 0;
     box-sizing: border-box;
     position: relative;
     opacity: 0;
     transform: scale(0.9);
     animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
     z-index: 1;
+    font-family: var(--font-body);
 }
 
-/* Kortin hover-tila */
 .result-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
 /* Kun kortti poistetaan */
@@ -150,24 +314,91 @@ select, input {
 }
 
 .result-card .card-content {
-    font-size: 14px;
-    padding-right: 1px; /* Varmistaa, että sisältö ei mene poistoruksin päälle */
+    font-size: 0.9rem;
+    padding-right: 28px;
+    line-height: 1.45;
 }
 
-/* Poistoruksin tyyli */
+.result-card .compare-card-lead {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 var(--space-sm);
+    color: var(--color-text);
+    line-height: 1.35;
+}
+
+.result-card .compare-spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.result-card .compare-spec-table td {
+    padding: 8px 0;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.result-card .compare-spec-table tr:last-child td {
+    border-bottom: none;
+}
+
+.result-card .compare-spec-table td:first-child {
+    color: var(--color-text-muted);
+    width: 58%;
+    padding-right: 8px;
+}
+
+.result-card .compare-spec-table td:last-child {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text);
+}
+
+.result-card .compare-spec-section td {
+    border-bottom: none;
+    padding-top: var(--space-sm);
+    padding-bottom: 4px;
+    text-align: left;
+}
+
+.result-card .compare-section-label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    text-align: left;
+}
+
+.result-card .compare-spec-total td {
+    font-weight: 600;
+    color: var(--color-text);
+    padding-top: 10px;
+    border-bottom: none;
+}
+
+.result-card .compare-spec-total td:first-child {
+    color: var(--color-text);
+}
+
 .result-card .remove-button {
     position: absolute;
-    top: 5px;
+    top: 8px;
     right: 10px;
     cursor: pointer;
-    font-size: 32px;
-    color: #cc3333;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--color-danger);
+    transition: color 0.2s ease, transform 0.2s ease;
+    z-index: 2;
 }
 
 /* Poistoruksin hover-tila */
 .result-card .remove-button:hover {
-    color: #b83131;
+    color: var(--color-danger-hover);
     transform: scale(1.2) rotate(90deg);
 }
 
@@ -188,25 +419,14 @@ select, input {
 
     .result-card {
         width: 100%;
+        max-width: 100%;
+        flex: 1 1 100%;
         margin-bottom: 15px;
         transform: scale(0.95);
     }
-    
+
     .result-card:hover {
         transform: translateY(-3px) scale(0.98);
-    }
-}
-
-@media screen and (max-width: 768px) {
-    /* Make the saved results container full width */
-    .saved-results {
-        flex-direction: column; /* Stack cards vertically */
-    }
-
-    /* Make the result cards take full width */
-    .result-card {
-        width: 100%; /* Full width in mobile */
-        margin-bottom: 10px; /* Add space between cards */
     }
 }
 
@@ -223,31 +443,28 @@ select, input {
 
 /* General Button Styles */
 button {
-    background: #3171af;
-    color: white;
+    background: var(--color-accent);
+    color: #fff;
     cursor: pointer;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     padding: 10px 20px;
     display: inline-block;
-    font-size: 16px;
-    font-weight: bold;
-    font-family: inherit;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    box-shadow: var(--shadow-sm);
     text-align: center;
     white-space: nowrap;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     position: relative;
     overflow: hidden;
 }
 
-/* Hover and focus effects */
-button:hover, 
-button:focus {
-    background: #b0bedc;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    outline: none;
+button:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Active effect (painallus) */
@@ -261,66 +478,62 @@ button#calculateButton {
     flex-grow: 1; /* Allow the calculate button to take up the remaining space */
 }
 
-button#calculateButton:hover {
-    background: #45a049;
-}
-
 /* Clear Button Specific Styles */
 
 button#calculateButton {
-    background: #81b463 !important;
-    color: white !important;
+    background: var(--color-success) !important;
+    color: #fff !important;
     padding: 10px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     width: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
 }
 
-button#calculateButton:hover {
-    background: #6e9457 !important;
-    transform: scale(1.02);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+button#calculateButton:hover:not(:disabled) {
+    background: var(--color-success-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 button#clearButton {
-    background: #d96fc5 !important;
-    color: white !important;
+    background: var(--color-magenta) !important;
+    color: #fff !important;
     padding: 10px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     width: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
 	display: none;
 }
 
-button#clearButton:hover {
-    background: #d95fc2 !important;
-    transform: scale(1.02);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+button#clearButton:hover:not(:disabled) {
+    background: var(--color-magenta-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Add to Compare Button */
 #addToCompareButton {
-    background: #5f74d9;
-    color: white;
-    border-radius: 5px;
+    background: var(--color-compare);
+    color: #fff;
+    border-radius: var(--radius-sm);
     padding: 10px;
     width: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
     display: none;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-#addToCompareButton:hover {
-    background: #475ed1;
-    transform: translateY(2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+#addToCompareButton:hover:not(:disabled) {
+    background: var(--color-compare-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 #addToCompareButton:active {
     transform: translateY(0);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 /* Tabs container */
@@ -328,7 +541,7 @@ button#clearButton:hover {
     display: flex;
     position: relative; /* For glider positioning */
     margin-bottom: 10px;
-    border-bottom: 4px rgba(27, 38, 49, 0.7); /* Muuttaa taustan läpinäkyväksi */
+    border-bottom: 3px solid var(--color-panel-border);
     width: 100%; /* Full width for tabs */
     overflow: hidden; /* Prevent overflow during resizing */
 }
@@ -339,25 +552,24 @@ button#clearButton:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    font-size: 16px;
-    border-top-left-radius: 4px; /* Rounded top left */
-    border-top-right-radius: 4px; /* Rounded top right */
+    font-weight: 600;
+    font-size: 1rem;
+    border-top-left-radius: var(--radius-sm);
+    border-top-right-radius: var(--radius-sm);
     cursor: pointer;
-    background-color: #3171af;
+    background-color: var(--color-accent);
     color: #fff;
-    outline: none;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, flex-grow 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, flex-grow 0.25s ease;
     flex: 1; /* Default width for equal spacing */
 	
 }
 
 .tab:hover {
-    background-color: #b0bedc;
+    background-color: var(--color-accent-hover);
 }
 
 .tab.active {
-    background-color: #1b4965;
+    background-color: var(--color-accent-active);
     z-index: 2; /* Ensure it stays above the glider */
     flex-grow: 1.5; /* Highlight active tab by growing it */
 	
@@ -399,14 +611,17 @@ input[id="tab-2"]:checked ~ .glider {
     width: 100%;
     text-align: left;
     border: none;
-    outline: none;
-    font-size: 16px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-text);
+    transition: background-color 0.2s ease;
 }
 
 .accordion:hover {
-    background-color: #b0bedc;
+    background-color: var(--color-accent-hover);
 }
 
 .accordion.active::after {
@@ -436,7 +651,7 @@ input[id="tab-2"]:checked ~ .glider {
 }
 
 /* Varmista, että "Kulutustiedot" on oletuksena auki */
-.accordion.active + .accordion-content {
+#showNewVsOld .accordion.active + .accordion-content {
     display: block;
     max-height: 500px;
 }
@@ -462,9 +677,10 @@ input[id="tab-2"]:checked ~ .glider {
 }
 
 #introContainer th {
-    background-color: #3171af;
+    background-color: var(--color-secondary);
     color: #fff;
-    font-weight: bold;
+    font-weight: 600;
+    font-family: var(--font-display);
 }
 
 #introContainer td {
@@ -472,17 +688,137 @@ input[id="tab-2"]:checked ~ .glider {
 	/* text-align: left; */
 }
 
-/* Hover effect for table cells */
+/* Hover: otsikot sama sävy kuin secondary-nappi hoverissa */
 #introContainer th:hover, #introContainer td:hover {
-    transform: scale(1.05); /* Pop-out effect */
-    background-color: rgba(27, 38, 49, 1); /* Subtle background color change */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for hover effect */
-    border-radius: 4px; /* Kulmien pyöristys soluille hover-tilassa */
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+#introContainer th:hover {
+    background-color: var(--color-secondary-hover);
+}
+
+#introContainer td:hover {
+    background-color: rgba(27, 38, 49, 1);
 }
 
 /* Optional: Table shadow on hover */
 #introContainer table:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow intensity */
+}
+
+/* Etusivu: hero-tyyppinen intro (tuloslaatikko + infokortit, hiottu hierarkia) */
+#pageReset {
+    margin-bottom: var(--space-sm);
+}
+
+#introContainer.intro-fin-wrap {
+    background: var(--color-result-pill);
+    border-radius: var(--radius-lg);
+    padding: clamp(var(--space-md), 4vw, var(--space-lg));
+    margin: var(--space-md) 0 var(--space-lg);
+    border: 1px solid var(--color-panel-border);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+#introContainer.intro-fin-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+#introContainer.intro-fin-wrap .intro-fin-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(12px, 2.5vw, 18px);
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 720px) {
+    #introContainer.intro-fin-wrap .intro-fin-cards {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+#introContainer.intro-fin-wrap .intro-fin-card {
+    text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100%;
+    padding: clamp(14px, 3vw, 20px) clamp(12px, 2vw, 16px);
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+}
+
+#introContainer.intro-fin-wrap .intro-fin-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #introContainer.intro-fin-wrap .intro-fin-card {
+        transition: none;
+    }
+
+    #introContainer.intro-fin-wrap .intro-fin-card:hover {
+        transform: none;
+    }
+}
+
+#introContainer.intro-fin-wrap .intro-fin-card > p.intro-fin-emoji {
+    margin: 0 0 10px;
+    font-size: clamp(1.5rem, 4.5vw, 1.9rem);
+    line-height: 1;
+    color: var(--color-text);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+}
+
+#introContainer.intro-fin-wrap .intro-fin-card h3 {
+    font-size: clamp(0.68rem, 1.85vw, 0.78rem);
+    letter-spacing: 0.09em;
+    line-height: 1.35;
+    margin: 0 0 10px;
+    max-width: 20rem;
+    color: rgba(226, 232, 240, 0.92);
+}
+
+#introContainer.intro-fin-wrap .intro-fin-card > p:not(.intro-fin-emoji) {
+    margin: 0;
+    font-size: clamp(0.88rem, 2.2vw, 0.95rem);
+    line-height: 1.5;
+    max-width: 19rem;
+    color: rgba(241, 245, 249, 0.78);
+    flex-grow: 1;
+}
+
+#introContainer.intro-fin-wrap .intro-cta-row {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 52rem;
+    position: relative;
+    z-index: 1;
 }
 
 /* Layerin oletustila (piilotettu) */
@@ -491,11 +827,12 @@ input[id="tab-2"]:checked ~ .glider {
     top: 50%;
     right: -400px; /* Piilotettuna näytön ulkopuolella */
     width: 350px;
-    background-color: rgba(27, 38, 49, 0.9); /* Tumma tausta */
-    color: #fff; /* Valkoinen teksti */
+    background-color: var(--color-panel);
+    color: var(--color-text);
     padding: 5px;
-    border-radius: 8px 0px 0px 8px; /* Pyöristetyt kulmat */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Hieno varjo */
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-panel-border);
     transform: translateY(-50%); /* Keskitetty pystysuunnassa */
     transition: right 0.5s ease-in-out; /* Sulava siirtymä */
     z-index: 1000; /* Layer näkyy päällä */
@@ -518,18 +855,17 @@ input[id="tab-2"]:checked ~ .glider {
     right: 2px; /* Etäisyys layerin oikeasta reunasta */
     cursor: pointer;
     font-size: 24px; /* Ruksin koko */
-    color: #cc3333; /* Punainen väri */
+    color: var(--color-danger);
     font-weight: bold; /* Vahva fontti */
     background: none; /* Ei taustaväriä */
     border: none; /* Ei reunuksia */
-    outline: none; /* Ei korostusta */
     z-index: 1100; /* Varmistaa, että se näkyy päällä */
     transition: transform 0.3s ease, color 0.3s ease; /* Sulava hover-siirtymä */
     box-shadow: none; /* Poistaa hoverilla näkyvän varjon */
 }
 
 #comparisonLayer .close-button:hover {
-    color: #b83131; /* Tummempi punainen hoverilla */
+    color: var(--color-danger-hover);
     transform: scale(1.2); /* Suurentaa hoverilla */
 }
 
@@ -546,24 +882,24 @@ input[id="tab-2"]:checked ~ .glider {
 
 /* Sama tyyli domain-otsikolle */
 h2.domain {
-    background: #3171af;
-    color: white;
-    border-radius: 4px;
-    padding: 10px 20px;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    padding: var(--space-xs) var(--space-md);
     display: inline-block;
-    font-size: 24px;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
     text-align: center;
 }
 
 /* Inline-h2-tyyli, jotta se tulee samalle riville */
 h2.inline-h2 {
     display: inline-block; /* Pitää elementin samalla rivillä */
-    font-size: 24px; /* Sama fonttikoko kuin domain-otsikossa */
+    font-size: clamp(1.05rem, 2.8vw, 1.35rem);
     margin-left: 10px; /* Pieni väli ensimmäisen osan jälkeen */
-    font-weight: normal; /* Voit säätää painotusta halutessasi */
-    color: #fff; /* Tekstin väri */
+    font-weight: 500;
+    color: var(--color-text);
 }
 
 /* Media query näytöille alle 685px */
@@ -582,25 +918,26 @@ h2.inline-h2 {
 
 /* Styling for buttons */
 .expand-button {
-    background: #3171af;
-    color: white;
+    background: var(--color-accent);
+    color: #fff;
     cursor: pointer;
     border: none;
     padding: 15px 30px;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+    font-weight: 600;
+    font-family: var(--font-body);
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
     position: relative;
     overflow: hidden;
     z-index: 1;
 }
 
 .expand-button:hover {
-    background: #b0bedc;
+    background: var(--color-accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
 }
 
 .expand-button:active {
@@ -643,26 +980,389 @@ button:active::after,
     opacity: 1;
 }
 
-/* Add more space below the main button */
-#mainButton {
+/* Etusivun CTA-rivi: Vertaa tästä + rahoitusvertailu */
+.intro-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
+}
+
+a.expand-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.expand-button--secondary {
+    background: var(--color-secondary);
+}
+
+.expand-button--secondary:hover {
+    background: var(--color-secondary-hover);
+}
+
+@media (max-width: 770px) {
+    .intro-cta-row {
+        flex-direction: column;
+    }
+
+    .intro-cta-row .expand-button,
+    .intro-cta-row a.expand-button {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+#mainButton {
+    margin-bottom: 0;
+}
+
+/* Rahoitusvertailu (rahoitusvertailu.html) */
+.fin-page h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 3.5vw, 1.45rem);
+    font-weight: 600;
+    margin: 0 0 8px;
+    line-height: 1.3;
+}
+
+.fin-back {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.fin-back:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+}
+
+.fin-field {
+    margin-bottom: 18px;
+}
+
+.fin-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.fin-stepper {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    max-width: 100%;
+}
+
+/* Sama aksentti kuin expand-button--secondary (violetti), ei yleinen teal-button-hover */
+.fin-stepper > button {
+    flex: 0 0 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    background: #e2e8f0;
+    color: #0f172a;
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: none;
+    border-radius: 0;
+    white-space: nowrap;
+}
+
+.fin-stepper > button:hover:not(:disabled) {
+    background: var(--color-secondary);
+    color: #fff;
+    border-color: var(--color-secondary);
+    transform: none;
+    box-shadow: none;
+}
+
+.fin-stepper > button:active:not(:disabled) {
+    background: var(--color-secondary-hover);
+    border-color: var(--color-secondary-hover);
+    transform: scale(0.98);
+    box-shadow: none;
+}
+
+.fin-stepper > button:focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+}
+
+.fin-stepper > button::after {
+    display: none;
+}
+
+.fin-stepper > button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.fin-stepper > button:last-child {
+    border-radius: 0 4px 4px 0;
+    border-left: none;
+}
+
+.fin-stepper input[type="number"] {
+    flex: 1;
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+    min-width: 0;
+}
+
+.fin-result-box {
+    background: var(--color-result-pill);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin: var(--space-md) 0;
+    border: 1px solid var(--color-panel-border);
+}
+
+.fin-result-box h2 {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    font-family: var(--font-display);
+}
+
+.fin-result-lead {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+}
+
+.fin-result-sub {
+    font-size: 0.95rem;
+    margin: 0 0 8px;
+    color: var(--color-text-muted);
+}
+
+.fin-result-breakeven {
+    font-size: 0.95rem;
+    margin: 0;
+    color: var(--color-text);
+}
+
+/* Päälaskuri (#result): tuloslistat sama hierarkia kuin rahoitusvertailun infolaatikossa */
+.result .fin-result-box ul.calc-result-list {
+    list-style: disc;
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+.result .fin-result-box ul.calc-result-list li {
+    margin: 0.4em 0;
+}
+
+.result .fin-result-box ul.calc-result-list li:first-child {
+    margin-top: 0;
+}
+
+.result .fin-result-box ul.calc-result-list li:last-child {
+    margin-bottom: 0;
+}
+
+.fin-bars {
+    margin: 18px 0;
+}
+
+.fin-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.fin-bar-label {
+    flex: 0 0 72px;
+    font-size: 0.9rem;
+}
+
+.fin-bar-track {
+    flex: 1;
+    height: 28px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.fin-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.35s ease;
+    min-width: 2px;
+}
+
+.fin-bar-fill--new {
+    background: var(--color-secondary);
+}
+
+.fin-bar-fill--used {
+    background: var(--color-bar-muted);
+}
+
+.fin-bar-value {
+    flex: 0 0 88px;
+    text-align: right;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.fin-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+    .fin-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.fin-card {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fin-card h3 {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+    color: var(--color-text-muted);
+    font-family: var(--font-display);
+}
+
+.fin-card .fin-card-total {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+
+.fin-card p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.fin-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.fin-chip {
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: transparent;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.fin-chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.fin-chip.is-active {
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.fin-disclaimer {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 24px;
+    line-height: 1.45;
+}
+
+.fin-advanced .accordion-content {
+    color: #fff;
+}
+
+.fin-advanced .accordion-content label {
+    color: #fff;
+}
+
+.fin-advanced .accordion-content input {
+    color: #000;
+}
+
+.fin-advanced-inner {
+    margin-top: 12px;
+}
+
+.fin-settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+    align-items: start;
+}
+
+.fin-advanced .fin-settings-grid .fin-field {
+    margin-bottom: 0;
+}
+
+.fin-advanced .fin-settings-grid .fin-field input[type='number'] {
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+.fin-settings-full {
+    margin-top: var(--space-md);
+}
+
+.fin-settings-full > label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+@media (max-width: 560px) {
+    .fin-settings-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Oletusarvo: Footer kiinteä suuremmilla näytöillä */
 .footer {
-    background-color: rgba(27, 38, 49, 0.7);
-    color: #fff;
+    background-color: var(--color-panel-soft);
+    color: var(--color-text);
     text-align: center;
-    padding: 10px;
+    padding: var(--space-md) var(--space-sm);
     position: relative; /* Kiinteä alareunassa oletuksena */
     bottom: 0;
     left: 0;
     margin: 350px auto 0; /* Keskittää footerin ja lisää marginaalin ylhäältä */
-    max-width: 800px;
-	border-radius: 4;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;;
-    transition: all 0.3s ease;
+    max-width: var(--container-max);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-panel-border);
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 
@@ -674,21 +1374,29 @@ button:active::after,
         margin-left: auto; /* Siirtää footerin oikealle */
         border-radius: 4; /* Poista pyöristykset mobiilissa */
         box-shadow: none; /* Poista varjo mobiilissa */
-        background-color: rgba(27, 38, 49, 0.7); /* Sama taustaväri */
+        background-color: var(--color-panel-soft);
     }
 }
 
 
 .footer-links a {
-    color: #fff;
+    color: var(--color-text);
     text-decoration: none;
     display: inline-block;
     margin: 5px 0;
+    font-size: 0.9rem;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 /* Separator styling */
 .separator {
-    color: #fff;
+    color: var(--color-text-muted);
     display: inline; /* Default */
 }
 
@@ -705,22 +1413,38 @@ button:active::after,
 
 /* Blog Container Styles */
 .blog-container {
-    max-width: 800px; /* Max width to match other containers */
-    margin: auto; /* Center the container */
-    background-color:  rgba(255, 255, 255, 0.90); /* White transparent background */
-    color: #000; /* Black text for readability */
-    padding: 20px; /* Padding inside the container */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s ease; /* Smooth transition for background changes */
+    max-width: var(--container-max);
+    margin: auto;
+    background-color: rgba(252, 253, 255, 0.96);
+    color: #1a1f26;
+    padding: var(--space-lg) var(--space-md);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease;
+}
+
+.blog-container p,
+.blog-container li {
+    max-width: 65ch;
+    line-height: var(--line-prose);
+    font-family: var(--font-body);
+}
+
+.blog-container h4 {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    color: #141a22;
 }
 
 h2.blog {
     display: inline-block; /* Pitää elementin samalla rivillä */
-    font-size: 24px; /* Sama fonttikoko kuin domain-otsikossa */
-    margin-left: 10px; /* Pieni väli ensimmäisen osan jälkeen */
-    font-weight: normal; /* Voit säätää painotusta halutessasi */
-    color: #000; /* Tekstin väri */
+    font-size: clamp(1.05rem, 2.8vw, 1.35rem);
+    margin-left: 10px;
+    font-weight: 500;
+    color: #1a1f26;
 }
 
 
@@ -758,14 +1482,15 @@ h2.blog {
 }
 
 .terms-container {
-    max-width: 800px;
+    max-width: var(--container-max);
     margin: auto;
-    background-color: rgba(27, 38, 49, 0.7);
-    color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    background-color: var(--color-panel);
+    color: var(--color-text);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-panel-border);
+    transition: box-shadow 0.2s ease;
 }
 
 .modal {
@@ -800,16 +1525,23 @@ h2.blog {
 }
 
 .modal-content {
-    background: rgba(27, 38, 49, 0.7);
-    padding: 25px;
-    border-radius: 16px;
+    background: var(--color-panel);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
     width: 90%;
     max-width: 500px;
     position: relative;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-lg);
     margin: auto;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
+    border: 1px solid var(--color-panel-border);
+    color: var(--color-text);
+}
+
+@supports (backdrop-filter: blur(10px)) {
+    .modal-content {
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
 }
 
 .close {
@@ -892,9 +1624,9 @@ h2.blog {
     border-radius: 4px;
     color: #000;
     background-color: #fff;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: var(--font-body);
     box-sizing: border-box;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .type-price input[type="number"] {
@@ -905,10 +1637,10 @@ h2.blog {
     width: 60px;
 }
 
-.type-price input[type="number"]:focus,
-.share input[type="number"]:focus {
-    border-color: #3171af;
-    box-shadow: 0 0 0 3px rgba(49, 113, 175, 0.1);
+.type-price input[type="number"]:focus-visible,
+.share input[type="number"]:focus-visible {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(159, 212, 255, 0.35);
     outline: none;
 }
 
@@ -923,19 +1655,19 @@ input[type="number"]:-webkit-autofill:focus {
 }
 
 .fuel-setting-group {
-    background: rgba(27, 38, 49, 0.7);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
+    background: var(--color-panel-soft);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-panel-border);
+    transition: box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
 }
 
 .fuel-setting-group:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
-    background: rgba(27, 38, 49, 0.8);
+    background: var(--color-panel);
 }
 
 .fuel-setting-group h3 {
@@ -944,18 +1676,18 @@ input[type="number"]:-webkit-autofill:focus {
     width: 100%;
     text-align: left;
     border: none;
-    outline: none;
-    font-size: 16px;
-    border-radius: 4px;
+    font-size: 1rem;
+    font-family: var(--font-display);
+    border-radius: var(--radius-sm);
     transition: background-color 0.3s ease;
-    background: #3171af;
+    background: var(--color-accent);
     color: white;
     margin-bottom: 15px;
     box-sizing: border-box;
 }
 
 .fuel-setting-group h3:hover {
-    background-color: #b0bedc;
+    background-color: var(--color-accent-hover);
 }
 
 .fuel-setting {
@@ -994,19 +1726,20 @@ input[type="number"]:-webkit-autofill:focus {
 .modal-buttons button {
     padding: 10px 20px;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    background: #3171af;
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    font-family: var(--font-body);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    background: var(--color-accent);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
 }
 
-.modal-buttons button:hover {
+.modal-buttons button:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    background: #3883c8;
+    box-shadow: var(--shadow-md);
+    background: var(--color-accent-hover);
 }
 
 .settings-icon {
@@ -1014,17 +1747,17 @@ input[type="number"]:-webkit-autofill:focus {
     top: 0;
     right: 0;
     padding: 10px 14px;
-    background: #3171af;
-    border-radius: 0 0 0 16px;
+    background: var(--color-accent);
+    border-radius: 0 0 0 var(--radius-md);
     color: #fff;
     font-size: 1.5em;
     z-index: 1000;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, transform 0.25s ease;
 }
 
 .settings-icon:hover {
-    background: #b0bedc;
+    background: var(--color-accent-hover);
     transform: rotate(90deg);
 }
 

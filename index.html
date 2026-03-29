@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://autollehinta.fi" />
-    <title>Auton Arvon Alenema ja Polttoainekustannukset vf96dc29</title>
-    <meta name="description" content="Auton arvon alenema ja polttoainekustannukset vf96dc29">
-    <meta name="keywords" content="auton arvo, arvon aleneminen, polttoainekustannukset, auto, taloudellisuus, auton ylläpito, autovertailu, autolle hinta, autoilun kuukausikustannukset, Tarkista auton arvo laskurilla, Auton arvon aleneminen -laskuri, auton arvonalenema, Paljonko auton arvo alenee, Näin paljon autosi arvo alenee vuosittain, Auton kulut, autoilun kulut, Autoilun hinta-laskuri, auton käyttökulut, auton ylläpidon kustannukset, kannattaako vaihtaa teslaan, auton arvonlasku, käytetyn auton arvo, auton arvon laskeminen, auton jälleenmyyntiarvo, käytetyn auton ostaminen, auton ylläpidon kustannukset, auton polttoainekulut, auton vakuutuskulut, sähköauton kannattavuus, auton vaihtoarvo, dieselauton ylläpitokustannukset, sähköauton huoltokulut, hybridiauton kustannukset, auton arvonkehitys, uuden auton ostaminen, vanhan auton arvo, auton vuosittaiset kustannukset, autoilun taloudellisuus, auton arvon vertailu, Tesla vs. polttomoottoriauto, id4 arvonalenema, leasing vs omistus">
+    <link rel="canonical" href="https://autollehinta.fi/" />
+    <title>Auton kustannukset ja arvonalenema – laske helposti vf96dc29 | Autollehinta.fi</title>
+    <meta name="description" content="Laske auton arvon alenema, polttoaine- ja sähkökulut sekä kokonaiskustannukset. Vertaa uutta ja käytettyä, lisää tuloksia vertailuun. Ilmainen laskuri. vf96dc29">
+    <meta name="keywords" content="auton arvonalenema, auton kulut, polttoainekustannukset, kuukausikustannus, auton vertailu, käytetty auto, sähköauto, Autollehinta">
+    <meta name="robots" content="index, follow">
 
-    <!-- For .png format -->
-    <link rel="icon" href="/favicon.png" type="image/png">
-    <!-- Linkki ulkoiseen tyylitiedostoon -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+    <meta property="og:site_name" content="Autollehinta.fi">
+    <meta property="og:locale" content="fi_FI">
+    <meta property="og:title" content="Autollehinta.fi – auton kustannukset, arvonalenema ja vertailu">
+    <meta property="og:description" content="Laske auton arvon alenema, polttoaine- ja sähkökulut sekä kokonaiskustannukset. Vertaa vaihtoehtoja ja tallenna vertailuun.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://autollehinta.fi/">
+    <meta property="og:image" content="https://autollehinta.fi/og-default.svg">
+    <meta property="og:image:alt" content="Autollehinta.fi – auton kustannukset ja vertailu">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Autollehinta.fi – auton kustannukset ja arvonalenema">
+    <meta name="twitter:description" content="Laske auton arvon alenema ja käyttökulut. Vertaa uutta ja käytettyä – ilmainen laskuri.">
+    <meta name="twitter:image" content="https://autollehinta.fi/og-default.svg">
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 
 <body onload="setRandomBackground()">
 <div class="container" style="position: relative;">
-    <i class="fas fa-cog settings-icon" id="fuelSettingsIcon" tabindex="0"></i>
+    <i class="fa-solid fa-gear settings-icon" id="fuelSettingsIcon" tabindex="0" role="button" aria-label="Polttoainehintojen asetukset"></i>
     <!-- Title and description with click-to-reset functionality -->
     <div id="pageReset">
         <h2 class="domain">Autollehinta.fi</h2>
@@ -139,26 +151,28 @@
         <div class="saved-results" id="savedResults"></div> 
     </div>
 
-    <div id="introContainer">
-		<table>
-			<thead>
-				<tr>
-					<th>💸<br>Tarkastele kustannuksia</th>
-					<th>🛠️<br> Kokeile työkalua</th>
-					<th>✅<br> Tee päätös tietoon perustuen</th>
-				</tr>
-			</thead>
-			<tbody>
-			
-				<tr>
-					<td>Säästäisitkö hankkimalla uudemman auton?</td>
-					<td>Syötä nykyisen autosi tiedot<br> ja vaihtoehdot</td>
-					<td>Näe selkeästi, mikä sopii sinulle parhaiten!</td>
-				</tr>
-			</tbody>
-		</table>
-        <!-- Main Button -->
-        <button id="mainButton" class="expand-button">Vertaa tästä</button>
+    <div id="introContainer" class="intro-fin-wrap">
+        <div class="intro-fin-cards" role="region" aria-label="Miten työkalu auttaa">
+            <article class="fin-card intro-fin-card">
+                <p class="intro-fin-emoji" aria-hidden="true">💸</p>
+                <h3>Tarkastele kustannuksia</h3>
+                <p>Säästäisitkö hankkimalla uudemman auton?</p>
+            </article>
+            <article class="fin-card intro-fin-card">
+                <p class="intro-fin-emoji" aria-hidden="true">🛠️</p>
+                <h3>Kokeile työkalua</h3>
+                <p>Syötä nykyisen autosi tiedot ja vaihtoehdot</p>
+            </article>
+            <article class="fin-card intro-fin-card">
+                <p class="intro-fin-emoji" aria-hidden="true">✅</p>
+                <h3>Tee päätös tietoon perustuen</h3>
+                <p>Näe selkeästi, mikä sopii sinulle parhaiten!</p>
+            </article>
+        </div>
+        <div class="intro-cta-row">
+            <button id="mainButton" type="button" class="expand-button">Vertaa tästä</button>
+            <a href="rahoitusvertailu.html" class="expand-button expand-button--secondary">Uusi vs. käytetty rahoituksella</a>
+        </div>
     </div>
 
 </div>

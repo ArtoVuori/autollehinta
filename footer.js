@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="separator">|</span>
             <a href="./blog_02.html">Yksityisleasingin kannattavuus vs. auton omistaminen</a>
             <span class="separator">|</span>
+            <a href="./rahoitusvertailu.html">Rahoitusvertailu (uusi vs. käytetty)</a>
+            <span class="separator">|</span>
             <a href="./audi.html">Audi</a>
             <span class="separator">|</span>
             <a href="./byd.html">BYD</a>

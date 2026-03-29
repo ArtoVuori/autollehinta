@@ -1,31 +1,4 @@
-// Ladataan Google Fonts dynaamisesti
-function loadGoogleFonts() {
-    // Tarkistetaan onko fontti jo ladattu
-    if (document.querySelector('link[href*="Josefin+Sans"]')) {
-        return;
-    }
-
-    // Lisätään preconnect-linkit
-    const preconnectGoogle = document.createElement('link');
-    preconnectGoogle.rel = 'preconnect';
-    preconnectGoogle.href = 'https://fonts.googleapis.com';
-    document.head.appendChild(preconnectGoogle);
-
-    const preconnectGstatic = document.createElement('link');
-    preconnectGstatic.rel = 'preconnect';
-    preconnectGstatic.href = 'https://fonts.gstatic.com';
-    preconnectGstatic.crossOrigin = 'anonymous';
-    document.head.appendChild(preconnectGstatic);
-
-    // Lisätään fontti
-    const fontLink = document.createElement('link');
-    fontLink.rel = 'stylesheet';
-    fontLink.href = 'https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap';
-    document.head.appendChild(fontLink);
-}
-
-// Ladataan fontit heti kun skripti suoritetaan
-loadGoogleFonts();
+/* Fontit ladataan style.css @importilla (DM Sans + Josefin Sans). */
 
 // Alustetaan globaalit muuttujat
 let devaluationData = {};
@@ -575,60 +548,66 @@ async function calculate() {
     const monthlyCost = (globalTotalIncludingCosts / totalMonths).toFixed(2);
     const monthlyCostWithoutDepreciation = (totalCostWithoutDepreciation / totalMonths).toFixed(2);
 
-    // Display the result in HTML
-    const startYear = isUsed ? modelYear : new Date().getFullYear();
-    const endYear = startYear + selectedAge;
+    // Display the result in HTML — aikajänne kalenterivuosina (pito alkaa kuluvasta vuodesta), ei vuosimallista
+    const currentCalendarYear = new Date().getFullYear();
+    const startYear = currentCalendarYear;
+    const endYear = currentCalendarYear + selectedAge;
     const currentMileage = isUsed ? parseFloat(document.getElementById('drivenKilometers').value) || 0 : 0;
     const futureMileage = currentMileage + (annualKilometers * selectedAge);
     
 	document.getElementById('result').innerHTML = `
-		<p class="result-paragraph">Auton arvo ${combinedAge} vuoden jälkeen on ${futureValue.toFixed(0)} € (${endYear})</p>
-		<ul style="font-size: smaller;">
-			<li>Arvon alenema seuraavan ${selectedAge} vuoden aikana on ${depreciation} €.</li>
-			${annualFuelCost > 0 ? `<li>Vuosittaiset polttoainekustannukset ovat ${annualFuelCost.toFixed(2)} €.</li>` : ''}
-			${annualInsuranceCost > 0 ? `<li>Vuosittaiset vakuutuskustannukset ovat ${annualInsuranceCost} €.</li>` : ''}
-			${annualTaxCost > 0 ? `<li>Vuosittaiset verokustannukset ovat ${annualTaxCost} €.</li>` : ''}
-		</ul>
-		<p class="result-paragraph">Kokonaiskustannukset ${selectedAge} vuodelta ${globalTotalIncludingCosts} € (${startYear}-${endYear}).</p>
-		<ul style="font-size: smaller;">
-			<li>Kuukausikustannukset ${monthlyCost} €.</li>
-			<li>Arvon alenema kuukaudessa ${(monthlyCost - monthlyCostWithoutDepreciation).toFixed(2)} €.</li>
-			<li>Kuukausikustannukset ilman arvonalenemaa ${monthlyCostWithoutDepreciation} €.</li>
-			<li>Auton mittarilukema ${futureMileage.toFixed(0)} km.</li>
-		</ul>
+		<div class="fin-result-box">
+			<h2>Arvioitu arvo — ${selectedAge} vuotta</h2>
+			<p class="fin-result-lead">Auton arvioitu arvo noin ${selectedAge} vuoden kuluttua on ${futureValue.toFixed(0)} € (vuosi ${endYear})</p>
+			<ul class="calc-result-list">
+				<li>Arvon alenema seuraavan ${selectedAge} vuoden aikana on ${depreciation} €.</li>
+				${annualFuelCost > 0 ? `<li>Vuosittaiset polttoainekustannukset ovat ${annualFuelCost.toFixed(2)} €.</li>` : ''}
+				${annualInsuranceCost > 0 ? `<li>Vuosittaiset vakuutuskustannukset ovat ${annualInsuranceCost} €.</li>` : ''}
+				${annualTaxCost > 0 ? `<li>Vuosittaiset verokustannukset ovat ${annualTaxCost} €.</li>` : ''}
+			</ul>
+		</div>
+		<div class="fin-result-box">
+			<h2>Kokonaiskustannukset — ${selectedAge} vuotta</h2>
+			<p class="fin-result-lead">Kokonaiskustannukset ${selectedAge} vuodelta ${globalTotalIncludingCosts} € (${startYear}–${endYear}).</p>
+			<ul class="calc-result-list">
+				<li>Kuukausikustannukset ${monthlyCost} €.</li>
+				<li>Arvon alenema kuukaudessa ${(monthlyCost - monthlyCostWithoutDepreciation).toFixed(2)} €.</li>
+				<li>Kuukausikustannukset ilman arvonalenemaa ${monthlyCostWithoutDepreciation} €.</li>
+				<li>Auton mittarilukema ${futureMileage.toFixed(0)} km.</li>
+			</ul>
+		</div>
 	`;
 
 
-    // Prepare content for comparison card
+    // Prepare content for comparison card (tyylit: .compare-spec-table, rahoitusvertailun infolaatikko)
     comparisonContent = `
-        <table style="width: 100%;">
+        <table class="compare-spec-table">
             <tr>
-                <td style="width: 60%;">Hankintahinta:</td>
-                <td style="width: 40%;">${price.toFixed(0)} €</td>
+                <td>Hankintahinta</td>
+                <td>${price.toFixed(0)} €</td>
             </tr>
             <tr>
-                <td style="width: 60%;">Pitoaika:</td>
-                <td style="width: 40%;">${selectedAge} vuotta</td>
+                <td>Pitoaika</td>
+                <td>${selectedAge} vuotta</td>
             </tr>
             <tr>
-                <td style="width: 60%;">Ajomäärä vuodessa:</td>
-                <td style="width: 40%;">${kilometers} km</td>
+                <td>Ajomäärä vuodessa</td>
+                <td>${kilometers} km</td>
+            </tr>
+            <tr class="compare-spec-section">
+                <td colspan="2"><span class="compare-section-label">Kuukausikustannukset</span></td>
             </tr>
             <tr>
-                <td style="width: 60%;"><br><b>Kuukausikustannukset</b></td>
-                <td style="width: 40%;"></td>
+                <td>Arvon alenema</td>
+                <td>${(monthlyCost - monthlyCostWithoutDepreciation).toFixed(2)} €</td>
             </tr>
             <tr>
-                <td style="width: 60%;">- Arvon alenema:</td>
-                <td style="width: 40%;">${(monthlyCost - monthlyCostWithoutDepreciation).toFixed(2)} €</td>
+                <td>Kulut</td>
+                <td>${monthlyCostWithoutDepreciation} €</td>
             </tr>
-            <tr>
-                <td style="width: 60%;">- Kulut:</td>
-                <td style="width: 40%;">${monthlyCostWithoutDepreciation} €</td>
-            </tr>
-            <tr>
-                <td style="width: 60%;">- Yhteensä:</td>
-                <td style="width: 40%;">${monthlyCost} €</td>
+            <tr class="compare-spec-total">
+                <td>Yhteensä</td>
+                <td>${monthlyCost} €</td>
             </tr>
         </table>
     `;
@@ -742,10 +721,9 @@ function addToComparison() {
         removeCard(card); // Käynnistetään poisto animaation kanssa
     };
     
-    // Kortin sisältö
     card.innerHTML = `
         <div class="card-content">
-            <h4>${carDetails}</h4>
+            <div class="compare-card-lead">${carDetails}</div>
             ${comparisonContent}
         </div>
     `;
