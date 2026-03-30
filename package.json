@@ -4,18 +4,17 @@
   "main": "javascript.js",
   "scripts": {
     "test": "echo \"Error: no tests\" && exit 1",
-    "start": "node server.js",
+    "start": "node scripts/static_preview.mjs",
     "data:refresh": "node scripts/run_merge_and_build.mjs",
     "build:market": "node scripts/build_market_stats.mjs --input data/merged_parsed.json --output data/market_stats.json",
     "extract:brand-template": "node scripts/generate_brand_pages.mjs --extract-template",
-    "generate:brands": "node scripts/generate_brand_pages.mjs"
+    "generate:brands": "node scripts/generate_brand_pages.mjs",
+    "extend:devaluation": "node scripts/extend_devaluation_from_market.mjs && node scripts/extend_devaluation_from_market.mjs --ev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.21.1"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "description": ""
 }

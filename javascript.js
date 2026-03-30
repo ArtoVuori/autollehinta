@@ -13,8 +13,42 @@ let carDetails = ""; // Globaali muuttuja auton tietojen tallentamiseen
 let globalDepreciation = 0;
 let globalTotalCosts = 0;
 let globalTotalIncludingCosts = 0;
+/** Viimeisin laskettu rivi CSV-exportille; liitetään korttiin addToComparison():ssa. */
+let lastComparisonExport = null;
 
+/** Vastaa devaluation.csv / devaluation_ev.csv iäkkäitä sarakkeita 1…N (horisontti "seuraavat N vuotta"). */
+const DEVALUATION_PLANNING_YEARS_MAX = 20;
 
+/**
+ * Suomessa yleisimmät merkit (likimääräinen myynti-/rekisteröintijärjestys, top 10).
+ * Näytetään valikossa ensin; loput merkit aakkosjärjestyksessä.
+ * Nimet vastaavat devaluation.csv -rivejä.
+ */
+const FINLAND_TOP_BRANDS_ORDER = [
+    'Toyota',
+    'Volkswagen',
+    'Volvo',
+    'Skoda',
+    'Mercedes-Benz',
+    'BMW',
+    'Kia',
+    'Ford',
+    'Nissan',
+    'Hyundai',
+];
+
+function buildOrderedBrandList(regularBrands, evBrands) {
+    const brandSet = new Set([
+        ...Object.keys(regularBrands),
+        ...Object.keys(evBrands),
+    ]);
+    const topFirst = FINLAND_TOP_BRANDS_ORDER.filter((b) => brandSet.has(b));
+    const topSet = new Set(topFirst);
+    const restAlpha = [...brandSet]
+        .filter((b) => !topSet.has(b))
+        .sort((a, b) => a.localeCompare(b, 'fi'));
+    return { topFirst, restAlpha };
+}
 
 // Ladataan CSV-tiedostot ja käsitellään ne
 async function loadCSV(filePath) {
@@ -44,7 +78,7 @@ async function fillAgeOptions() {
     console.log('Täytetään ikävalinnat.');
     const ageSelect = document.getElementById('age');
     ageSelect.innerHTML = ""; // Tyhjennetään vanhat valinnat ennen uusien lisäämistä
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= DEVALUATION_PLANNING_YEARS_MAX; i++) {
         const option = document.createElement('option');
         option.value = i;
         option.textContent = `${i} vuotta`;
@@ -107,16 +141,30 @@ async function updateBrandOptions() {
     const regularBrands = await loadCSV('devaluation.csv');
     const evBrands = await loadCSV('devaluation_ev.csv');
     
-    // Yhdistetään ja poistetaan duplikaatit
-    const allBrands = [...new Set([...Object.keys(regularBrands), ...Object.keys(evBrands)])].sort();
-    
-    // Lisätään kaikki merkit valikkoon
-    allBrands.forEach(brand => {
-        const option = document.createElement('option');
-        option.value = brand;
-        option.textContent = brand;
-        brandSelect.appendChild(option);
-    });
+    const { topFirst, restAlpha } = buildOrderedBrandList(regularBrands, evBrands);
+    const allBrands = [...topFirst, ...restAlpha];
+
+    const appendOptions = (parent, brands) => {
+        brands.forEach((brand) => {
+            const option = document.createElement('option');
+            option.value = brand;
+            option.textContent = brand;
+            parent.appendChild(option);
+        });
+    };
+
+    if (topFirst.length > 0 && restAlpha.length > 0) {
+        const ogTop = document.createElement('optgroup');
+        ogTop.label = 'Yleisimmät Suomessa';
+        appendOptions(ogTop, topFirst);
+        brandSelect.appendChild(ogTop);
+        const ogRest = document.createElement('optgroup');
+        ogRest.label = 'Kaikki merkit (A–Ö)';
+        appendOptions(ogRest, restAlpha);
+        brandSelect.appendChild(ogRest);
+    } else {
+        appendOptions(brandSelect, allBrands);
+    }
 
     // Jos tallennettu merkki löytyy uudesta listasta, aseta se valituksi
     if (selectedBrand && allBrands.includes(selectedBrand)) {
@@ -290,16 +338,10 @@ function getMileageFactor(brand, kilometers, fuelType, age) {
 // Lasketaan arvonalenema, käyttämällä sopivaa kerrointa
 function calculateDepreciation(age, depreciationArray, brand, kilometers, fuelType) {
     console.log(`Lasketaan arvonalenema iälle: ${age}, kilometrit: ${kilometers}`);
-    
-    // Jos ikä ylittää 20 vuotta, käytetään 95% alenemaa
-    if (age >= 20) {  
-        console.warn(`Ikä ${age} ylittää 20 vuotta. Käytetään 95 % alenemaa.`);
-        return 0.95;
-    }
-    
-    // Varmistetaan että ikä on järkevä
+
+    // Ikä taulukon ulkopuolella: enimmäisalenema (CSV:ssä sarakkeet 0…MAX vastaavat vuosia)
     if (age < 0 || age >= depreciationArray.length) {
-        console.warn(`Virheellinen ikä: ${age}, käytetään oletusarvoa 0.95`);
+        console.warn(`Ikä ${age} ei osu taulukkoon (pituus ${depreciationArray.length}), käytetään 0.95`);
         return 0.95;
     }
     
@@ -349,8 +391,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (checkFormValidity()) {
             console.log("Lomake on voimassa, jatketaan.");
-            await logCalculate();  // Odotetaan, että logCalculate-funktio suoritetaan loppuun
-            await calculate();  // Suorittaa laskennan vasta logCalculate:n jälkeen
+            await calculate();
             smoothScrollToResult();
 
             // Piilotetaan "Tyhjennä"-nappula Laske-painalluksen jälkeen, jos se on määritelty
@@ -366,10 +407,16 @@ document.addEventListener("DOMContentLoaded", function () {
         this.style.display = 'none'; // Piilota Tyhjennä-nappula
     });
 
+    const exportCsvBtn = document.getElementById('exportCompareCsv');
+    if (exportCsvBtn) {
+        exportCsvBtn.addEventListener('click', function () {
+            exportComparisonToCsv();
+        });
+    }
+    updateCompareExportButtonVisibility();
+
     // Lisää tapahtumakuuntelija Lisää vertailuun -napille
     document.getElementById('addToCompareButton').addEventListener('click', function() {
-        const details = carDetails; // Tallennetaan auton tiedot
-        logAddToCompare(details);  // Kirjaa vertailuun lisäys palvelimelle
         addToComparison(); // Lisää kortti vertailuun
 
         // Piilota "Lisää vertailuun" -nappula, kun kortti on lisätty vertailuun
@@ -457,6 +504,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Lasketaan auton arvonalenema ja kustannukset
 async function calculate() {
     console.log('Aloitetaan laskenta.');
+    lastComparisonExport = null;
     if (typeof window.clearMarketReference === 'function') {
         window.clearMarketReference();
     }
@@ -568,6 +616,12 @@ async function calculate() {
     const monthlyCost = (globalTotalIncludingCosts / totalMonths).toFixed(2);
     const monthlyCostWithoutDepreciation = (totalCostWithoutDepreciation / totalMonths).toFixed(2);
 
+    const fuelSelect = document.getElementById('fuelType');
+    const fuelLabel =
+        fuelSelect && fuelSelect.options[fuelSelect.selectedIndex]
+            ? fuelSelect.options[fuelSelect.selectedIndex].textContent.trim()
+            : fuelType;
+
     // Display the result in HTML — aikajänne kalenterivuosina (pito alkaa kuluvasta vuodesta), ei vuosimallista
     const currentCalendarYear = new Date().getFullYear();
     const startYear = currentCalendarYear;
@@ -612,7 +666,7 @@ async function calculate() {
             </tr>
             <tr>
                 <td>Ajomäärä vuodessa</td>
-                <td>${kilometers} km</td>
+                <td>${annualKilometers} km</td>
             </tr>
             <tr class="compare-spec-section">
                 <td colspan="2"><span class="compare-section-label">Kuukausikustannukset</span></td>
@@ -632,11 +686,17 @@ async function calculate() {
         </table>
     `;
 
-    const fuelSelect = document.getElementById('fuelType');
-    const fuelLabel =
-        fuelSelect && fuelSelect.options[fuelSelect.selectedIndex]
-            ? fuelSelect.options[fuelSelect.selectedIndex].textContent.trim()
-            : fuelType;
+    const monthlyDepreciation = (monthlyCost - monthlyCostWithoutDepreciation).toFixed(2);
+    lastComparisonExport = {
+        auto: `${selectedBrand}${isUsed ? ' (käytetty)' : ''} (${fuelLabel})`,
+        hankintahinta: price.toFixed(0),
+        pitoaikaVuotta: String(selectedAge),
+        ajomaaraVuodessa: String(annualKilometers),
+        kuukausiArvonAlenema: monthlyDepreciation,
+        kuukausiKulut: String(monthlyCostWithoutDepreciation),
+        kuukausiYhteensa: String(monthlyCost),
+    };
+
     const marketModelEl = document.getElementById('marketModel');
     const modelInput = marketModelEl ? marketModelEl.value : '';
     if (isUsed && typeof window.updateMarketReference === 'function') {
@@ -742,6 +802,7 @@ function removeCard(cardElement) {
     // Odota animaation loppumista ennen kuin kortti poistetaan DOM:sta
     setTimeout(function() {
         cardElement.remove();
+        updateCompareExportButtonVisibility();
     }, 500); // 500 ms vastaa animaation kestoa
 }
 
@@ -768,7 +829,11 @@ function addToComparison() {
     `;
     
     card.appendChild(removeButton); // Lisää poistoruksi korttiin
+    if (lastComparisonExport) {
+        card._comparisonExport = lastComparisonExport;
+    }
     savedResultsDiv.appendChild(card);
+    lastComparisonExport = null;
 
     // Viivästys, jotta kortti tulee näkyviin sulavasti
     setTimeout(() => {
@@ -782,14 +847,87 @@ function addToComparison() {
     if (typeof window.clearMarketReference === 'function') {
         window.clearMarketReference();
     }
+
+    updateCompareExportButtonVisibility();
 }
 
 
+
+function updateCompareExportButtonVisibility() {
+    const wrap = document.querySelector('.saved-results-export');
+    if (!wrap) return;
+    const n = document.querySelectorAll('#savedResults .result-card').length;
+    wrap.classList.toggle('is-visible', n > 0);
+}
 
 function clearSavedResults() {
     console.log('Tyhjennetään tallennetut kortit.');
     const savedResultsDiv = document.getElementById('savedResults');
     savedResultsDiv.innerHTML = ''; // Clears all saved cards
+    updateCompareExportButtonVisibility();
+}
+
+function escapeCsvField(value) {
+    const str = value == null ? '' : String(value);
+    if (/[;"'\n\r]/.test(str)) {
+        return '"' + str.replace(/"/g, '""') + '"';
+    }
+    return str;
+}
+
+function exportComparisonToCsv() {
+    const cards = document.querySelectorAll('#savedResults .result-card');
+    if (!cards.length) {
+        alert(
+            'Ei vertailukortteja. Laske ensin ja lisää kortti painikkeella "Lisää vertailuun".'
+        );
+        return;
+    }
+    const header = [
+        'Auto',
+        'Hankintahinta (€)',
+        'Pitoaika (vuotta)',
+        'Ajomäärä vuodessa (km)',
+        'Kuukausi arvon alenema (€)',
+        'Kuukausi kulut (€)',
+        'Kuukausi yhteensä (€)',
+    ];
+    const lines = [header.map(escapeCsvField).join(';')];
+    cards.forEach(function (card) {
+        const d = card._comparisonExport;
+        if (!d) return;
+        lines.push(
+            [
+                escapeCsvField(d.auto),
+                escapeCsvField(d.hankintahinta),
+                escapeCsvField(d.pitoaikaVuotta),
+                escapeCsvField(d.ajomaaraVuodessa),
+                escapeCsvField(d.kuukausiArvonAlenema),
+                escapeCsvField(d.kuukausiKulut),
+                escapeCsvField(d.kuukausiYhteensa),
+            ].join(';')
+        );
+    });
+    if (lines.length < 2) {
+        alert(
+            'Korteissa ei ole tallennettuja tietoja CSV:lle. Lisää uudet kortit laskennan jälkeen.'
+        );
+        return;
+    }
+    const bom = '\uFEFF';
+    const blob = new Blob([bom + lines.join('\r\n')], {
+        type: 'text/csv;charset=utf-8',
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const ymd = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = 'autollehinta-vertailu-' + ymd + '.csv';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 // Sivun latautuessa täytetään ikävalinnat ja päivitetään auton merkit
@@ -868,98 +1006,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error('Main button, intro container, or form container is missing.');
     }
 });
-
-// Tallennetaan Laske-nappulan klikkaukset ja kaikki lomakkeen tiedot palvelimelle
-
-async function logCalculate() {
-    console.log("logCalculate() kutsuttu");  // Vahvistetaan, että funktio käynnistyy
-
-    const data = {
-        brand: document.getElementById('brand').value,
-        fuelType: document.getElementById('fuelType').value,
-        age: document.getElementById('age').value,
-        price: document.getElementById('price').value,
-        kilometers: document.getElementById('kilometers').value,
-        insurance: document.getElementById('insurance').value,
-        tax: document.getElementById('tax').value,
-        fuelConsumption: document.getElementById('fuelPer100Km').value,
-        electricConsumption: document.getElementById('electricPer100Km').value,
-        gasConsumption: document.getElementById('gasPer100Km').value,
-        maintenance: document.getElementById('maintenance').value,
-        tires: document.getElementById('tires').value,
-        otherCosts: document.getElementById('otherCosts').value,
-    };
-
-    console.log("Logging calculate action data:", data);
-
-    try {
-        const response = await fetch('/logCalculate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-        });
-
-        if (response.ok) {
-            console.log("Data logged successfully");
-        } else {
-            console.error("Server error:", response.status);
-        }
-    } catch (error) {
-        console.error("Fetch error:", error);
-    }
-}
-
-// Tallennetaan Vertailuun lisäykset palvelimelle
-async function logAddToCompare(details) {
-    console.log("logAddToCompare() kutsuttu");
-
-    // Log global variables to confirm correct values
-    console.log("Logging global variables in logAddToCompare:", {
-        globalDepreciation,
-        globalTotalCosts,
-        globalTotalIncludingCosts
-    });
-
-    // Retrieve inputs and ensure default values for numbers
-    const data = {
-        brand: document.getElementById('brand').value || '',
-        fuelType: document.getElementById('fuelType').value || '',
-        age: document.getElementById('age').value || '',
-        price: parseFloat(document.getElementById('price').value || 0).toFixed(2),
-        kilometers: document.getElementById('kilometers').value || '',
-        insurance: parseFloat(document.getElementById('insurance').value || 0).toFixed(2),
-        tax: parseFloat(document.getElementById('tax').value || 0).toFixed(2),
-        fuelConsumption: document.getElementById('fuelPer100Km').value || '',
-        electricConsumption: document.getElementById('electricPer100Km').value || '',
-        gasConsumption: document.getElementById('gasPer100Km').value || '',
-        maintenance: parseFloat(document.getElementById('maintenance').value || 0).toFixed(2),
-        tires: parseFloat(document.getElementById('tires').value || 0).toFixed(2),
-        otherCosts: parseFloat(document.getElementById('otherCosts').value || 0).toFixed(2),
-
-        // Use global variables with default values if NaN
-        depreciation: parseFloat(globalDepreciation || 0).toFixed(2),
-        costs: parseFloat(globalTotalCosts || 0).toFixed(2),
-        total: parseFloat(globalTotalIncludingCosts || 0).toFixed(2)
-    };
-
-    console.log("Logging compare action data:", data);
-
-    try {
-        const response = await fetch('/logAddToCompare', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-        });
-
-        if (response.ok) {
-            console.log("Data logged successfully to compare");
-        } else {
-            console.error("Server error:", response.status);
-        }
-    } catch (error) {
-        console.error("Fetch error:", error);
-    }
-}
 
 document.getElementById('mainButton').addEventListener('click', function() {
     const footer = document.querySelector('.footer');

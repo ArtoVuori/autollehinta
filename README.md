@@ -1,6 +1,6 @@
 # Autollehinta.fi
 
-Staattinen verkkosivu auton käyttökustannusten ja arvonaleneman laskentaan sekä rahoitusvertailuun. Julkinen etusivu toimii ilman palvelinta; Express-palvelin on valinnainen lokitukselle ja kehitykselle.
+Staattinen verkkosivu auton käyttökustannusten ja arvonaleneman laskentaan sekä rahoitusvertailuun. Julkinen sivu on pelkkiä staattisia tiedostoja (ei Node-palvelinta hostissa). Paikalliseen esikatseluun käytetään kevyttä `scripts/static_preview.mjs` -palvelinta (vain Node stdlib).
 
 **Projektin juuri on `C:\temp\autollehinta`.** Älä sekoita polkuun `C:\temp\scripts\autollehinta` (siellä on erillisiä työkaluja, ei näitä `scripts/*.mjs` -tiedostoja). Komennot ja `npm run` ajetaan aina `autollehinta`-kansiosta.
 
@@ -13,7 +13,7 @@ npm start
 
 Avaa selaimessa: `http://localhost:3000`
 
-Vaihtoehto: mikä tahansa staattinen palvelin projektin juureen (esim. `python -m http.server`), jos et tarvitse `/logCalculate`-lokitusta.
+Vaihtoehto: mikä tahansa staattinen palvelin projektin juureen (esim. `python -m http.server`).
 
 ## Markkinadatan päivitys (Autotalli-vedokset)
 
@@ -49,7 +49,7 @@ Tarkemmin: [scripts/README_merge_parsed.md](scripts/README_merge_parsed.md).
 
 | Komento | Kuvaus |
 |--------|--------|
-| `npm start` | Express (portti 3000), staattiset tiedostot juuresta |
+| `npm start` | Staattinen esikatselu (portti 3000), `scripts/static_preview.mjs` |
 | `npm run data:refresh` | Merge + `market_stats.json` (oletushakemisto Autotalli) |
 | `npm run build:market` | Vain aggregointi, jos `data/merged_parsed.json` on jo olemassa |
 

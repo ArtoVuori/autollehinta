@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Merkkisivut: lukee devaluation.csv + devaluation_ev.csv, kirjoittaa puuttuvat {slug}.html,
- * päivittää footer.js:n merkkilinkit, sitemap.xml:n Merkkisivut-osion (kaikki slug.html-URLit CSV-merkeistä),
+ * päivittää footer.js:n merkkilinkit, automerkkit.html:n merkkilistan,
+ * sitemap.xml:n Merkkisivut-osion (kaikki slug.html-URLit CSV-merkeistä),
  * ja market_brand_insight.js:n FILE_TO_BRAND.
  *
  * Kun audi.html / tesla.html -rakennetta muutat, aja ensin pohjan uudelleenotto:
@@ -176,6 +177,31 @@ function patchFooter(rowsHtml, dryRun) {
   if (!dryRun) fs.writeFileSync(p, s, 'utf8');
 }
 
+/** automerkkit.html: merkkilinkit (sama järjestys / data kuin footer). */
+function patchBrandIndexPage(sorted, dryRun) {
+  const p = path.join(ROOT, 'automerkkit.html');
+  if (!fs.existsSync(p)) {
+    console.warn('automerkkit.html: tiedostoa ei löydy, ohitetaan merkkilistan päivitys');
+    return;
+  }
+  let s = fs.readFileSync(p, 'utf8');
+  const start = '<!-- BRAND_INDEX_LIST_START -->';
+  const end = '<!-- BRAND_INDEX_LIST_END -->';
+  if (!s.includes(start) || !s.includes(end)) {
+    console.error('automerkkit.html: puuttuvat BRAND_INDEX_LIST_START/END -merkit');
+    process.exit(1);
+  }
+  const items = sorted
+    .map(
+      ({ brand, slug }) =>
+        `            <li><a href="./${slug}.html">${escHtml(brand)}</a></li>`
+    )
+    .join('\n');
+  const block = `${start}\n        <ul class="brand-index-list" role="navigation" aria-label="Automerkit">\n${items}\n        </ul>\n        ${end}`;
+  s = s.replace(new RegExp(`${reEsc(start)}[\\s\\S]*?${reEsc(end)}`, 'm'), block);
+  if (!dryRun) fs.writeFileSync(p, s, 'utf8');
+}
+
 function patchSitemap(slugs, dryRun) {
   const p = path.join(ROOT, 'sitemap.xml');
   const s = fs.readFileSync(p, 'utf8');
@@ -292,6 +318,7 @@ function main() {
   const sitemapSlugs = [...new Set(rows.map((r) => r.slug))].sort();
 
   patchFooter(footerHtml, dry);
+  patchBrandIndexPage(sorted, dry);
   patchSitemap(sitemapSlugs, dry);
   patchInsight(mapEntries, dry);
 

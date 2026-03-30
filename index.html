@@ -158,7 +158,10 @@
         <aside id="marketReference" class="market-reference market-reference--hidden" aria-live="polite" aria-label="Markkinaviite"></aside>
         
         <!-- New section for displaying saved results -->
-        <div class="saved-results" id="savedResults"></div> 
+        <div class="saved-results" id="savedResults"></div>
+        <div class="saved-results-export">
+            <button type="button" id="exportCompareCsv">CSV</button>
+        </div>
     </div>
 
     <div id="introContainer" class="intro-fin-wrap">
@@ -180,8 +183,11 @@
             </article>
         </div>
         <div class="intro-cta-row">
-            <button id="mainButton" type="button" class="expand-button">Vertaa tästä</button>
-            <a href="rahoitusvertailu.html" class="expand-button expand-button--secondary">Uusi vs. käytetty rahoituksella</a>
+            <div class="intro-cta-buttons">
+                <button id="mainButton" type="button" class="expand-button">Vertaa tästä</button>
+                <a href="rahoitusvertailu.html" class="expand-button expand-button--secondary">Uusi vs. käytetty rahoituksella</a>
+                <a href="automerkkit.html" class="expand-button expand-button--tertiary">Automerkit</a>
+            </div>
         </div>
     </div>
 

@@ -19,6 +19,9 @@
     --color-magenta-hover: #f43f5e;
     --color-compare: #818cf8;
     --color-compare-hover: #a5b4fc;
+    /* Hillitty CTA (Automerkit): läpinäkymätön slate */
+    --color-cta-muted-bg: #334155;
+    --color-cta-muted-bg-hover: #475569;
     --color-danger: #fb7185;
     --color-danger-hover: #f43f5e;
     --color-result-pill: rgba(15, 118, 110, 0.5);
@@ -42,7 +45,8 @@
     --space-lg: 28px;
     --font-display: 'Josefin Sans', ui-sans-serif, system-ui, sans-serif;
     --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
-    --container-max: 800px;
+    /* Työpöytä/kokonäyttö (aiemmin 800px); ≤768px: .container max-width 100% */
+    --container-max: 1120px;
     --secondary-color: rgba(20, 184, 166, 0.32);
     --line-prose: 1.65;
     --text-base: 1rem;
@@ -253,7 +257,39 @@ button:disabled {
     transition: all 0.5s ease;
 }
 
+.saved-results-export {
+    display: none;
+    margin-top: var(--space-md);
+}
 
+.saved-results-export.is-visible {
+    display: block;
+}
+
+.saved-results-export #exportCompareCsv {
+    background: var(--color-panel-soft);
+    color: var(--color-text);
+    border: 1px solid var(--color-panel-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.saved-results-export #exportCompareCsv:hover {
+    background: rgba(51, 65, 85, 0.95);
+    border-color: rgba(139, 124, 248, 0.35);
+    transform: translateY(-1px);
+}
+
+.saved-results-export #exportCompareCsv:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
 
 /* Fade-in animation */
 @keyframes fadeIn {
@@ -808,17 +844,39 @@ input[id="tab-2"]:checked ~ .glider {
     flex-grow: 1;
 }
 
+/* Erottimen täysi leveys: border ei saa jakaa max-widthia nappien kanssa (aiheutti „vajaan” viivan). */
 #introContainer.intro-fin-wrap .intro-cta-row {
     margin-top: 0;
     margin-bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
+    margin-right: 0;
     padding-top: var(--space-md);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
-    max-width: 52rem;
+    max-width: none;
     position: relative;
     z-index: 1;
+    display: block;
+    box-sizing: border-box;
+}
+
+#introContainer.intro-fin-wrap .intro-cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    max-width: 52rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 770px) {
+    #introContainer.intro-fin-wrap .intro-cta-buttons {
+        flex-direction: column;
+    }
 }
 
 /* Layerin oletustila (piilotettu) */
@@ -1016,6 +1074,19 @@ a.expand-button {
     background: var(--color-secondary-hover);
 }
 
+.expand-button--tertiary {
+    background: var(--color-cta-muted-bg);
+    color: #f1f5f9;
+    border: none;
+    box-shadow: var(--shadow-sm);
+    font-weight: 500;
+}
+
+.expand-button--tertiary:hover {
+    background: var(--color-cta-muted-bg-hover);
+    color: #fff;
+}
+
 @media (max-width: 770px) {
     .intro-cta-row {
         flex-direction: column;
@@ -1052,6 +1123,46 @@ a.expand-button {
 .fin-back:hover {
     color: var(--color-text);
     text-decoration: underline;
+}
+
+/* Automerkit-luettelo (automerkkit.html) */
+.brand-index-page .brand-index-lead {
+    margin: 0 0 var(--space-md);
+    font-size: var(--text-lead);
+    line-height: var(--line-prose);
+    color: var(--color-text-muted);
+    max-width: 40rem;
+}
+
+.brand-index-page .brand-index-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+    gap: 10px 14px;
+}
+
+.brand-index-page .brand-index-list li {
+    margin: 0;
+}
+
+.brand-index-page .brand-index-list a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-panel-border);
+    background: rgba(0, 0, 0, 0.18);
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.brand-index-page .brand-index-list a:hover {
+    border-color: rgba(20, 184, 166, 0.45);
+    background: rgba(20, 184, 166, 0.12);
+    color: var(--color-accent-hover);
 }
 
 .fin-field {

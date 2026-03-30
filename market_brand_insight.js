@@ -166,7 +166,6 @@
 
   /** Sama logiikka kuin javascript.js / calculateDepreciation. */
   function calculateDepreciationLocal(age, depreciationArray, brand, kilometers, fuelType, mileageFactors) {
-    if (age >= 20) return 0.95;
     if (!depreciationArray || age < 0 || age >= depreciationArray.length) return 0.95;
     var depreciationFactor = parseFloat(depreciationArray[age]);
     if (isNaN(depreciationFactor) || depreciationFactor < 0) depreciationFactor = 0.95;
