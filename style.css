@@ -2324,6 +2324,21 @@ input[type="number"]:-webkit-autofill:focus {
     outline-offset: 2px;
 }
 
+.market-brand-insight__chart-check span {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.market-brand-insight__row-main > .market-brand-insight__model,
+.market-brand-insight__row-main > .market-brand-insight__prices,
+.market-brand-insight__row-main > .market-brand-insight__count {
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
 .market-brand-insight__show-more-models {
     display: block;
     width: 100%;
@@ -2387,4 +2402,272 @@ input[type="number"]:-webkit-autofill:focus {
     margin: var(--space-sm) 0 0;
     font-size: 0.88rem;
     color: var(--color-text-muted);
+}
+
+/* Merkkisivut (body.brand-page): kapea näyttö — täysleveys, tilastotaulukko, kuvaaja, insight */
+@media (max-width: 640px) {
+    body.brand-page {
+        padding: var(--space-xs) 0;
+    }
+
+    body.brand-page .container {
+        max-width: none;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        padding: 10px var(--space-sm);
+        box-sizing: border-box;
+    }
+
+    body.brand-page > footer.footer {
+        max-width: none;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        box-sizing: border-box;
+    }
+
+    body.brand-page > footer.footer .footer-links a {
+        font-size: 0.82rem;
+    }
+
+    body.brand-page main section h2 {
+        font-size: clamp(0.9rem, 3.8vw, 1.05rem);
+        line-height: 1.28;
+    }
+
+    body.brand-page main section p,
+    body.brand-page main section li {
+        font-size: 0.85rem;
+        line-height: 1.55;
+    }
+
+    body.brand-page main section ul {
+        overflow-wrap: break-word;
+        word-break: break-word;
+        padding-right: 2px;
+    }
+
+    body.brand-page main section ul li {
+        white-space: normal;
+    }
+
+    body.brand-page #pageReset h2.domain,
+    body.brand-page #pageReset h2.inline-h2 {
+        font-size: clamp(1rem, 4.5vw, 1.2rem);
+    }
+
+    /* Yläosan 3 saraketta → pinottu korttirivi (ei ahtaita minisarakkeita) */
+    body.brand-page #introContainer table {
+        display: block;
+        width: 100%;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        background: transparent;
+        overflow: visible;
+    }
+
+    body.brand-page #introContainer thead {
+        display: none;
+    }
+
+    body.brand-page #introContainer tbody {
+        display: block;
+        width: 100%;
+    }
+
+    body.brand-page #introContainer tbody tr {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    body.brand-page #introContainer td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-sm);
+        border: 1px solid rgba(139, 124, 248, 0.28);
+        background: rgba(15, 23, 42, 0.55);
+        font-size: 0.84rem;
+        line-height: 1.55;
+    }
+
+    body.brand-page #introContainer td:nth-child(1)::before {
+        content: '💸 Keskimääräinen arvonalenema';
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.8rem;
+        color: var(--color-secondary-hover);
+        margin-bottom: var(--space-xs);
+        letter-spacing: 0.02em;
+    }
+
+    body.brand-page #introContainer td:nth-child(2)::before {
+        content: '⌛ 3 vuoden jälkeen';
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.8rem;
+        color: var(--color-secondary-hover);
+        margin-bottom: var(--space-xs);
+        letter-spacing: 0.02em;
+    }
+
+    body.brand-page #introContainer td:nth-child(3)::before {
+        content: '✅ Keskimääräinen kulutus';
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.8rem;
+        color: var(--color-secondary-hover);
+        margin-bottom: var(--space-xs);
+        letter-spacing: 0.02em;
+    }
+
+    body.brand-page #introContainer td:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .market-brand-insight {
+        padding: 10px var(--space-sm);
+        margin-bottom: var(--space-md);
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .market-brand-insight__title {
+        font-size: 0.92rem;
+        line-height: 1.28;
+    }
+
+    .market-brand-insight__lead {
+        font-size: 0.78rem;
+        line-height: 1.45;
+    }
+
+    .market-brand-insight__list {
+        font-size: 0.78rem;
+        line-height: 1.55;
+        padding-left: 1.35rem;
+    }
+
+    .market-brand-insight__list--interactive {
+        padding-left: 1.45rem;
+    }
+
+    .market-brand-insight__list--interactive .market-brand-insight__item {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .market-brand-insight__model {
+        font-size: 0.84rem;
+    }
+
+    .market-brand-insight__prices {
+        font-size: 0.76rem;
+        line-height: 1.4;
+    }
+
+    .market-brand-insight__count {
+        font-size: 0.72rem;
+    }
+
+    .market-brand-insight__row-main > .market-brand-insight__model,
+    .market-brand-insight__row-main > .market-brand-insight__prices,
+    .market-brand-insight__row-main > .market-brand-insight__count {
+        display: block;
+        width: 100%;
+    }
+
+    .market-brand-insight__row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+    }
+
+    .market-brand-insight__row-main {
+        flex-direction: column;
+        align-items: flex-start;
+        align-self: stretch;
+        gap: 0.15rem 0;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .market-brand-insight__chart-title {
+        font-size: 0.88rem;
+    }
+
+    .market-brand-insight__chart-ai-note {
+        font-size: 0.72rem;
+    }
+
+    /* Poltto/sähkö + mallit: yksi sarake, ei kapeaa kaksisaraketta */
+    .market-brand-insight__chart-fuel-checkgrid,
+    .market-brand-insight__chart-checkgrid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px 10px;
+        padding: 8px 10px;
+    }
+
+    .market-brand-insight__chart-fuel-checkgrid {
+        max-height: min(320px, 50vh);
+    }
+
+    .market-brand-insight__chart-fuel-extra-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px 0;
+    }
+
+    .market-brand-insight__chart-fuel-extra-row .market-brand-insight__chart-check {
+        align-items: flex-start;
+    }
+
+    .market-brand-insight__chart-check {
+        font-size: 0.78rem;
+        line-height: 1.4;
+    }
+
+    /* Kuvaaja: enemmän korkeutta kapealla, jotta akselit erottuvat */
+    .market-brand-insight__chart-canvas-wrap {
+        height: clamp(260px, 48vh, 340px);
+        min-height: 260px;
+        max-height: none;
+        margin-top: var(--space-sm);
+    }
+
+    .market-brand-insight__year-table {
+        font-size: 0.78rem;
+    }
+
+    .market-brand-insight__year-table th,
+    .market-brand-insight__year-table td {
+        padding: 0.4rem 0.4rem;
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .market-brand-insight__year-table th {
+        font-size: 0.72rem;
+    }
+
+    .market-brand-insight__show-more-models {
+        max-width: none;
+    }
 }

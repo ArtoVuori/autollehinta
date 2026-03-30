@@ -541,6 +541,14 @@
     var mileageFactors = chartOpts.mileageFactors || {};
     var showKmLines = chartOpts.showKmLines !== false;
 
+    var narrowViewport =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(max-width: 640px)').matches;
+    var axisTickFont = narrowViewport ? 10 : 12;
+    var axisTitleFont = narrowViewport ? 11 : 12;
+    var legendFont = narrowViewport ? 9 : 10;
+
     var grid = 'rgba(148, 163, 184, 0.12)';
     var tick = '#94a3b8';
     var datasets = [];
@@ -664,16 +672,31 @@
     var scales = {
       x: {
         type: 'linear',
-        title: { display: true, text: 'Auton ikä (vuotta)', color: tick },
-        ticks: { color: tick },
+        title: {
+          display: true,
+          text: 'Auton ikä (vuotta)',
+          color: tick,
+          font: { size: axisTitleFont },
+        },
+        ticks: {
+          color: tick,
+          font: { size: axisTickFont },
+          maxTicksLimit: narrowViewport ? 8 : undefined,
+        },
         grid: { color: grid },
       },
       y: {
         type: 'linear',
         position: 'left',
-        title: { display: true, text: 'Hinta (€)', color: tick },
+        title: {
+          display: true,
+          text: 'Hinta (€)',
+          color: tick,
+          font: { size: axisTitleFont },
+        },
         ticks: {
           color: tick,
+          font: { size: axisTickFont },
           callback: function (v) {
             return new Intl.NumberFormat('fi-FI', { maximumFractionDigits: 0 }).format(v);
           },
@@ -686,9 +709,15 @@
       scales.y1 = {
         type: 'linear',
         position: 'right',
-        title: { display: true, text: 'Mediaani km', color: tick },
+        title: {
+          display: true,
+          text: 'Mediaani km',
+          color: tick,
+          font: { size: axisTitleFont },
+        },
         ticks: {
           color: tick,
+          font: { size: axisTickFont },
           callback: function (v) {
             return new Intl.NumberFormat('fi-FI', { maximumFractionDigits: 0 }).format(v);
           },
@@ -708,7 +737,13 @@
           title: { display: false },
           legend: {
             display: true,
-            labels: { color: tick, font: { size: 10 }, boxWidth: 10 },
+            position: narrowViewport ? 'bottom' : 'top',
+            labels: {
+              color: tick,
+              font: { size: legendFont },
+              boxWidth: narrowViewport ? 8 : 10,
+              padding: narrowViewport ? 6 : 10,
+            },
           },
           tooltip: {
             callbacks: {
